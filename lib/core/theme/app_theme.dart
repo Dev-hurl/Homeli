@@ -16,7 +16,7 @@ class AppTheme {
       tertiary: AppColors.goldTertiary,
       secondary: AppColors.bluePrimary,
       secondaryContainer: AppColors.blueSecondary,
-      surface: AppColors.background,
+      surface: AppColors.white,
       surfaceContainerLow: AppColors.greyLight,
       surfaceContainerHigh: AppColors.grey,
       onSurface: AppColors.primaryText,

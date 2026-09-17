@@ -8,6 +8,7 @@ class AppColors {
   static const Color grey = Color(0xffEAEAEA);
   static const Color greyLight = Color(0xffEFEFEF);
   static const Color borderColor = Color(0xffE2E8F0);
+  static const Color white = Color(0xffFFFFFF);
 
   // ─── BRAND ──────────────────────────────────────────
 
