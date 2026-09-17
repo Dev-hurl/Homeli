@@ -12,6 +12,7 @@ class AppTheme {
     colorScheme: ColorScheme.light(
       primary: AppColors.goldPrimary,
       primaryContainer: AppColors.goldSecondary,
+      tertiary: AppColors.goldTertiary,
       secondary: AppColors.bluePrimary,
       secondaryContainer: AppColors.blueSecondary,
       surface: AppColors.background,

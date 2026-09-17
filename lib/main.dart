@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeli/core/features/auth/presentation/screens/role_setup_screen.dart';
 import 'package:homeli/core/features/auth/presentation/screens/splash_screen.dart';
 import 'package:homeli/core/theme/app_theme.dart';
 
@@ -12,9 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Homeli',
       theme: AppTheme.lightTheme,
-      home: SplashScreen()
+      home: RoleSetupScreen(),
     );
   }
 }
