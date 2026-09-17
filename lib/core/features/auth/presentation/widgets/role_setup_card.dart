@@ -104,9 +104,7 @@ class RoleSetupCard extends StatelessWidget {
               ),
               Text(
                 roleSetup.subtitle,
-                style: textTheme.labelMedium?.copyWith(
-                  fontWeight: FontWeight.w400,
-                ),
+                style: textTheme.labelMedium,
               ),
             ],
           ),

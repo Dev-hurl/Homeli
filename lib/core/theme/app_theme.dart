@@ -7,6 +7,7 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.background,
+    dividerColor: AppColors.borderColor,
     fontFamily: 'Plus Jakarta Sans',
 
     colorScheme: ColorScheme.light(
@@ -22,5 +23,6 @@ class AppTheme {
       onSurfaceVariant: AppColors.secondaryText,
       //error: AppColors.error,
     ),
+    
   );
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeli/core/features/auth/presentation/screens/onboarding_screen.dart';
-import 'package:homeli/core/features/auth/presentation/screens/role_setup_screen.dart';
+import 'package:homeli/core/features/auth/presentation/screens/registration/role_setup_screen.dart';
 import 'package:homeli/core/features/auth/presentation/screens/splash_screen.dart';
 import 'package:homeli/core/theme/app_theme.dart';
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Homeli',
       theme: AppTheme.lightTheme,
-      home: OnboardingScreen(), // Change this to the desired initial screen
+      home: OnboardingScreen(),
     );
   }
 }

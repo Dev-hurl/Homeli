@@ -14,6 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   hugeicons: ^1.1.7
   flutter_launcher_icons: ^0.14.4
+  flutter_svg: ^2.3.0
   
 
 dev_dependencies:

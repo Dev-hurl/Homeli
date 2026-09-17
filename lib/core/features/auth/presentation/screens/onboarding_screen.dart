@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homeli/core/features/auth/presentation/screens/role_setup_screen.dart';
+import 'package:homeli/core/features/auth/presentation/screens/registration/role_setup_screen.dart';
 
 class OnboardingSlide {
   final String title;
@@ -71,8 +71,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        actionsPadding: EdgeInsets.symmetric(horizontal: 16),
         leading: Image.asset('assets/icons/Homeli Logo Inverted.png'),
-        
         actions: [
           FilledButton(
             onPressed: _onSkip,
@@ -148,27 +148,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           textAlign: TextAlign.center,
                           style: textTheme.labelLarge?.copyWith(
                             color: colorScheme.secondary,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.normal,
                           ),
                         ),
                         SizedBox(height: 24),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 52,
-                          child: ElevatedButton(
-                            onPressed: _onGetStartedPressed,
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              backgroundColor: colorScheme.primary,
-                            ),
-                            child: Text(
-                              _currentPage == _slides.length - 1
-                                  ? 'Get Started'
-                                  : 'Continue',
-                              style: textTheme.labelLarge?.copyWith(
-                                color: colorScheme.onPrimary,
-                                fontWeight: FontWeight.w600,
-                              ),
+                        ElevatedButton(
+                          onPressed: _onGetStartedPressed,
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            minimumSize: Size(double.infinity, 52),
+                            backgroundColor: colorScheme.primary,
+                          ),
+                          child: Text(
+                            _currentPage == _slides.length - 1
+                                ? 'Get Started'
+                                : 'Continue',
+                            style: textTheme.labelLarge?.copyWith(
+                              color: colorScheme.onPrimary,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),

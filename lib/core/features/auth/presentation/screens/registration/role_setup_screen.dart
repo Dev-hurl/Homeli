@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeli/core/features/auth/models/role_setup_data.dart';
+import 'package:homeli/core/features/auth/presentation/screens/registration/sign_up_screen.dart';
 import 'package:homeli/core/features/auth/presentation/widgets/role_setup_card.dart';
 
 class RoleSetupScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _RoleSetupScreenState extends State<RoleSetupScreen> {
             children: [
               Text(
                 'How will you use Homeli?',
-                style: textTheme.bodyLarge?.copyWith(
+                style: textTheme.headlineMedium?.copyWith(
                   color: colorScheme.secondary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -47,6 +48,38 @@ class _RoleSetupScreenState extends State<RoleSetupScreen> {
                     isSelected: _selectedRoleName == role.roleName,
                     onTap: () =>
                         setState(() => _selectedRoleName = role.roleName),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _selectedRoleName != null
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignUpScreen(),
+                          ),
+                        );
+                        //debugPrint('Selected Role: $_selectedRoleName');
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  minimumSize: Size(double.infinity, 52),
+                  disabledBackgroundColor: colorScheme.primary.withValues(
+                    alpha: 0.5,
+                  ),
+                  backgroundColor: colorScheme.primary,
+                ),
+                child: Text(
+                  _selectedRoleName == null
+                      ? 'Continue'
+                      : 'Continue as ${_selectedRoleName!.toLowerCase()}',
+                  style: textTheme.labelLarge?.copyWith(
+                    color: colorScheme.onPrimary,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
