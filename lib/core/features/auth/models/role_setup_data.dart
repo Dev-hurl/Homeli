@@ -1,13 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:homeli/core/constants/app_colors.dart';
 import 'package:homeli/core/features/auth/models/role_setup_model.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 final List<RoleSetupModel> roleSetup = [
   RoleSetupModel(
-    roleIcon: HugeIcon(
-      icon: HugeIcons.strokeRoundedGlobalSearch,
-      size: 20,
-      color: AppColors.bluePrimary,
+    roleIcon: UnconstrainedBox(
+      child: HugeIcon(
+        icon: HugeIcons.strokeRoundedGlobalSearch,
+        size: 20,
+        color: AppColors.bluePrimary,
+      ),
     ),
     roleName: 'SEEKER',
     rolePurpose: 'Find a Home',
@@ -15,10 +18,12 @@ final List<RoleSetupModel> roleSetup = [
   ),
 
   RoleSetupModel(
-    roleIcon: HugeIcon(
-      icon: HugeIcons.strokeRoundedRealEstate01,
-      size: 20,
-      color: AppColors.bluePrimary,
+    roleIcon: UnconstrainedBox(
+      child: HugeIcon(
+        icon: HugeIcons.strokeRoundedRealEstate01,
+        size: 20,
+        color: AppColors.bluePrimary,
+      ),
     ),
     roleName: 'LISTER',
     rolePurpose: 'List Properties',
