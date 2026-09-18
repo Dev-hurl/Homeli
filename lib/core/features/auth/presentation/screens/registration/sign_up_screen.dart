@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:homeli/core/features/auth/presentation/screens/registration/otp_verification.dart';
 import 'package:homeli/core/features/auth/presentation/widgets/custom_text_form_field.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  final String? roleName;
+  const SignUpScreen({super.key, this.roleName});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -17,6 +19,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final bool isObscure = true;
+  String? _checked;
+
+  void _onCreateAccountPressed() {
+    if (_formKey.currentState!.validate()) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              OtpVerification(emailAddress: _emailAddress.text),
+        ),
+      );
+    }
+  }
 
   @override
   void dispose() {
@@ -35,137 +50,218 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Begin Your Santuary Journey',
-                style: textTheme.headlineLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: colorScheme.secondary,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Begin Your Santuary Journey',
+                  style: textTheme.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.secondary,
+                  ),
                 ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Curated architectural living & design-forward stays worldwide.',
-                style: textTheme.bodyMedium,
-              ),
-              SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: _SocialButton(
-                      iconPath: 'assets/icons/Google.svg',
-                      label: 'Google',
-                      onTap: () {},
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: _SocialButton(
-                      iconPath: 'assets/icons/Apple.svg',
-                      label: 'Apple',
-                      onTap: () {},
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: Theme.of(context).dividerColor,
-                      endIndent: 12,
-                    ),
-                  ),
-                  Text(
-                    'OR SIGN UP WITH EMAIL',
-                    style: textTheme.labelSmall?.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: Theme.of(context).dividerColor,
-                      endIndent: 12,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 24),
-              //TextFormFields
-              Form(
-                key: _formKey,
-                child: Column(
-                  spacing: 16,
+                SizedBox(height: 8),
+                Text(
+                  'Curated architectural living & design-forward stays worldwide.',
+                  style: textTheme.bodyMedium,
+                ),
+                SizedBox(height: 24),
+                Row(
                   children: [
-                    //FUllNAME
-                    CustomTextFormField(
-                      controller: _legalName,
-                      labelText: 'Full Legal Name',
-                      hintText: 'Timothy Carter',
-                      prefixIcon: UnconstrainedBox(
-                        child: HugeIcon(
-                          icon: HugeIcons.strokeRoundedUser,
-                          size: 18,
-                          color: colorScheme.secondary,
-                        ),
+                    Expanded(
+                      child: _SocialButton(
+                        iconPath: 'assets/icons/Google.svg',
+                        label: 'Google',
+                        onTap: () {},
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your full legal name';
-                        }
-                        return null;
-                      },
                     ),
-
-                    //Email Address
-                    CustomTextFormField(
-                      controller: _emailAddress,
-                      labelText: 'Email Address',
-                      hintText: 'user@homeli.com',
-                      prefixIcon: UnconstrainedBox(
-                        child: HugeIcon(
-                          icon: HugeIcons.strokeRoundedMail01,
-                          size: 18,
-                          color: colorScheme.secondary,
-                        ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: _SocialButton(
+                        iconPath: 'assets/icons/Apple.svg',
+                        label: 'Apple',
+                        onTap: () {},
                       ),
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email address';
-                        }
-                        return null;
-                      },
-                    ),
-
-                    //Password
-                    CustomTextFormField(
-                      controller: _password,
-                      labelText: 'Password',
-                      hintText: 'Create a strong password',
-                      obscureText: true,
-                      showPasswordToggle: true,
-                      prefixIcon: UnconstrainedBox(
-                        child: HugeIcon(
-                          icon: HugeIcons.strokeRoundedSquareLockPassword,
-                          size: 18,
-                          color: colorScheme.secondary,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
                     ),
                   ],
                 ),
-              ),
-            ],
+                SizedBox(height: 24),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: Theme.of(context).dividerColor,
+                        endIndent: 12,
+                      ),
+                    ),
+                    Text(
+                      'OR SIGN UP WITH EMAIL',
+                      style: textTheme.labelSmall?.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: Theme.of(context).dividerColor,
+                        endIndent: 12,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                //TextFormFields
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    spacing: 16,
+                    children: [
+                      //FUllNAME
+                      CustomTextFormField(
+                        controller: _legalName,
+                        labelText: 'Full Legal Name',
+                        hintText: 'Timothy Carter',
+                        prefixIcon: UnconstrainedBox(
+                          child: HugeIcon(
+                            icon: HugeIcons.strokeRoundedUser,
+                            size: 18,
+                            color: colorScheme.secondary,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your full legal name';
+                          }
+                          return null;
+                        },
+                      ),
+
+                      //Email Address
+                      CustomTextFormField(
+                        controller: _emailAddress,
+                        labelText: 'Email Address',
+                        hintText: 'user@homeli.com',
+                        prefixIcon: UnconstrainedBox(
+                          child: HugeIcon(
+                            icon: HugeIcons.strokeRoundedMail01,
+                            size: 18,
+                            color: colorScheme.secondary,
+                          ),
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email address';
+                          }
+                          return null;
+                        },
+                      ),
+
+                      //Password
+                      CustomTextFormField(
+                        controller: _password,
+                        labelText: 'Password',
+                        hintText: 'Create a strong password',
+                        obscureText: true,
+                        showPasswordToggle: true,
+                        prefixIcon: UnconstrainedBox(
+                          child: HugeIcon(
+                            icon: HugeIcons.strokeRoundedSquareLockPassword,
+                            size: 18,
+                            color: colorScheme.secondary,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 24),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _checked == 'checked',
+                      fillColor: WidgetStateProperty.all(colorScheme.primary),
+                      checkColor: colorScheme.surface,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _checked = value! ? 'checked' : null;
+                        });
+                      },
+                    ),
+                    Text.rich(
+                      TextSpan(
+                        text: 'I agree to the ',
+                        style: textTheme.labelMedium,
+                        children: [
+                          TextSpan(
+                            text: 'Terms of Service',
+                            style: textTheme.labelMedium?.copyWith(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          TextSpan(text: ' and ', style: textTheme.labelMedium),
+                          TextSpan(
+                            text: 'Privacy Policy',
+                            style: textTheme.labelMedium?.copyWith(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: _onCreateAccountPressed,
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: colorScheme.primary,
+                    minimumSize: Size(double.infinity, 52),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    'Create your Homeli Account',
+                    style: textTheme.labelLarge?.copyWith(
+                      color: colorScheme.surface,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 24),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text.rich(
+                    TextSpan(
+                      text: 'Already have an account? ',
+                      style: textTheme.labelMedium,
+                      children: [
+                        TextSpan(
+                          text: 'Sign In',
+                          style: textTheme.labelMedium?.copyWith(
+                            color: colorScheme.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

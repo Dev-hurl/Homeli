@@ -71,6 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         actionsPadding: EdgeInsets.symmetric(horizontal: 16),
         leading: Image.asset('assets/icons/Homeli Logo Inverted.png'),
         actions: [
