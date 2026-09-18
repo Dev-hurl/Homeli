@@ -1,40 +1,32 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:homeli/core/features/auth/presentation/screens/registration/otp_verification.dart';
-import 'package:homeli/core/features/auth/presentation/screens/registration/sign_in_screen.dart';
+import 'package:homeli/core/features/auth/presentation/screens/registration/role_setup_screen.dart';
 import 'package:homeli/core/features/auth/presentation/widgets/custom_text_form_field.dart';
+import 'package:homeli/core/features/lister%20role/presentation/screens/lister_home_screen.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-class SignUpScreen extends StatefulWidget {
-  final String roleName;
-  const SignUpScreen({super.key, required this.roleName});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignInScreen> createState() => _SignInState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController _legalName = TextEditingController();
+class _SignInState extends State<SignInScreen> {
   final TextEditingController _emailAddress = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TapGestureRecognizer _signInRecognizer = TapGestureRecognizer();
 
   final bool isObscure = true;
-  String? _checked;
 
-  void _onCreateAccountPressed() {
+  void _onLogin() {
     if (_formKey.currentState!.validate()) {
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(
-          builder: (context) => OtpVerification(
-            firstName: _legalName.text,
-            emailAddress: _emailAddress.text,
-            roleName: widget.roleName,
-          ),
-        ),
+        MaterialPageRoute(builder: (context) => ListerHomeScreen()),
+        (route) => false,
       );
     }
   }
@@ -42,7 +34,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void dispose() {
     _signInRecognizer.dispose();
-    _legalName.dispose();
     _emailAddress.dispose();
     _password.dispose();
     super.dispose();
@@ -62,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Begin Your Santuary Journey',
+                  'Welcome Back',
                   style: textTheme.headlineLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: colorScheme.secondary,
@@ -70,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  'Curated architectural living & design-forward stays worldwide.',
+                  'Login to continue your journey',
                   style: textTheme.bodyMedium,
                 ),
                 SizedBox(height: 24),
@@ -103,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     Text(
-                      'OR SIGN UP WITH EMAIL',
+                      'OR SIGN IN WITH EMAIL',
                       style: textTheme.labelSmall?.copyWith(
                         fontWeight: FontWeight.w800,
                       ),
@@ -123,26 +114,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Column(
                     spacing: 16,
                     children: [
-                      //FUllNAME
-                      CustomTextFormField(
-                        controller: _legalName,
-                        labelText: 'Full Legal Name',
-                        hintText: 'Timothy Carter',
-                        prefixIcon: UnconstrainedBox(
-                          child: HugeIcon(
-                            icon: HugeIcons.strokeRoundedUser,
-                            size: 18,
-                            color: colorScheme.secondary,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your full legal name';
-                          }
-                          return null;
-                        },
-                      ),
-
                       //Email Address
                       CustomTextFormField(
                         controller: _emailAddress,
@@ -188,50 +159,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 24),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _checked == 'checked',
-                      fillColor: WidgetStateProperty.all(colorScheme.primary),
-                      checkColor: colorScheme.surface,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _checked = value! ? 'checked' : null;
-                        });
-                      },
-                    ),
-                    Text.rich(
-                      TextSpan(
-                        text: 'I agree to the ',
-                        style: textTheme.labelMedium,
-                        children: [
-                          TextSpan(
-                            text: 'Terms of Service',
-                            style: textTheme.labelMedium?.copyWith(
-                              color: colorScheme.primary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          TextSpan(text: ' and ', style: textTheme.labelMedium),
-                          TextSpan(
-                            text: 'Privacy Policy',
-                            style: textTheme.labelMedium?.copyWith(
-                              color: colorScheme.primary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 24),
+                SizedBox(height: 32),
                 ElevatedButton(
-                  onPressed: _onCreateAccountPressed,
+                  onPressed: _onLogin,
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     backgroundColor: colorScheme.primary,
@@ -241,7 +171,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   child: Text(
-                    'Create your Homeli Account',
+                    'Login',
                     style: textTheme.labelLarge?.copyWith(
                       color: colorScheme.surface,
                       fontWeight: FontWeight.w600,
@@ -253,17 +183,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.center,
                   child: Text.rich(
                     TextSpan(
-                      text: 'Already have an account? ',
+                      text: 'Don\'t have an account? ',
                       style: textTheme.labelMedium,
                       children: [
                         TextSpan(
-                          text: 'Sign In',
+                          text: 'Sign Up',
                           recognizer: _signInRecognizer
                             ..onTap = () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => SignInScreen(),
+                                  builder: (context) => RoleSetupScreen(),
                                 ),
                               );
                             },

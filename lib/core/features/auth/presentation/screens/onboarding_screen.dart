@@ -73,7 +73,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         actionsPadding: EdgeInsets.symmetric(horizontal: 16),
-        leading: Image.asset('assets/icons/Homeli Logo Inverted.png'),
+        leading: Image.asset('assets/icons/Homeli Logo Inverted .png'),
         actions: [
           FilledButton(
             onPressed: _onSkip,

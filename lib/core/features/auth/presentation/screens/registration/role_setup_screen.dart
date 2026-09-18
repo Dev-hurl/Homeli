@@ -15,12 +15,10 @@ class _RoleSetupScreenState extends State<RoleSetupScreen> {
 
   void _onContinuePressed() {
     if (_selectedRoleName != null) {
-
-      final user = roleSetup.firstWhere((role) => role.roleName == _selectedRoleName);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SignUpScreen(roleName: _selectedRoleName),
+          builder: (context) => SignUpScreen(roleName: _selectedRoleName!),
         ),
       );
     }
@@ -43,7 +41,7 @@ class _RoleSetupScreenState extends State<RoleSetupScreen> {
                   'How will you use Homeli?',
                   style: textTheme.headlineMedium?.copyWith(
                     color: colorScheme.secondary,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
                 SizedBox(height: 8),

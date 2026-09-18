@@ -59,7 +59,6 @@ class AppFonts {
     color: AppColors.primaryText,
   );
 
-
   // ---- BODY ----
   // Primary reading content, descriptions, user input
   static TextStyle bodyLarge = TextStyle(

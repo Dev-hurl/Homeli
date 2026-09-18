@@ -107,7 +107,7 @@ class OtpKeypad extends StatelessWidget {
       shrinkWrap: true,
       mainAxisSpacing: 8,
       crossAxisSpacing: 12,
-      childAspectRatio: 2.2,
+      childAspectRatio: 2,
       physics: NeverScrollableScrollPhysics(),
       children: keypadItems,
     );
