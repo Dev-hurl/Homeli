@@ -47,23 +47,30 @@ class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: onboarding,
     routes: [
-      GoRoute(path: onboarding, builder: (_, _) => OnboardingScreen()),
+      GoRoute(
+        path: onboarding,
+        builder: (context, state) => OnboardingScreen(),
+      ),
       GoRoute(
         path: '/auth',
-        redirect: (_, state) => state.uri.path == '/auth' ? roleSetup : null,
+        redirect: (context, state) =>
+            state.uri.path == '/auth' ? roleSetup : null,
         routes: [
-          GoRoute(path: 'role-setup', builder: (_, _) => RoleSetupScreen()),
-          GoRoute(path: 'sign-in', builder: (_, _) => SignInScreen()),
+          GoRoute(
+            path: 'role-setup',
+            builder: (context, state) => RoleSetupScreen(),
+          ),
+          GoRoute(path: 'sign-in', builder: (context, state) => SignInScreen()),
           GoRoute(
             path: 'sign-up',
-            builder: (_, state) {
+            builder: (context, state) {
               final arguments = state.extra! as SignUpRouteArguments;
               return SignUpScreen(roleName: _roleName(arguments.role));
             },
           ),
           GoRoute(
             path: 'otp-verification',
-            builder: (_, state) {
+            builder: (context, state) {
               final arguments = state.extra! as OtpRouteArguments;
               return OtpVerification(
                 firstName: arguments.firstName,
@@ -76,14 +83,23 @@ class AppRouter {
       ),
       GoRoute(
         path: '/lister',
-        routes: [GoRoute(path: 'home', builder: (_, _) => ListerHomeScreen())],
-      ),
-      GoRoute(
-        path: '/seeker',
+        redirect: (context, state) =>
+            state.uri.path == '/lister' ? listerHome : null,
         routes: [
           GoRoute(
             path: 'home',
-            builder: (_, state) {
+            builder: (context, state) => ListerHomeScreen(),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/seeker',
+        redirect: (context, state) =>
+            state.uri.path == '/seeker' ? seekerHome : null,
+        routes: [
+          GoRoute(
+            path: 'home',
+            builder: (context, state) {
               final arguments = state.extra! as SeekerHomeRouteArguments;
               return SeekerHomeScreen(firstName: arguments.firstName);
             },
@@ -92,10 +108,12 @@ class AppRouter {
       ),
       GoRoute(
         path: '/shared',
+        redirect: (context, state) =>
+            state.uri.path == '/shared' ? notifications : null,
         routes: [
           GoRoute(
             path: 'notifications',
-            builder: (_, _) => NotificationScreen(),
+            builder: (context, state) => NotificationScreen(),
           ),
         ],
       ),
