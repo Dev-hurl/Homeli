@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:homeli/core/features/auth/presentation/screens/registration/role_setup_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/auth/presentation/widgets/custom_text_form_field.dart';
-import 'package:homeli/core/features/lister%20role/presentation/screens/lister_home_screen.dart';
+import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -23,11 +23,7 @@ class _SignInState extends State<SignInScreen> {
 
   void _onLogin() {
     if (_formKey.currentState!.validate()) {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => ListerHomeScreen()),
-        (route) => false,
-      );
+      context.go(AppRouter.listerHome);
     }
   }
 
@@ -190,12 +186,7 @@ class _SignInState extends State<SignInScreen> {
                           text: 'Sign Up',
                           recognizer: _signInRecognizer
                             ..onTap = () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RoleSetupScreen(),
-                                ),
-                              );
+                              context.push(AppRouter.roleSetup);
                             },
                           style: textTheme.labelMedium?.copyWith(
                             color: colorScheme.primary,

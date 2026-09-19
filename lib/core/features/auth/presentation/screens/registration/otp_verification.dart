@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homeli/core/constants/app_colors.dart';
-import 'package:homeli/core/features/lister role/presentation/screens/lister_home_screen.dart';
-import 'package:homeli/core/features/seeker%20role/presentation/screens/seeker_home_screen.dart';
+import 'package:homeli/core/routing/app_router.dart';
 import 'package:homeli/core/widgets/otp_keypad.dart';
 
 class OtpVerification extends StatefulWidget {
@@ -50,15 +50,14 @@ class _OtpVerificationState extends State<OtpVerification> {
     });
 
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => widget.roleName == 'LISTER'
-              ? const ListerHomeScreen()
-              : SeekerHomeScreen(firstName: widget.firstName),
-        ),
-        (route) => false,
-      );
+      if (widget.roleName == 'LISTER') {
+        context.go(AppRouter.listerHome);
+      } else {
+        context.go(
+          AppRouter.seekerHome,
+          extra: SeekerHomeRouteArguments(firstName: widget.firstName),
+        );
+      }
     }
   }
 
@@ -130,7 +129,7 @@ class _OtpVerificationState extends State<OtpVerification> {
             child: Column(
               children: [
                 Image.asset(
-                  'assets/icons/Homeli Logo Inverted .png',
+                  'assets/icons/Homeli Logo T Inverted.png',
                   width: 100,
                   height: 100,
                 ),

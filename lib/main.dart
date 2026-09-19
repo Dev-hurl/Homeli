@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homeli/core/features/auth/presentation/screens/onboarding_screen.dart';
-import 'package:homeli/core/features/auth/presentation/screens/registration/role_setup_screen.dart';
-import 'package:homeli/core/features/auth/presentation/screens/splash_screen.dart';
+import 'package:homeli/core/routing/app_router.dart';
 import 'package:homeli/core/theme/app_theme.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -18,11 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FlutterNativeSplash.remove();
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Homeli',
       theme: AppTheme.lightTheme,
-      home: const OnboardingScreen(),
+      routerConfig: AppRouter.router,
     );
   }
 }

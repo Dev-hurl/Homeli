@@ -1,4 +1,4 @@
-package com.example.homeli
+package com.bwn.homeli
 
 import io.flutter.embedding.android.FlutterActivity
 

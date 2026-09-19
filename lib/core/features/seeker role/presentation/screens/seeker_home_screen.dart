@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class SeekerHomeScreen extends StatefulWidget {
@@ -21,15 +23,18 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
       appBar: AppBar(
         actionsPadding: EdgeInsets.only(right: 24),
         leading: Image.asset(
-          'assets/icons/Homeli Logo Inverted.png',
+          'assets/icons/Homeli Logo Inverted .png',
           width: 40,
           height: 40,
         ),
         actions: [
-          HugeIcon(
-            icon: HugeIcons.strokeRoundedNotification01,
-            size: 24,
-            strokeWidth: 2,
+          IconButton(
+            onPressed: () => context.push(AppRouter.notifications),
+            icon: HugeIcon(
+              icon: HugeIcons.strokeRoundedNotification01,
+              size: 24,
+              strokeWidth: 2,
+            ),
           ),
           SizedBox(width: 16),
           CircleAvatar(

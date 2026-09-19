@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:homeli/core/features/auth/presentation/screens/registration/otp_verification.dart';
-import 'package:homeli/core/features/auth/presentation/screens/registration/sign_in_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/auth/presentation/widgets/custom_text_form_field.dart';
+import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -26,14 +26,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _onCreateAccountPressed() {
     if (_formKey.currentState!.validate()) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => OtpVerification(
-            firstName: _legalName.text,
-            emailAddress: _emailAddress.text,
-            roleName: widget.roleName,
-          ),
+      context.push(
+        AppRouter.otpVerification,
+        extra: OtpRouteArguments(
+          firstName: _legalName.text,
+          emailAddress: _emailAddress.text,
+          role: widget.roleName == 'LISTER' ? UserRole.lister : UserRole.seeker,
         ),
       );
     }
@@ -260,12 +258,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           text: 'Sign In',
                           recognizer: _signInRecognizer
                             ..onTap = () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SignInScreen(),
-                                ),
-                              );
+                              context.push(AppRouter.signIn);
                             },
                           style: textTheme.labelMedium?.copyWith(
                             color: colorScheme.primary,

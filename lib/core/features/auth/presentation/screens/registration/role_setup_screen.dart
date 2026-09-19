@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/auth/models/role_setup_data.dart';
-import 'package:homeli/core/features/auth/presentation/screens/registration/sign_up_screen.dart';
 import 'package:homeli/core/features/auth/presentation/widgets/role_setup_card.dart';
+import 'package:homeli/core/routing/app_router.dart';
 
 class RoleSetupScreen extends StatefulWidget {
   const RoleSetupScreen({super.key});
@@ -15,10 +16,12 @@ class _RoleSetupScreenState extends State<RoleSetupScreen> {
 
   void _onContinuePressed() {
     if (_selectedRoleName != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SignUpScreen(roleName: _selectedRoleName!),
+      context.push(
+        AppRouter.signUp,
+        extra: SignUpRouteArguments(
+          role: _selectedRoleName == 'LISTER'
+              ? UserRole.lister
+              : UserRole.seeker,
         ),
       );
     }
@@ -63,12 +66,12 @@ class _RoleSetupScreenState extends State<RoleSetupScreen> {
                     ),
                   ),
                 ),
-            
+
                 SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: _onContinuePressed,
                   style: ElevatedButton.styleFrom(
-                   elevation: 0,
+                    elevation: 0,
                     minimumSize: Size(double.infinity, 52),
                     disabledBackgroundColor: colorScheme.primary.withValues(
                       alpha: 0.5,

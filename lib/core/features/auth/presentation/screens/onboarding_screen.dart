@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homeli/core/features/auth/presentation/screens/registration/role_setup_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:homeli/core/routing/app_router.dart';
 
 class OnboardingSlide {
   final String title;
@@ -38,9 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   ];
 
   void _finishOnboarding() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(builder: (_) => RoleSetupScreen()),
-    );
+    context.go(AppRouter.roleSetup);
   }
 
   void _onGetStartedPressed() {
@@ -73,7 +72,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         actionsPadding: EdgeInsets.symmetric(horizontal: 16),
-        leading: Image.asset('assets/icons/Homeli Logo Inverted .png'),
+        leading: Image.asset('assets/icons/Homeli Logo T Inverted.png'),
         actions: [
           FilledButton(
             onPressed: _onSkip,
@@ -111,7 +110,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               slides.imagePath,
                               fit: BoxFit.cover,
                               width: double.infinity,
-                              
                             ),
                           ),
                         ),
