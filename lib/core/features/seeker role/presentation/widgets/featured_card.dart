@@ -7,27 +7,35 @@ class FeaturedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-      child: Column(
-        children: [
-          _buildTopSection(
-            context,
-            imagePath: featuredCard.imagesPath,
-            rating: featuredCard.rating,
-            price: featuredCard.price,
-            verificationStatus: featuredCard.verificationStatus,
-          ),
-          _buildBottomSection(
-            context,
-            cardIcon: featuredCard.cardIcon,
-            propertyName: featuredCard.propertyName,
-            propertyLocation: featuredCard.propertyLocation,
-            apartmentType: featuredCard.apartmentType,
-            features: featuredCard.features,
-          ),
-        ],
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return ClipRRect(
+      borderRadius: BorderRadiusGeometry.circular(24),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          children: [
+            _buildTopSection(
+              context,
+              imagePath: featuredCard.imagesPath,
+              rating: featuredCard.rating,
+              price: featuredCard.price,
+              verificationStatus: featuredCard.verificationStatus,
+            ),
+            _buildBottomSection(
+              context,
+              cardIcon: featuredCard.cardIcon,
+              propertyName: featuredCard.propertyName,
+              propertyLocation: featuredCard.propertyLocation,
+              apartmentType: featuredCard.apartmentType,
+              features: featuredCard.features,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -45,23 +53,33 @@ class FeaturedCard extends StatelessWidget {
     return Stack(
       children: [
         Container(
-  width: double.infinity,
-  height: 200, // pick whatever fits your card design
-  decoration: BoxDecoration(
-    image: DecorationImage(
-      image: AssetImage(imagePath),
-      fit: BoxFit.cover,
-    ),
-  ),
-),
+          width: double.infinity,
+          height: 150,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(imagePath),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
         Positioned(
+          top: 12,
+          left: 23,
           child: Container(
             height: 20,
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainerLow,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Text(verificationStatus, style: textTheme.bodyMedium),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                verificationStatus,
+                style: textTheme.labelMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
           ),
         ),
       ],
@@ -79,46 +97,60 @@ class FeaturedCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(color: colorScheme.surface),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(propertyName, style: textTheme.headlineSmall),
-              Spacer(),
-              Container(
-                height: 18,
-                decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainerLow,
-                ),
-                child: Text(apartmentType, style: textTheme.labelSmall),
-              ),
-            ],
-          ),
-          SizedBox(height: 12),
-          Text(propertyLocation, style: textTheme.labelMedium),
-          SizedBox(height: 24),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: features
-                .map(
-                  (feature) => Container(
-                    height: 18,
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerLow,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(feature, style: textTheme.labelSmall),
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: SizedBox(
+        width: double.infinity,
+
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  propertyName,
+                  style: textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
-                )
-                .toList(),
-          ),
-        ],
+                ),
+                Spacer(),
+                Container(
+                  height: 18,
+                  decoration: BoxDecoration(
+                    color: colorScheme.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(apartmentType, style: textTheme.labelSmall),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 12),
+            Text(propertyLocation, style: textTheme.labelMedium),
+            SizedBox(height: 24),
+            Wrap(
+              direction: Axis.vertical,
+              spacing: 8,
+              runSpacing: 8,
+              children: features
+                  .map(
+                    (feature) => Container(
+                      height: 18,
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: colorScheme.surfaceContainerLow,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(feature, style: textTheme.labelSmall),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ],
+        ),
       ),
     );
   }

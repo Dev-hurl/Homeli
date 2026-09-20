@@ -34,7 +34,7 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
       appBar: AppBar(
         actionsPadding: EdgeInsets.only(right: 24),
         leading: Image.asset(
-          'assets/icons/Homeli Logo Inverted .png',
+          'assets/icons/Homeli Logo T Inverted.png',
           width: 40,
           height: 40,
         ),
@@ -134,13 +134,19 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
                 ),
                 trailing: [
                   Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(color: colorScheme.secondary),
-                    child: HugeIcon(
-                      icon: HugeIcons.strokeRoundedPreferenceHorizontal,
-                      color: colorScheme.surface,
-                      strokeWidth: 2,
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: UnconstrainedBox(
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedPreferenceHorizontal,
+                        color: colorScheme.surface,
+                        strokeWidth: 1.5,
+                        size: 20,
+                      ),
                     ),
                   ),
                 ],
@@ -153,6 +159,7 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
                   child: FeaturedCard(featuredCard: feature),
                 ),
               ),
+
             ],
           ),
         ),
@@ -160,3 +167,4 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
     );
   }
 }
+
