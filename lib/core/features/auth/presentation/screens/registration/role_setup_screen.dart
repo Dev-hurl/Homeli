@@ -73,9 +73,7 @@ class _RoleSetupScreenState extends State<RoleSetupScreen> {
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     minimumSize: Size(double.infinity, 52),
-                    disabledBackgroundColor: colorScheme.primary.withValues(
-                      alpha: 0.5,
-                    ),
+                    
                     backgroundColor: colorScheme.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

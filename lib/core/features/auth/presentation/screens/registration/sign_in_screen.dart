@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:homeli/core/features/auth/presentation/widgets/custom_text_form_field.dart';
+import 'package:homeli/core/widgets/custom_text_form_field.dart';
 import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
