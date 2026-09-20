@@ -1,0 +1,342 @@
+import 'package:flutter/material.dart';
+import 'package:homeli/core/features/messaging/models/conversation_model.dart';
+import 'package:hugeicons/hugeicons.dart';
+
+class MessagesListScreen extends StatefulWidget {
+  const MessagesListScreen({super.key});
+
+  @override
+  State<MessagesListScreen> createState() => _MessagesListScreenState();
+}
+
+class _MessagesListScreenState extends State<MessagesListScreen> {
+  final _searchController = TextEditingController();
+  int _selectedTab = 0;
+  final _tabs = ['All Messages', 'Active Stays', 'Tour Inquiries'];
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final unreadTotal = conversations.fold<int>(
+      0,
+      (sum, c) => sum + c.unreadCount,
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/icons/Homeli Logo Inverted .png',
+              width: 28,
+              height: 28,
+            ),
+            SizedBox(width: 8),
+            Text('Homeli'),
+          ],
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: HugeIcon(
+              icon: HugeIcons.strokeRoundedNotification01,
+              size: 22,
+            ),
+          ),
+          SizedBox(width: 12),
+          CircleAvatar(radius: 16),
+          SizedBox(width: 16),
+        ],
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
+              child: Row(
+                children: [
+                  Text(
+                    'Messages',
+                    style: textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  if (unreadTotal > 0) ...[
+                    SizedBox(width: 8),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        '$unreadTotal Unread',
+                        style: textTheme.labelSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
+                  Spacer(),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surfaceContainerHigh,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.done_all, size: 16),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: colorScheme.surfaceContainerLow,
+                  hintText: 'Search conversations or listings...',
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.all(12),
+                    child: HugeIcon(
+                      icon: HugeIcons.strokeRoundedSearch02,
+                      size: 18,
+                    ),
+                  ),
+                  suffixIcon: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: HugeIcon(
+                      icon: HugeIcons.strokeRoundedPreferenceHorizontal,
+                      size: 18,
+                      color: colorScheme.secondary,
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: SizedBox(
+                height: 36,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _tabs.length,
+                  separatorBuilder: (_, _) => SizedBox(width: 8),
+                  itemBuilder: (context, index) {
+                    final selected = index == _selectedTab;
+                    return GestureDetector(
+                      onTap: () => setState(() => _selectedTab = index),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: selected
+                              ? colorScheme.secondary
+                              : colorScheme.surfaceContainerHigh,
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: Text(
+                          _tabs[index],
+                          style: textTheme.labelMedium?.copyWith(
+                            color: selected
+                                ? colorScheme.onSecondary
+                                : colorScheme.onSurface,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Expanded(
+              child: ListView.separated(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                itemCount: conversations.length,
+                separatorBuilder: (_, _) => Divider(height: 24),
+                itemBuilder: (context, index) =>
+                    _ConversationTile(conversation: conversations[index]),
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        backgroundColor: colorScheme.secondary,
+        icon: Icon(Icons.edit, color: colorScheme.onSecondary, size: 16),
+        label: Text(
+          'New Message',
+          style: textTheme.labelMedium?.copyWith(
+            color: colorScheme.onSecondary,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      ),
+    );
+  }
+}
+
+class _ConversationTile extends StatelessWidget {
+  final ConversationModel conversation;
+  _ConversationTile({required this.conversation});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Stack(
+          children: [
+            CircleAvatar(
+              radius: 24,
+              backgroundImage: AssetImage(conversation.avatarPath),
+            ),
+            if (conversation.isOnline)
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  height: 12,
+                  width: 12,
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: colorScheme.surface, width: 2),
+                  ),
+                ),
+              ),
+          ],
+        ),
+        SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    conversation.name,
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(width: 6),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surfaceContainerHigh,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      conversation.roleTag,
+                      style: textTheme.labelSmall?.copyWith(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    conversation.timeLabel,
+                    style: textTheme.labelSmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 2),
+              Row(
+                children: [
+                  HugeIcon(
+                    icon: HugeIcons.strokeRoundedHome01,
+                    size: 12,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      conversation.contextLabel,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.secondary,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 4),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      conversation.lastMessage,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: conversation.unreadCount > 0
+                            ? colorScheme.onSurface
+                            : colorScheme.onSurfaceVariant,
+                        fontWeight: conversation.unreadCount > 0
+                            ? FontWeight.w600
+                            : FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  if (conversation.unreadCount > 0)
+                    Container(
+                      padding: EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        '${conversation.unreadCount}',
+                        style: textTheme.labelSmall?.copyWith(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    )
+                  else if (conversation.isRead)
+                    Icon(Icons.done_all, size: 16, color: colorScheme.secondary)
+                  else
+                    Container(
+                      height: 8,
+                      width: 8,
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
