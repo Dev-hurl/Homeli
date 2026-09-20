@@ -1,0 +1,711 @@
+import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:hugeicons/hugeicons.dart';
+
+class ListerDashboardScreen extends StatefulWidget {
+  const ListerDashboardScreen({super.key});
+
+  @override
+  State<ListerDashboardScreen> createState() => _ListerDashboardScreenState();
+}
+
+class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
+  int _selectedTab = 0;
+  final _tabs = ['All (3)', 'Active (2)', 'Draft / Review (1)', 'Paused (0)'];
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/icons/Homeli Logo Inverted .png',
+              width: 28,
+              height: 28,
+            ),
+            SizedBox(width: 8),
+            Text('Profile'),
+          ],
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 16),
+            child: CircleAvatar(radius: 16),
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.all(20),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.verified, size: 12),
+                      SizedBox(width: 4),
+                      Text(
+                        'LISTER HUB',
+                        style: textTheme.labelSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    HugeIcon(
+                      icon: HugeIcons.strokeRoundedPreferenceHorizontal,
+                      size: 16,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      'Settings',
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Text(
+              'My Listings',
+              style: textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Text(
+              'Manage 3 residences and your incoming guest inquiries.',
+              style: textTheme.labelSmall?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: _StatCard(
+                    label: 'Est. Revenue',
+                    value: '\$11,900',
+                    trailingChip: '+14%',
+                    trailing: _RevenueSparkline(),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: _StatCard(
+                    label: 'Occupancy',
+                    value: '94%',
+                    subtitle: 'Target: 90%',
+                    trailing: SizedBox(
+                      height: 28,
+                      width: 28,
+                      child: CircularProgressIndicator(
+                        value: 0.94,
+                        strokeWidth: 3,
+                        color: colorScheme.primary,
+                        backgroundColor: colorScheme.surfaceContainerHigh,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: _StatCard(
+                    label: 'Inquiries',
+                    value: '5 Pending',
+                    subtitle: '2 need reply today',
+                    trailing: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: _StatCard(
+                    label: 'Rating',
+                    value: '4.98',
+                    subtitle: '124 verified reviews',
+                    trailing: Icon(
+                      Icons.star,
+                      size: 18,
+                      color: colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            SizedBox(
+              height: 36,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: _tabs.length,
+                separatorBuilder: (_, _) => SizedBox(width: 8),
+                itemBuilder: (context, index) {
+                  final selected = index == _selectedTab;
+                  return GestureDetector(
+                    onTap: () => setState(() => _selectedTab = index),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: selected
+                            ? colorScheme.secondary
+                            : colorScheme.surfaceContainerHigh,
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      child: Text(
+                        _tabs[index],
+                        style: textTheme.labelMedium?.copyWith(
+                          color: selected
+                              ? colorScheme.onSecondary
+                              : colorScheme.onSurface,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 16),
+            _ActiveListingCard(
+              imagePath: 'assets/images/onboard1.png',
+              badge: 'Premier Host',
+              location: 'Soho, New York',
+              title: 'The Glass Pavilion',
+              price: '\$3,850',
+              stats: ['18 views', '4 requests', '1 today'],
+              visibilityLabel: 'Listing Visibility',
+              visibilitySubtitle: 'Publicly bookable on search',
+              visibilityOn: true,
+              actionButtons: ['Edit', 'Calendar', 'Promote'],
+              highlightedAction: 'Promote',
+            ),
+            SizedBox(height: 16),
+            _ActiveListingCard(
+              imagePath: 'assets/images/onboard1.png',
+              badge: null,
+              location: 'Tribeca, New York',
+              title: 'Franklin Studio Loft',
+              price: '\$4,200',
+              stats: ['12 Views today', '2 Booking Inquiries'],
+              visibilityLabel: 'Listing Active',
+              visibilitySubtitle: 'Accepting instant requests',
+              visibilityOn: true,
+              actionButtons: ['Manage', 'Calendar'],
+              highlightedAction: null,
+            ),
+            SizedBox(height: 16),
+            _DraftListingCard(
+              imagePath: 'assets/images/onboard1.png',
+              title: 'Chelsea Townhouse',
+              stepLabel: 'Draft (Step 2/3)',
+              note: 'Pricing & verification pending',
+            ),
+            SizedBox(height: 24),
+            FilledButton(
+              onPressed: () {},
+              style: FilledButton.styleFrom(
+                backgroundColor: colorScheme.primary,
+                minimumSize: Size(double.infinity, 52),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(28),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.add, size: 18),
+                  SizedBox(width: 6),
+                  Text(
+                    'Add New Listing',
+                    style: textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StatCard extends StatelessWidget {
+  final String label;
+  final String value;
+  final String? subtitle;
+  final String? trailingChip;
+  final Widget trailing;
+
+  const _StatCard({
+    required this.label,
+    required this.value,
+    this.subtitle,
+    this.trailingChip,
+    required this.trailing,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Container(
+      padding: EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                label,
+                style: textTheme.labelSmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+              if (trailingChip != null)
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    trailingChip!,
+                    style: textTheme.labelSmall?.copyWith(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                )
+              else
+                trailing,
+            ],
+          ),
+          SizedBox(height: 6),
+          Text(
+            value,
+            style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+          ),
+          if (subtitle != null)
+            Text(
+              subtitle!,
+              style: textTheme.labelSmall?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+          if (trailingChip != null) SizedBox(height: 24, child: trailing),
+        ],
+      ),
+    );
+  }
+}
+
+class _RevenueSparkline extends StatelessWidget {
+  const _RevenueSparkline();
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return LineChart(
+      LineChartData(
+        gridData: FlGridData(show: false),
+        titlesData: FlTitlesData(show: false),
+        borderData: FlBorderData(show: false),
+        lineTouchData: LineTouchData(enabled: false),
+        lineBarsData: [
+          LineChartBarData(
+            spots: [
+              FlSpot(0, 1),
+              FlSpot(1, 2),
+              FlSpot(2, 1.5),
+              FlSpot(3, 3),
+              FlSpot(4, 2.5),
+              FlSpot(5, 4),
+            ],
+            isCurved: true,
+            color: colorScheme.primary,
+            barWidth: 2,
+            dotData: FlDotData(show: false),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ActiveListingCard extends StatelessWidget {
+  final String imagePath;
+  final String? badge;
+  final String location;
+  final String title;
+  final String price;
+  final List<String> stats;
+  final String visibilityLabel;
+  final String visibilitySubtitle;
+  final bool visibilityOn;
+  final List<String> actionButtons;
+  final String? highlightedAction;
+
+  const _ActiveListingCard({
+    required this.imagePath,
+    required this.badge,
+    required this.location,
+    required this.title,
+    required this.price,
+    required this.stats,
+    required this.visibilityLabel,
+    required this.visibilitySubtitle,
+    required this.visibilityOn,
+    required this.actionButtons,
+    required this.highlightedAction,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              Image.asset(
+                imagePath,
+                width: double.infinity,
+                height: 160,
+                fit: BoxFit.cover,
+              ),
+              Positioned(
+                top: 12,
+                left: 12,
+                child: Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 6,
+                            height: 6,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            'Active',
+                            style: textTheme.labelSmall?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (badge != null) ...[
+                      SizedBox(width: 6),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: colorScheme.primary,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          badge!,
+                          style: textTheme.labelSmall?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 12,
+                left: 12,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      location,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: Colors.white70,
+                      ),
+                    ),
+                    Text(
+                      title,
+                      style: textTheme.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 12,
+                right: 12,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      price,
+                      style: textTheme.titleMedium?.copyWith(
+                        color: colorScheme.primary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      '/month',
+                      style: textTheme.labelSmall?.copyWith(
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.all(14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: stats
+                      .map(
+                        (stat) => Padding(
+                          padding: EdgeInsets.only(right: 12),
+                          child: Text(
+                            stat,
+                            style: textTheme.labelSmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+                SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            visibilityLabel,
+                            style: textTheme.labelMedium?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          Text(
+                            visibilitySubtitle,
+                            style: textTheme.labelSmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Switch(
+                      value: visibilityOn,
+                      onChanged: (_) {},
+                      activeThumbColor: colorScheme.primary,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 12),
+                Row(
+                  children: actionButtons.map((label) {
+                    final isHighlighted = label == highlightedAction;
+                    return Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 8),
+                        child: isHighlighted
+                            ? FilledButton(
+                                onPressed: () {},
+                                style: FilledButton.styleFrom(
+                                  backgroundColor:
+                                      colorScheme.secondaryContainer,
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                ),
+                                child: Text(
+                                  label,
+                                  style: textTheme.labelSmall?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              )
+                            : OutlinedButton(
+                                onPressed: () {},
+                                style: OutlinedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                ),
+                                child: Text(label, style: textTheme.labelSmall),
+                              ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DraftListingCard extends StatelessWidget {
+  final String imagePath;
+  final String title;
+  final String stepLabel;
+  final String note;
+
+  const _DraftListingCard({
+    required this.imagePath,
+    required this.title,
+    required this.stepLabel,
+    required this.note,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                imagePath,
+                width: 64,
+                height: 64,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(stepLabel, style: textTheme.labelSmall),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    title,
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    note,
+                    style: textTheme.labelSmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          decoration: BoxDecoration(
+            color: colorScheme.primaryContainer,
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: Row(
+            children: [
+              HugeIcon(
+                icon: HugeIcons.strokeRoundedEdit02,
+                size: 16,
+                color: colorScheme.secondary,
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Finish listing to publish',
+                  style: textTheme.labelMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              Icon(Icons.chevron_right, size: 18),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
