@@ -8,35 +8,72 @@ class FeaturedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
-    return ClipRRect(
-      borderRadius: BorderRadiusGeometry.circular(24),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: colorScheme.surface,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildTopSection(
-              context,
-              imagePath: featuredCard.imagesPath,
-              rating: featuredCard.rating,
-              price: featuredCard.price,
-              verificationStatus: featuredCard.verificationStatus,
+            Text(
+              'Featured Selection',
+              style: textTheme.bodyLarge?.copyWith(
+                color: colorScheme.secondaryContainer,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-            _buildBottomSection(
-              context,
-              cardIcon: featuredCard.cardIcon,
-              propertyName: featuredCard.propertyName,
-              propertyLocation: featuredCard.propertyLocation,
-              apartmentType: featuredCard.apartmentType,
-              features: featuredCard.features,
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'See all',
+                style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.primaryContainer,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ],
         ),
-      ),
+        SizedBox(height: 12),
+        ClipRRect(
+          borderRadius: BorderRadiusGeometry.circular(24),
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: colorScheme.secondary.withValues(alpha: 0.07),
+                  blurRadius: 16,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                _buildTopSection(
+                  context,
+                  imagePath: featuredCard.imagesPath,
+                  rating: featuredCard.rating,
+                  price: featuredCard.price,
+                  verificationStatus: featuredCard.verificationStatus,
+                ),
+                _buildBottomSection(
+                  context,
+                  cardIcon: featuredCard.cardIcon,
+                  propertyName: featuredCard.propertyName,
+                  propertyLocation: featuredCard.propertyLocation,
+                  apartmentType: featuredCard.apartmentType,
+                  features: featuredCard.features,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -53,8 +90,8 @@ class FeaturedCard extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          width: double.infinity,
-          height: 150,
+          //width: double.infinity,
+          height: 200,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(imagePath),
@@ -110,6 +147,7 @@ class FeaturedCard extends StatelessWidget {
                 Text(
                   propertyName,
                   style: textTheme.headlineSmall?.copyWith(
+                    color: colorScheme.secondaryContainer,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -127,27 +165,28 @@ class FeaturedCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 12),
+            SizedBox(height: 4),
             Text(propertyLocation, style: textTheme.labelMedium),
-            SizedBox(height: 24),
-            Wrap(
-              direction: Axis.vertical,
-              spacing: 8,
-              runSpacing: 8,
-              children: features
-                  .map(
-                    (feature) => Container(
-                      height: 18,
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerLow,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(feature, style: textTheme.labelSmall),
+            SizedBox(height: 18),
+            SizedBox(
+              height: 28,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: features.length,
+                separatorBuilder: (context, index) => SizedBox(width: 8),
+                itemBuilder: (context, index) {
+                  final feature = features[index];
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: colorScheme.surfaceContainerLow,
+                      borderRadius: BorderRadius.circular(999),
                     ),
-                  )
-                  .toList(),
+                    child: Text(feature, style: textTheme.labelSmall),
+                  );
+                },
+              ),
             ),
           ],
         ),

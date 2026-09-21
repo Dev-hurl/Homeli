@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class SearchFiltersScreen extends StatefulWidget {
-  SearchFiltersScreen({super.key});
+  const SearchFiltersScreen({super.key});
 
   @override
   State<SearchFiltersScreen> createState() => _SearchFiltersScreenState();
@@ -15,8 +15,8 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
   final _propertyTypes = ['All Homes', 'House', 'Apartment', 'Villa'];
 
   RangeValues _priceRange = RangeValues(1500, 6000);
-  static double _minPrice = 800;
-  static double _maxPrice = 12000;
+  final double _minPrice = 800;
+  final double _maxPrice = 12000;
 
   String _selectedBedrooms = '2';
   final _bedroomOptions = ['Any', '1', '2', '3', '4+'];

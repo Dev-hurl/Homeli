@@ -159,6 +159,7 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
                   child: FeaturedCard(featuredCard: feature),
                 ),
               ),
+              SizedBox()
 
             ],
           ),

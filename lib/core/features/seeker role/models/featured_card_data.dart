@@ -5,7 +5,7 @@ final List<FeaturedCardModel> featureCard = [
   FeaturedCardModel(
     verificationStatus: 'Verified Architect',
     cardIcon: HugeIcon(icon: HugeIcons.strokeRoundedBookmark02),
-    imagesPath: 'assets/images/onboard1.png',
+    imagesPath: 'assets/images/elite-prop.jpg',
     rating: '${4.9}',
     price: '${3850}/month',
     propertyName: 'The Glass Pavilion, Soho',
