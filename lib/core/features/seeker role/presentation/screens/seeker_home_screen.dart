@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/seeker%20role/models/featured_card_data.dart';
+import 'package:homeli/core/features/seeker%20role/models/nearby_residences_data.dart';
+import 'package:homeli/core/features/seeker%20role/presentation/screens/nearby_residences_card.dart';
 import 'package:homeli/core/features/seeker%20role/presentation/widgets/featured_card.dart';
 import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -159,8 +161,13 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
                   child: FeaturedCard(featuredCard: feature),
                 ),
               ),
-              SizedBox()
-
+              SizedBox(height: 16),
+              ...nearbyProperty.map(
+                (property) => Padding(
+                  padding: EdgeInsetsGeometry.only(bottom: 12),
+                  child: NearbyResidencesCard(nearbyResidences: property),
+                ),
+              ),
             ],
           ),
         ),
@@ -168,4 +175,3 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
     );
   }
 }
-

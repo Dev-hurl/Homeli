@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:homeli/core/features/seeker%20role/models/featured_card_model.dart';
+import 'package:homeli/core/features/seeker%20role/models/nearby_residences_model.dart';
+import 'package:hugeicons/hugeicons.dart';
 
-class FeaturedCard extends StatelessWidget {
-  final FeaturedCardModel featuredCard;
-  const FeaturedCard({super.key, required this.featuredCard});
+class NearbyResidencesCard extends StatelessWidget {
+  final NearbyResidencesModel nearbyResidences;
+  const NearbyResidencesCard({super.key, required this.nearbyResidences});
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +19,32 @@ class FeaturedCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Featured Selection',
+              'Nearby Residences',
               style: textTheme.bodyLarge?.copyWith(
                 color: colorScheme.secondaryContainer,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'See all',
-                style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.primaryContainer,
-                  fontWeight: FontWeight.w600,
+            Text(
+              'Curated spots within 2 miles of you',
+              style: textTheme.bodySmall?.copyWith(
+                color: colorScheme.secondaryContainer,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainerLow,
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: UnconstrainedBox(
+                child: HugeIcon(
+                  icon: HugeIcons.strokeRoundedPreferenceHorizontal,
+                  color: colorScheme.secondaryContainer,
+                  strokeWidth: 1.5,
+                  size: 20,
                 ),
               ),
             ),
@@ -54,20 +68,17 @@ class FeaturedCard extends StatelessWidget {
             ),
             child: Column(
               children: [
-                _buildTopSection(
+                _buildLeftSection(
                   context,
-                  imagePath: featuredCard.imagesPath,
-                  rating: featuredCard.rating,
-                  price: featuredCard.price,
-                  verificationStatus: featuredCard.verificationStatus,
+                  imagePath: nearbyResidences.imagePath,
+                  rating: nearbyResidences.rating,
                 ),
-                _buildBottomSection(
+                _buildRightSection(
                   context,
-                  cardIcon: featuredCard.cardIcon,
-                  propertyName: featuredCard.propertyName,
-                  propertyLocation: featuredCard.propertyLocation,
-                  apartmentType: featuredCard.apartmentType,
-                  features: featuredCard.features,
+                  price: nearbyResidences.price,
+                  propertyName: nearbyResidences.propertyName,
+                  propertyLocation: nearbyResidences.propertyLocation,
+                  features: nearbyResidences.features,
                 ),
               ],
             ),
@@ -77,12 +88,10 @@ class FeaturedCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTopSection(
+  Widget _buildLeftSection(
     BuildContext context, {
     required String imagePath,
-    required String rating,
-    required String price,
-    required String verificationStatus,
+    required double rating,
   }) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
@@ -101,7 +110,7 @@ class FeaturedCard extends StatelessWidget {
         ),
         Positioned(
           top: 12,
-          left: 23,
+          left: 12,
           child: Container(
             height: 20,
             decoration: BoxDecoration(
@@ -111,7 +120,7 @@ class FeaturedCard extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                verificationStatus,
+                rating.toString(),
                 style: textTheme.labelMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -123,12 +132,12 @@ class FeaturedCard extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomSection(
+  Widget _buildRightSection(
     BuildContext context, {
-    required dynamic cardIcon,
     required String propertyName,
     required String propertyLocation,
-    required String apartmentType,
+    bool isSaved = false,
+    required String price,
     required List<String> features,
   }) {
     final textTheme = Theme.of(context).textTheme;
@@ -143,30 +152,30 @@ class FeaturedCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  propertyName,
+                  propertyLocation,
                   style: textTheme.headlineSmall?.copyWith(
                     color: colorScheme.secondaryContainer,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Spacer(),
+
                 Container(
-                  height: 18,
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
-                    color: colorScheme.surfaceContainerLow,
-                    borderRadius: BorderRadius.circular(24),
+                    color: colorScheme.surfaceContainerHigh,
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(apartmentType, style: textTheme.labelSmall),
+                  child: Icon(
+                    isSaved ? Icons.favorite_outline : Icons.favorite,
                   ),
                 ),
               ],
             ),
             SizedBox(height: 4),
-            Text(propertyLocation, style: textTheme.labelMedium),
+            Text(propertyName, style: textTheme.labelMedium),
             SizedBox(height: 18),
             SizedBox(
               height: 28,
