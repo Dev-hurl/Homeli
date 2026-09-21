@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class SearchFiltersScreen extends StatefulWidget {
@@ -57,14 +59,14 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
               child: Row(
                 children: [
                   IconButton(
-                    onPressed: () => Navigator.of(context).maybePop(),
+                    onPressed: () => context.pop(),
                     icon: Icon(Icons.close),
                   ),
                   Expanded(
                     child: Text(
                       'Search & Filters',
                       textAlign: TextAlign.center,
-                      style: textTheme.titleMedium?.copyWith(
+                      style: textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -79,7 +81,13 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                       _instantBooking = false;
                       _flexibleLease = false;
                     }),
-                    child: Text('Reset'),
+                    child: Text(
+                      'Reset',
+                      style: textTheme.labelMedium?.copyWith(
+                        color: colorScheme.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -90,51 +98,87 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'DESTINATION',
-                      style: textTheme.labelSmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsetsDirectional.all(16),
+                      decoration: BoxDecoration(
+                        color: colorScheme.surface,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                  BoxShadow(
+                    color: colorScheme.secondary.withValues(alpha: 0.05),
+                    blurRadius: 16,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'DESTINATION',
+                            style: textTheme.labelSmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          TextField(
+                            controller: _destinationController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: colorScheme.surfaceContainerLow,
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(12),
+                                child: HugeIcon(
+                                  icon: HugeIcons.strokeRoundedLocation09,
+                                  size: 18,
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                              suffixIcon: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 12),
+                                child: IconButton(
+                                  onPressed: () => _destinationController.clear(),
+                                  icon: HugeIcon(
+                                    icon: HugeIcons.strokeRoundedCancelCircle,
+                                    size: 18,
+                                    strokeWidth: 2,
+                                    
+                                  ),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(28),
+                                borderSide: BorderSide.none,
+                              ),
+
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(28),
+                                borderSide: BorderSide(
+                                  color: colorScheme.outlineVariant,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 8),
-                    TextField(
-                      controller: _destinationController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: colorScheme.surface,
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(12),
-                          child: HugeIcon(
-                            icon: HugeIcons.strokeRoundedLocation09,
-                            size: 18,
-                          ),
-                        ),
-                        suffixIcon: IconButton(
-                          onPressed: () => _destinationController.clear(),
-                          icon: Icon(Icons.cancel, size: 18),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(28),
-                          borderSide: BorderSide(
-                            color: colorScheme.outlineVariant,
-                          ),
-                        ),
-                      ),
-                    ),
+
                     SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Property Type',
-                          style: textTheme.titleSmall?.copyWith(
+                          style: textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                         Text(
                           'Selected: $_selectedPropertyType',
                           style: textTheme.labelSmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
+                            color: colorScheme.secondary,
                           ),
                         ),
                       ],
@@ -164,6 +208,7 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                               child: Text(
                                 type,
                                 style: textTheme.labelMedium?.copyWith(
+                                  color: colorScheme.secondaryContainer,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -177,7 +222,7 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                       width: double.infinity,
                       padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerLow,
+                        color: colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
@@ -192,7 +237,7 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                                   children: [
                                     Text(
                                       'Monthly Price',
-                                      style: textTheme.titleSmall?.copyWith(
+                                      style: textTheme.bodyMedium?.copyWith(
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -212,7 +257,7 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                                   vertical: 6,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: colorScheme.primaryContainer,
+                                  color: colorScheme.surfaceContainerLow,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
@@ -251,45 +296,51 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Text(
-                      'Rooms & Beds',
-                      style: textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsetsDirectional.all(16),
+                      decoration: BoxDecoration(
+                        color: colorScheme.surface,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Rooms & Beds',
+                            style: textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(height: 12),
+                          Text('Bedrooms', style: textTheme.labelMedium),
+                          SizedBox(height: 8),
+                          _StepperChipRow(
+                            options: _bedroomOptions,
+                            selected: _selectedBedrooms,
+                            onSelected: (v) =>
+                                setState(() => _selectedBedrooms = v),
+                          ),
+                          SizedBox(height: 16),
+                          Text('Bathrooms', style: textTheme.labelMedium),
+                          SizedBox(height: 8),
+                          _StepperChipRow(
+                            options: _bathroomOptions,
+                            selected: _selectedBathrooms,
+                            onSelected: (v) =>
+                                setState(() => _selectedBathrooms = v),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 12),
-                    Text(
-                      'Bedrooms',
-                      style: textTheme.labelMedium?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    _StepperChipRow(
-                      options: _bedroomOptions,
-                      selected: _selectedBedrooms,
-                      onSelected: (v) => setState(() => _selectedBedrooms = v),
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      'Bathrooms',
-                      style: textTheme.labelMedium?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    _StepperChipRow(
-                      options: _bathroomOptions,
-                      selected: _selectedBathrooms,
-                      onSelected: (v) => setState(() => _selectedBathrooms = v),
-                    ),
+
                     SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Amenities',
-                          style: textTheme.titleSmall?.copyWith(
+                          style: textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -333,9 +384,9 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                               amenity,
                               style: textTheme.labelMedium?.copyWith(
                                 color: selected
-                                    ? colorScheme.onSecondary
+                                    ? colorScheme.surface
                                     : colorScheme.onSurface,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
@@ -368,7 +419,7 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.asset(
-                              'assets/images/onboard1.png',
+                              'assets/images/elite-prop.jpg',
                               width: 48,
                               height: 48,
                               fit: BoxFit.cover,
@@ -383,6 +434,7 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                                   'LIVE PREVIEW',
                                   style: textTheme.labelSmall?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 Text(
@@ -416,7 +468,9 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                   SizedBox(width: 12),
                   Expanded(
                     child: FilledButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push(AppRouter.seekerHome);
+                      },
                       style: FilledButton.styleFrom(
                         backgroundColor: colorScheme.primary,
                         padding: EdgeInsets.symmetric(vertical: 16),
@@ -489,9 +543,9 @@ class _StepperChipRow extends StatelessWidget {
                   option,
                   style: textTheme.labelMedium?.copyWith(
                     color: isSelected
-                        ? colorScheme.onSecondary
+                        ? colorScheme.surface
                         : colorScheme.onSurface,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -527,7 +581,7 @@ class _ToggleRow extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: textTheme.bodyMedium?.copyWith(
+                style: textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),

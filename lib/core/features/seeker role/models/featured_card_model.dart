@@ -1,7 +1,7 @@
 class FeaturedCardModel {
   final String verificationStatus;
   final String rating;
-  final String price;
+  final double price;
   final String imagesPath;
   final dynamic cardIcon;
   final String propertyName;

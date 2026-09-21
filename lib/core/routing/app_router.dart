@@ -137,8 +137,11 @@ class AppRouter {
           GoRoute(
             path: 'home',
             builder: (context, state) {
-              final arguments = state.extra! as SeekerHomeRouteArguments;
-              return SeekerHomeScreen(firstName: arguments.firstName);
+              final arguments = state.extra;
+              final firstName = arguments is SeekerHomeRouteArguments
+                  ? arguments.firstName
+                  : 'User';
+              return SeekerHomeScreen(firstName: firstName);
             },
           ),
           GoRoute(

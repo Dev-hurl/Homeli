@@ -7,7 +7,7 @@ final List<FeaturedCardModel> featureCard = [
     cardIcon: HugeIcon(icon: HugeIcons.strokeRoundedBookmark02),
     imagesPath: 'assets/images/elite-prop.jpg',
     rating: '${4.9}',
-    price: '${3850}/month',
+    price: 3850,
     propertyName: 'The Glass Pavilion, Soho',
     propertyLocation: 'Broome & Mercer St, Soho, Manhattan',
     apartmentType: 'rent',

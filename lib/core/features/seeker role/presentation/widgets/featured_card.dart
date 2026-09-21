@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/seeker%20role/models/featured_card_model.dart';
+import 'package:homeli/core/routing/app_router.dart';
 
 class FeaturedCard extends StatelessWidget {
   final FeaturedCardModel featuredCard;
@@ -8,72 +10,53 @@ class FeaturedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
+    //final textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Featured Selection',
-              style: textTheme.bodyLarge?.copyWith(
-                color: colorScheme.secondaryContainer,
-                fontWeight: FontWeight.w600,
+    return GestureDetector(
+      onTap: () {
+        context.push(AppRouter.seekerListingDetails);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadiusGeometry.circular(24),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: colorScheme.surface,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: colorScheme.secondary.withValues(alpha: 0.07),
+                    blurRadius: 16,
+                    offset: Offset(0, 4),
+                  ),
+                ],
               ),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'See all',
-                style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.primaryContainer,
-                  fontWeight: FontWeight.w600,
-                ),
+              child: Column(
+                children: [
+                  _buildTopSection(
+                    context,
+                    imagePath: featuredCard.imagesPath,
+                    rating: featuredCard.rating,
+                    price: featuredCard.price,
+                    verificationStatus: featuredCard.verificationStatus,
+                  ),
+                  _buildBottomSection(
+                    context,
+                    cardIcon: featuredCard.cardIcon,
+                    propertyName: featuredCard.propertyName,
+                    propertyLocation: featuredCard.propertyLocation,
+                    apartmentType: featuredCard.apartmentType,
+                    features: featuredCard.features,
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 12),
-        ClipRRect(
-          borderRadius: BorderRadiusGeometry.circular(24),
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: colorScheme.secondary.withValues(alpha: 0.07),
-                  blurRadius: 16,
-                  offset: Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                _buildTopSection(
-                  context,
-                  imagePath: featuredCard.imagesPath,
-                  rating: featuredCard.rating,
-                  price: featuredCard.price,
-                  verificationStatus: featuredCard.verificationStatus,
-                ),
-                _buildBottomSection(
-                  context,
-                  cardIcon: featuredCard.cardIcon,
-                  propertyName: featuredCard.propertyName,
-                  propertyLocation: featuredCard.propertyLocation,
-                  apartmentType: featuredCard.apartmentType,
-                  features: featuredCard.features,
-                ),
-              ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -81,7 +64,7 @@ class FeaturedCard extends StatelessWidget {
     BuildContext context, {
     required String imagePath,
     required String rating,
-    required String price,
+    required double price,
     required String verificationStatus,
   }) {
     final textTheme = Theme.of(context).textTheme;
@@ -104,6 +87,7 @@ class FeaturedCard extends StatelessWidget {
           left: 23,
           child: Container(
             height: 20,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainerLow,
               borderRadius: BorderRadius.circular(12),
@@ -117,6 +101,77 @@ class FeaturedCard extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+        ),
+        Positioned(
+          right: 12,
+          top: 12,
+          child: Container(
+            width: 32,
+            height: 32,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Align(
+              alignment: Alignment.center,
+              child: IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.favorite, size: 18),
+                color: colorScheme.secondary,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 12,
+          left: 12,
+          child: Container(
+            alignment: Alignment.center,
+            height: 28,
+            decoration: BoxDecoration(
+              color: colorScheme.secondary,
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2),
+              child: Row(
+                spacing: 4,
+                children: [
+                  Icon(Icons.star, color: colorScheme.primary, size: 18),
+                  Text(
+                    rating,
+                    style: textTheme.labelLarge?.copyWith(
+                      color: colorScheme.surface,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 12,
+          right: 12,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '\$${price.toStringAsFixed(0)}',
+                style: textTheme.headlineSmall?.copyWith(
+                  color: colorScheme.primary,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                '/month',
+                style: textTheme.labelMedium?.copyWith(
+                  color: colorScheme.surface,
+                ),
+              ),
+            ],
           ),
         ),
       ],

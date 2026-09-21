@@ -5,7 +5,7 @@ class NearbyResidencesModel {
   final String propertyLocation;
   final bool isSaved;
   final List<String> features;
-  final String price;
+  final double price;
   final String viewType;
 
   NearbyResidencesModel({

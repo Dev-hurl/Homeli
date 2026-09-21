@@ -7,7 +7,7 @@ final List<NearbyResidencesModel> nearbyProperty = [
     propertyLocation: 'Cobble Hill, Brooklyn',
     propertyName: 'The Arched Brownstone',
     features: ['2 Beds', '1 Bath', 'Private Gardern'],
-    price: '${2950}',
+    price: 2950,
     isSaved: true,
     viewType: 'Tour View',
   ),
@@ -17,7 +17,7 @@ final List<NearbyResidencesModel> nearbyProperty = [
     propertyLocation: 'Tribeca, New York',
     propertyName: 'Franklin Studio Loft',
     features: ['1 Beds', '1 Bath', 'Concierge 24/7'],
-    price: '${4200}',
+    price: 4200,
     viewType: 'Instant View',
   ),
 ];

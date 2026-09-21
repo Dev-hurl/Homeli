@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/seeker%20role/models/listing_detail_model.dart';
 import 'package:homeli/core/features/shared/widgets/circle_icon_button.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 final listingDetailData = ListingDetailModel(
-  imagePaths: List.filled(5, 'assets/images/onboard1.png'),
+  imagePaths: List.filled(5, 'assets/images/elite-prop.jpg'),
   statusLabel: 'For Rent',
   rating: 4.96,
   reviewCount: 48,
@@ -13,8 +14,8 @@ final listingDetailData = ListingDetailModel(
   price: '\$3,850',
   moveInStatus: 'Immediate Move-in',
   quickFeatures: ['3 Beds', '2 Baths', '1,800 sq ft'],
-  hostName: 'Sophia Chen',
-  hostImagePath: 'assets/images/avatar1.png',
+  hostName: 'Larry Cho',
+  hostImagePath: 'assets/images/avatar.png',
   hostResponseTime: 'Responds in < 15 mins',
   description: 'Experience refined urban elegance in this thoughtfully customized modern sanctuary. Soaring ceilings and floor-to-ceiling acoustic glass frame the city skyline, while the private courtyard pool offers a rare moment of stillness in Soho.',
   amenities: [
@@ -95,7 +96,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                   left: 12,
                   child: CircleIconButton(
                     icon: HugeIcons.strokeRoundedArrowLeft01,
-                    onTap: () => Navigator.of(context).maybePop(),
+                    onTap: () => context.pop(),
                   ),
                 ),
                 Positioned(
@@ -110,10 +111,8 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                       SizedBox(width: 8),
                       CircleIconButton(
                         icon: HugeIcons.strokeRoundedFavourite,
-                        iconColor: _isFavorited ? colorScheme.primary : null,
-                        backgroundColor: _isFavorited
-                            ? colorScheme.secondary
-                            : Colors.white,
+                        iconColor: _isFavorited ? colorScheme.primary : colorScheme.secondary,
+                        backgroundColor: colorScheme.surface,
                         onTap: () =>
                             setState(() => _isFavorited = !_isFavorited),
                       ),
@@ -126,7 +125,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
-                      color: Colors.black54,
+                      color: colorScheme.secondary,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
@@ -141,7 +140,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                         Text(
                           'Virtual Walkthrough',
                           style: textTheme.labelSmall?.copyWith(
-                            color: Colors.white,
+                            color: colorScheme.surface,
                           ),
                         ),
                       ],
@@ -154,13 +153,13 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
-                      color: Colors.black54,
+                      color: colorScheme.secondary,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       '${_currentImageIndex + 1}/${listing.imagePaths.length}',
                       style: textTheme.labelSmall?.copyWith(
-                        color: Colors.white,
+                        color: colorScheme.surface,
                       ),
                     ),
                   ),
@@ -195,7 +194,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: selected
-                                    ? colorScheme.primary
+                                    ? colorScheme.secondaryContainer
                                     : Colors.transparent,
                                 width: 2,
                               ),
@@ -217,7 +216,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                               child: Text(
                                 '+${listing.imagePaths.length - 4}',
                                 style: textTheme.labelMedium?.copyWith(
-                                  color: Colors.white,
+                                  color: colorScheme.surface,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
@@ -243,7 +242,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: colorScheme.primaryContainer,
+                          color: colorScheme.surfaceContainerHigh,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -269,6 +268,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                   Text(
                     listing.title,
                     style: textTheme.headlineMedium?.copyWith(
+                      color: colorScheme.secondaryContainer,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -573,7 +573,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: Image.asset(
-                      'assets/images/map_placeholder.png',
+                      'assets/images/map-placeholder.png',
                       width: double.infinity,
                       height: 160,
                       fit: BoxFit.cover,

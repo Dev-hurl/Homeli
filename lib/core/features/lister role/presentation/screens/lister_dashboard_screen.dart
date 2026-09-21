@@ -244,7 +244,7 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLow,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
