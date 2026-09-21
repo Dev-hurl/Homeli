@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:go_router/go_router.dart';
+import 'package:homeli/core/constants/app_colors.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class ListerDashboardScreen extends StatefulWidget {
@@ -11,6 +13,7 @@ class ListerDashboardScreen extends StatefulWidget {
 
 class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
   int _selectedTab = 0;
+  final String _imagePath = '';
   final _tabs = ['All (3)', 'Active (2)', 'Draft / Review (1)', 'Paused (0)'];
 
   @override
@@ -20,21 +23,17 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/icons/Homeli Logo Inverted .png',
-              width: 28,
-              height: 28,
-            ),
-            SizedBox(width: 8),
-            Text('Profile'),
-          ],
-        ),
+        actionsPadding: EdgeInsets.only(right: 24),
+        leading: Image.asset('assets/icons/Homeli Logo T Inverted.png'),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: CircleAvatar(radius: 16),
+          CircleAvatar(
+            child: _imagePath.isNotEmpty
+                ? Image.asset(_imagePath)
+                : HugeIcon(
+                    icon: HugeIcons.strokeRoundedUser02,
+                    size: 24,
+                    strokeWidth: 2,
+                  ),
           ),
         ],
       ),
@@ -42,57 +41,16 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
         child: ListView(
           padding: EdgeInsets.all(20),
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.verified, size: 12),
-                      SizedBox(width: 4),
-                      Text(
-                        'LISTER HUB',
-                        style: textTheme.labelSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    HugeIcon(
-                      icon: HugeIcons.strokeRoundedPreferenceHorizontal,
-                      size: 16,
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                    SizedBox(width: 4),
-                    Text(
-                      'Settings',
-                      style: textTheme.labelSmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 8),
             Text(
               'My Listings',
-              style: textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.w700,
+              style: textTheme.headlineLarge?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: colorScheme.secondary,
               ),
             ),
             Text(
               'Manage 3 residences and your incoming guest inquiries.',
-              style: textTheme.labelSmall?.copyWith(
+              style: textTheme.labelLarge?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
@@ -184,7 +142,7 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
                         _tabs[index],
                         style: textTheme.labelMedium?.copyWith(
                           color: selected
-                              ? colorScheme.onSecondary
+                              ? colorScheme.surface
                               : colorScheme.onSurface,
                           fontWeight: FontWeight.w600,
                         ),
@@ -196,7 +154,7 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
             ),
             SizedBox(height: 16),
             _ActiveListingCard(
-              imagePath: 'assets/images/onboard1.png',
+              imagePath: 'assets/images/elite-prop.jpg',
               badge: 'Premier Host',
               location: 'Soho, New York',
               title: 'The Glass Pavilion',
@@ -210,7 +168,7 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
             ),
             SizedBox(height: 16),
             _ActiveListingCard(
-              imagePath: 'assets/images/onboard1.png',
+              imagePath: 'assets/images/naksha.jpg',
               badge: null,
               location: 'Tribeca, New York',
               title: 'Franklin Studio Loft',
@@ -224,14 +182,16 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
             ),
             SizedBox(height: 16),
             _DraftListingCard(
-              imagePath: 'assets/images/onboard1.png',
+              imagePath: 'assets/images/new-uk-homes.png',
               title: 'Chelsea Townhouse',
               stepLabel: 'Draft (Step 2/3)',
               note: 'Pricing & verification pending',
             ),
             SizedBox(height: 24),
             FilledButton(
-              onPressed: () {},
+              onPressed: () {
+                context.go('/lister/create-listing');
+              },
               style: FilledButton.styleFrom(
                 backgroundColor: colorScheme.primary,
                 minimumSize: Size(double.infinity, 52),
@@ -247,6 +207,7 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
                   Text(
                     'Add New Listing',
                     style: textTheme.labelLarge?.copyWith(
+                      color: colorScheme.surface,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -294,7 +255,7 @@ class _StatCard extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: textTheme.labelSmall?.copyWith(
+                style: textTheme.labelLarge?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
               ),
@@ -302,13 +263,12 @@ class _StatCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
-                    color: colorScheme.primaryContainer,
+                    color: colorScheme.tertiary.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     trailingChip!,
-                    style: textTheme.labelSmall?.copyWith(
-                      fontSize: 10,
+                    style: textTheme.labelLarge?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -320,12 +280,12 @@ class _StatCard extends StatelessWidget {
           SizedBox(height: 6),
           Text(
             value,
-            style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+            style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
           ),
           if (subtitle != null)
             Text(
               subtitle!,
-              style: textTheme.labelSmall?.copyWith(
+              style: textTheme.labelMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
@@ -403,7 +363,7 @@ class _ActiveListingCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLow,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(20),
       ),
       clipBehavior: Clip.antiAlias,
@@ -426,7 +386,7 @@ class _ActiveListingCard extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: colorScheme.surface,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
@@ -436,14 +396,14 @@ class _ActiveListingCard extends StatelessWidget {
                             width: 6,
                             height: 6,
                             decoration: BoxDecoration(
-                              color: Colors.green,
+                              color: AppColors.success,
                               shape: BoxShape.circle,
                             ),
                           ),
                           SizedBox(width: 4),
                           Text(
                             'Active',
-                            style: textTheme.labelSmall?.copyWith(
+                            style: textTheme.labelMedium?.copyWith(
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -463,7 +423,7 @@ class _ActiveListingCard extends StatelessWidget {
                         ),
                         child: Text(
                           badge!,
-                          style: textTheme.labelSmall?.copyWith(
+                          style: textTheme.labelMedium?.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -480,14 +440,15 @@ class _ActiveListingCard extends StatelessWidget {
                   children: [
                     Text(
                       location,
-                      style: textTheme.labelSmall?.copyWith(
-                        color: Colors.white70,
+                      style: textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: colorScheme.surface,
                       ),
                     ),
                     Text(
                       title,
-                      style: textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
+                      style: textTheme.headlineSmall?.copyWith(
+                        color: colorScheme.surface,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -502,15 +463,15 @@ class _ActiveListingCard extends StatelessWidget {
                   children: [
                     Text(
                       price,
-                      style: textTheme.titleMedium?.copyWith(
+                      style: textTheme.headlineSmall?.copyWith(
                         color: colorScheme.primary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
                       '/month',
-                      style: textTheme.labelSmall?.copyWith(
-                        color: Colors.white70,
+                      style: textTheme.labelLarge?.copyWith(
+                        color: colorScheme.surface,
                       ),
                     ),
                   ],
@@ -523,20 +484,29 @@ class _ActiveListingCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: stats
-                      .map(
-                        (stat) => Padding(
-                          padding: EdgeInsets.only(right: 12),
-                          child: Text(
-                            stat,
-                            style: textTheme.labelSmall?.copyWith(
-                              color: colorScheme.onSurfaceVariant,
+                Container(
+                  height: 34,
+                  decoration: BoxDecoration(
+                    color: colorScheme.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: stats
+                        .map(
+                          (stat) => Padding(
+                            padding: EdgeInsets.only(right: 12),
+                            child: Text(
+                              stat,
+                              style: textTheme.labelLarge?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                      .toList(),
+                        )
+                        .toList(),
+                  ),
                 ),
                 SizedBox(height: 12),
                 Row(
@@ -547,13 +517,13 @@ class _ActiveListingCard extends StatelessWidget {
                         children: [
                           Text(
                             visibilityLabel,
-                            style: textTheme.labelMedium?.copyWith(
+                            style: textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           Text(
                             visibilitySubtitle,
-                            style: textTheme.labelSmall?.copyWith(
+                            style: textTheme.labelLarge?.copyWith(
                               color: colorScheme.onSurfaceVariant,
                             ),
                           ),
@@ -570,38 +540,25 @@ class _ActiveListingCard extends StatelessWidget {
                 SizedBox(height: 12),
                 Row(
                   children: actionButtons.map((label) {
-                    final isHighlighted = label == highlightedAction;
                     return Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(right: 8),
-                        child: isHighlighted
-                            ? FilledButton(
-                                onPressed: () {},
-                                style: FilledButton.styleFrom(
-                                  backgroundColor:
-                                      colorScheme.secondaryContainer,
-                                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                ),
-                                child: Text(
-                                  label,
-                                  style: textTheme.labelSmall?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              )
-                            : OutlinedButton(
-                                onPressed: () {},
-                                style: OutlinedButton.styleFrom(
-                                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                ),
-                                child: Text(label, style: textTheme.labelSmall),
-                              ),
+                        child: FilledButton(
+                          onPressed: () {},
+                          style: FilledButton.styleFrom(
+                            backgroundColor: colorScheme.surfaceContainerLow,
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: Text(
+                            label,
+                            style: textTheme.labelMedium?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
                       ),
                     );
                   }).toList(),
@@ -633,79 +590,97 @@ class _DraftListingCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
+    return Container(
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                imagePath,
-                width: 64,
-                height: 64,
-                fit: BoxFit.cover,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      imagePath,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 24),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: colorScheme.tertiary,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(stepLabel, style: textTheme.labelSmall),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        title,
+                        style: textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: colorScheme.secondary,
+                        ),
+                      ),
+                      Text(
+                        note,
+                        style: textTheme.labelLarge?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            SizedBox(height: 10),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              decoration: BoxDecoration(
+                color: colorScheme.tertiary.withValues(alpha: 0.5),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Row(
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(stepLabel, style: textTheme.labelSmall),
+                  HugeIcon(
+                    icon: HugeIcons.strokeRoundedEdit02,
+                    size: 16,
+                    color: colorScheme.secondary,
                   ),
-                  SizedBox(height: 4),
-                  Text(
-                    title,
-                    style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    note,
-                    style: textTheme.labelSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Finish listing to publish',
+                      style: textTheme.labelMedium?.copyWith(
+                        color: colorScheme.secondary,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
+                  Icon(Icons.chevron_right, size: 18),
                 ],
               ),
             ),
           ],
         ),
-        SizedBox(height: 10),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-          decoration: BoxDecoration(
-            color: colorScheme.primaryContainer,
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: Row(
-            children: [
-              HugeIcon(
-                icon: HugeIcons.strokeRoundedEdit02,
-                size: 16,
-                color: colorScheme.secondary,
-              ),
-              SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  'Finish listing to publish',
-                  style: textTheme.labelMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Icon(Icons.chevron_right, size: 18),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
