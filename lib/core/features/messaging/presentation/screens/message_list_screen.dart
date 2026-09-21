@@ -197,7 +197,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
 
 class _ConversationTile extends StatelessWidget {
   final ConversationModel conversation;
-  _ConversationTile({required this.conversation});
+  const _ConversationTile({required this.conversation});
 
   @override
   Widget build(BuildContext context) {

@@ -29,12 +29,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     OnboardingSlide(
       title: 'Discover Curated Santuaries',
       subtitle: 'Explore hand-selected architectural gems, lofts, and design-forward penthouses vetted for light, proportion, and craftsmanship.',
-      imagePath: 'assets/images/onboard1.png',
+      imagePath: 'assets/images/elite-prop.jpg',
     ),
     OnboardingSlide(
       title: 'Guided Walkthroughs & Digital Keys',
       subtitle: 'Tour extraordinary spaces in person or via immersive 3D scans. Unlock secure, seamless access with encrypted digital passes.',
-      imagePath: 'assets/images/onboard2.png',
+      imagePath: 'assets/images/naksha.jpg',
     ),
   ];
 
@@ -67,6 +67,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -103,14 +104,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                     child: Column(
                       children: [
-                        Expanded(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Image.asset(
-                              slides.imagePath,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                            ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.asset(
+                            slides.imagePath,
+                            fit: BoxFit.cover,
+                            height: size.height * 0.6,
                           ),
                         ),
                         SizedBox(height: 24),

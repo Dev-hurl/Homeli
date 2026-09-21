@@ -69,12 +69,14 @@ class _RoleSetupScreenState extends State<RoleSetupScreen> {
 
                 SizedBox(height: 24),
                 ElevatedButton(
-                  onPressed: _onContinuePressed,
+                  onPressed: _selectedRoleName == null
+                      ? null
+                      : _onContinuePressed,
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     minimumSize: Size(double.infinity, 52),
-                    
                     backgroundColor: colorScheme.primary,
+                    disabledBackgroundColor: colorScheme.surfaceContainerHigh,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

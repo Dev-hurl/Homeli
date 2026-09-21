@@ -4,7 +4,7 @@ class AppColors {
   AppColors._();
 
   // ─── BACAKGROUND ───────────────────────────────────────────
-  static const Color background = Color(0xffF9F9FB);
+  static const Color background = Color(0xfff3f3f3);
   static const Color grey = Color(0xffEAEAEA);
   static const Color greyLight = Color(0xffEFEFEF);
   static const Color borderColor = Color(0xffE2E8F0);
