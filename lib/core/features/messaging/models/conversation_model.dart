@@ -24,7 +24,7 @@ class ConversationModel {
 
 final conversations = [
   ConversationModel(
-    avatarPath: 'assets/images/avatar1.png',
+    avatarPath: 'assets/images/avatar.png',
     name: 'Sophia Chen',
     roleTag: 'HOST',
     contextLabel: 'The Glass Pavilion, Soho',
@@ -35,7 +35,7 @@ final conversations = [
     isRead: false,
   ),
   ConversationModel(
-    avatarPath: 'assets/images/avatar1.png',
+    avatarPath: 'assets/images/avatar.png',
     name: 'Julian Hayes',
     roleTag: 'LISTER',
     contextLabel: 'Franklin Studio Loft',
@@ -46,7 +46,7 @@ final conversations = [
     isRead: false,
   ),
   ConversationModel(
-    avatarPath: 'assets/images/avatar1.png',
+    avatarPath: 'assets/images/avatar.png',
     name: 'Marcus Vance',
     roleTag: 'HOST',
     contextLabel: 'The Arched Brownstone',
@@ -57,7 +57,7 @@ final conversations = [
     isRead: true,
   ),
   ConversationModel(
-    avatarPath: 'assets/images/avatar1.png',
+    avatarPath: 'assets/images/avatar.png',
     name: 'Homeli Concierge',
     roleTag: 'OFFICIAL',
     contextLabel: 'Account & Verification',

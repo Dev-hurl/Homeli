@@ -36,12 +36,12 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
 
   final _profiles = [
     ProfileOption(
-      imagePath: 'assets/images/avatar1.png',
+      imagePath: 'assets/images/avatar.png',
       name: 'Sophia Chen',
       subtitle: 'Renting & Exploring',
     ),
     ProfileOption(
-      imagePath: 'assets/images/avatar1.png',
+      imagePath: 'assets/images/avatar.png',
       name: 'Sophia Chen (Host)',
       subtitle: '2 Active Listings',
       rating: 4.96,

@@ -87,7 +87,7 @@ final categoryScores = [
 
 final propertyReviews = [
   ReviewModel(
-    avatarPath: 'assets/images/avatar1.png',
+    avatarPath: 'assets/images/avatar.png',
     name: 'Elena Vance',
     stayInfo: 'Stayed Oct 2024 • 4 nights',
     rating: 5.0,
@@ -106,7 +106,7 @@ final propertyReviews = [
     tag: 'Verified Stay',
   ),
   ReviewModel(
-    avatarPath: 'assets/images/avatar1.png',
+    avatarPath: 'assets/images/avatar.png',
     name: 'Marcus Vance',
     stayInfo: 'Stayed Sep 2024 • 1 week',
     rating: 5.0,
@@ -116,7 +116,7 @@ final propertyReviews = [
     tag: 'Remote Work Trip',
   ),
   ReviewModel(
-    avatarPath: 'assets/images/avatar1.png',
+    avatarPath: 'assets/images/avatar.png',
     name: 'Chloe Laurent',
     stayInfo: 'Stayed Aug 2024 • Guided Tour',
     rating: 4.8,

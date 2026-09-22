@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/messaging/models/chat_message_model.dart';
 import 'package:hugeicons/hugeicons.dart';
 
@@ -12,7 +13,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final _messageController = TextEditingController();
   final _quickReplies = [
-    'Sounds great! ✨',
+    'Sounds great!',
     'Can I bring a guest? ',
     'Where should I park?',
   ];
@@ -37,7 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Row(
                 children: [
                   IconButton(
-                    onPressed: () => Navigator.of(context).maybePop(),
+                    onPressed: () => context.pop(),
                     icon: HugeIcon(
                       icon: HugeIcons.strokeRoundedArrowLeft01,
                       size: 20,
@@ -47,9 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     children: [
                       CircleAvatar(
                         radius: 20,
-                        backgroundImage: AssetImage(
-                          'assets/images/avatar1.png',
-                        ),
+                        backgroundImage: AssetImage('assets/images/avatar.png'),
                       ),
                       Positioned(
                         bottom: 0,
@@ -75,12 +74,13 @@ class _ChatScreenState extends State<ChatScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Sophia Chen',
+                          ' Larry Cho',
                           style: textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                         Row(
+                          spacing: 8,
                           children: [
                             Text(
                               'Premier Host',
@@ -89,16 +89,10 @@ class _ChatScreenState extends State<ChatScreen> {
                               ),
                             ),
                             Text(
-                              ' • ',
-                              style: textTheme.labelSmall?.copyWith(
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                            Text(
                               'Online',
                               style: textTheme.labelSmall?.copyWith(
                                 color: Colors.green,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ],
@@ -118,87 +112,6 @@ class _ChatScreenState extends State<ChatScreen> {
                     icon: Icon(Icons.more_vert, size: 20),
                   ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainerLow,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        'assets/images/onboard1.png',
-                        width: 44,
-                        height: 44,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'The Glass Pavili...',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: textTheme.labelMedium?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 2,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: colorScheme.primaryContainer,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Text(
-                                  'Tour in 2 Days',
-                                  style: textTheme.labelSmall?.copyWith(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            '\$3,850/mo',
-                            style: textTheme.labelSmall?.copyWith(
-                              color: colorScheme.onSurfaceVariant,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    OutlinedButton(
-                      onPressed: () {},
-                      style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                      child: Text('View Pass', style: TextStyle(fontSize: 12)),
-                    ),
-                  ],
-                ),
               ),
             ),
             Expanded(
@@ -320,7 +233,7 @@ class _ChatBubble extends StatelessWidget {
           if (!message.isMe) ...[
             CircleAvatar(
               radius: 14,
-              backgroundImage: AssetImage('assets/images/avatar1.png'),
+              backgroundImage: AssetImage('assets/images/avatar.png'),
             ),
             SizedBox(width: 8),
           ],
@@ -342,7 +255,7 @@ class _ChatBubble extends StatelessWidget {
                     message.text,
                     style: textTheme.bodyMedium?.copyWith(
                       color: message.isMe
-                          ? Colors.black
+                          ? colorScheme.secondaryContainer
                           : colorScheme.onSurface,
                     ),
                   ),

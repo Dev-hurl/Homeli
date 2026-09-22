@@ -151,7 +151,7 @@ class _TrustVerificationScreenState extends State<TrustVerificationScreen> {
             ClipRRect(
               borderRadius: BorderRadius.circular(28),
               child: Image.asset(
-                'assets/images/avatar1.png',
+                'assets/images/avatar.png',
                 width: double.infinity,
                 height: 280,
                 fit: BoxFit.cover,

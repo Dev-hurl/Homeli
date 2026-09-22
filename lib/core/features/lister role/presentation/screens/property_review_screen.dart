@@ -44,7 +44,7 @@ class _PropertyReviewsScreenState extends State<PropertyReviewsScreen> {
                   ),
                   CircleAvatar(
                     radius: 18,
-                    backgroundImage: AssetImage('assets/images/avatar1.png'),
+                    backgroundImage: AssetImage('assets/images/avatar.png'),
                   ),
                 ],
               ),

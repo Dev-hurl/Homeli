@@ -20,17 +20,11 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/icons/Homeli Logo Inverted .png',
+        leading: Image.asset(
+              'assets/icons/Homeli Logo T Inverted.png',
               width: 28,
               height: 28,
             ),
-            SizedBox(width: 8),
-            Text('Homeli'),
-          ],
-        ),
         actions: [
           IconButton(
             onPressed: () {},
@@ -302,7 +296,7 @@ class _NextExperienceCard extends StatelessWidget {
           Stack(
             children: [
               Image.asset(
-                'assets/images/onboard1.png',
+                'assets/images/elite-prop.jpg',
                 width: double.infinity,
                 height: 180,
                 fit: BoxFit.cover,
@@ -445,7 +439,7 @@ class _NextExperienceCard extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 18,
-                      backgroundImage: AssetImage('assets/images/avatar1.png'),
+                      backgroundImage: AssetImage('assets/images/avatar.png'),
                     ),
                     SizedBox(width: 10),
                     Expanded(
@@ -453,7 +447,7 @@ class _NextExperienceCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Sophia Chen',
+                            'Larry Cho',
                             style: textTheme.labelMedium?.copyWith(
                               fontWeight: FontWeight.w700,
                             ),
@@ -571,7 +565,7 @@ class _PendingBookingCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.asset(
-              'assets/images/onboard1.png',
+              'assets/images/elite-prop.jpg',
               width: 64,
               height: 64,
               fit: BoxFit.cover,
@@ -684,7 +678,7 @@ class _PastBookingCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.asset(
-              'assets/images/onboard1.png',
+              'assets/images/elite-prop.jpg',
               width: 56,
               height: 56,
               fit: BoxFit.cover,
@@ -759,7 +753,7 @@ class _PastBookingCard extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          '★ Leave a Review',
+                          'Leave a Review',
                           style: TextStyle(fontSize: 12),
                         ),
                       ),

@@ -20,16 +20,10 @@ class _SavedSanctuariesScreenState extends State<SavedSanctuariesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/icons/Homeli Logo Inverted .png',
-              width: 28,
-              height: 28,
-            ),
-            SizedBox(width: 8),
-            Text('Homeli'),
-          ],
+        leading: Image.asset(
+          'assets/icons/Homeli Logo T Inverted.png',
+          width: 28,
+          height: 28,
         ),
         actions: [
           IconButton(
@@ -259,7 +253,7 @@ class _SavedListingCardState extends State<SavedListingCard> {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: colorScheme.surface,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
@@ -278,7 +272,7 @@ class _SavedListingCardState extends State<SavedListingCard> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: colorScheme.surface,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(

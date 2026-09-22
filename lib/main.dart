@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:homeli/core/features/auth/providers/role_provider.dart';
 import 'package:homeli/core/routing/app_router.dart';
 import 'package:homeli/core/theme/app_theme.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => UserRoleProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

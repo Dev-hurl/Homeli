@@ -134,7 +134,7 @@ class _LeaveReviewScreenState extends State<LeaveReviewScreen> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            'assets/images/onboard1.png',
+                            'assets/images/elite-prop.jpg',
                             width: 56,
                             height: 56,
                             fit: BoxFit.cover,
@@ -163,7 +163,7 @@ class _LeaveReviewScreenState extends State<LeaveReviewScreen> {
                                   SizedBox(width: 4),
                                   Expanded(
                                     child: Text(
-                                      'Sophia Chen • Checked out Sep 28, ...',
+                                      'Larry Cho • Checked out Sep 28, ...',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: textTheme.labelSmall?.copyWith(
@@ -430,7 +430,7 @@ class _LeaveReviewScreenState extends State<LeaveReviewScreen> {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            '+ Add photos from your stay',
+                            'Add photos from your stay',
                             style: textTheme.labelMedium?.copyWith(
                               fontWeight: FontWeight.w700,
                             ),

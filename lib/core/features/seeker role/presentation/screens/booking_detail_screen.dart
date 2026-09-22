@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/seeker%20role/models/booking_detail_screen.dart';
 import 'package:hugeicons/hugeicons.dart';
 
@@ -19,7 +20,7 @@ class BookingDetailScreen extends StatelessWidget {
               child: Row(
                 children: [
                   IconButton(
-                    onPressed: () => Navigator.of(context).maybePop(),
+                    onPressed: () => context.pop(),
                     icon: HugeIcon(
                       icon: HugeIcons.strokeRoundedArrowLeft01,
                       size: 20,
@@ -156,7 +157,7 @@ class BookingDetailScreen extends StatelessWidget {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.asset(
-                                    'assets/images/onboard1.png',
+                                    'assets/images/elite-prop.jpg',
                                     width: 64,
                                     height: 64,
                                     fit: BoxFit.cover,
@@ -339,7 +340,7 @@ class BookingDetailScreen extends StatelessWidget {
                         CircleAvatar(
                           radius: 22,
                           backgroundImage: AssetImage(
-                            'assets/images/avatar1.png',
+                            'assets/images/avatar.png',
                           ),
                         ),
                         SizedBox(width: 12),
@@ -350,7 +351,7 @@ class BookingDetailScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    'Sophia Chen',
+                                    'Larry Cho',
                                     style: textTheme.bodyLarge?.copyWith(
                                       fontWeight: FontWeight.w700,
                                     ),

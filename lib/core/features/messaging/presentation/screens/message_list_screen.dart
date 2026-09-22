@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/messaging/models/conversation_model.dart';
+import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class MessagesListScreen extends StatefulWidget {
@@ -31,28 +33,30 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/icons/Homeli Logo Inverted .png',
-              width: 28,
-              height: 28,
-            ),
-            SizedBox(width: 8),
-            Text('Homeli'),
-          ],
+        actionsPadding: EdgeInsets.only(right: 16),
+        leading: Image.asset(
+          'assets/icons/Homeli Logo T Inverted.png',
+          width: 28,
+          height: 28,
         ),
         actions: [
           IconButton(
             onPressed: () {},
             icon: HugeIcon(
               icon: HugeIcons.strokeRoundedNotification01,
-              size: 22,
+              size: 20,
+              strokeWidth: 2,
             ),
           ),
-          SizedBox(width: 12),
-          CircleAvatar(radius: 16),
-          SizedBox(width: 16),
+          SizedBox(width: 4),
+          IconButton(
+            onPressed: () {},
+            icon: HugeIcon(
+              icon: HugeIcons.strokeRoundedCustomerSupport,
+              size: 20,
+              strokeWidth: 2,
+            ),
+          ),
         ],
       ),
       body: SafeArea(
@@ -108,18 +112,11 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                   fillColor: colorScheme.surfaceContainerLow,
                   hintText: 'Search conversations or listings...',
                   prefixIcon: Padding(
-                    padding: EdgeInsets.all(12),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     child: HugeIcon(
                       icon: HugeIcons.strokeRoundedSearch02,
                       size: 18,
-                    ),
-                  ),
-                  suffixIcon: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: HugeIcon(
-                      icon: HugeIcons.strokeRoundedPreferenceHorizontal,
-                      size: 18,
-                      color: colorScheme.secondary,
+                      strokeWidth: 2,
                     ),
                   ),
                   border: OutlineInputBorder(
@@ -146,7 +143,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: selected
-                              ? colorScheme.secondary
+                              ? colorScheme.secondaryContainer
                               : colorScheme.surfaceContainerHigh,
                           borderRadius: BorderRadius.circular(18),
                         ),
@@ -154,7 +151,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                           _tabs[index],
                           style: textTheme.labelMedium?.copyWith(
                             color: selected
-                                ? colorScheme.onSecondary
+                                ? colorScheme.surface
                                 : colorScheme.onSurface,
                             fontWeight: FontWeight.w600,
                           ),
@@ -170,7 +167,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
               child: ListView.separated(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                 itemCount: conversations.length,
-                separatorBuilder: (_, _) => Divider(height: 24),
+                separatorBuilder: (_, _) => Divider(height: 24, color: Theme.of(context).dividerColor,),
                 itemBuilder: (context, index) =>
                     _ConversationTile(conversation: conversations[index]),
               ),
@@ -180,13 +177,13 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
-        backgroundColor: colorScheme.secondary,
-        icon: Icon(Icons.edit, color: colorScheme.onSecondary, size: 16),
+        backgroundColor: colorScheme.secondaryContainer,
+        icon: HugeIcon(icon: HugeIcons.strokeRoundedEdit03),
         label: Text(
           'New Message',
-          style: textTheme.labelMedium?.copyWith(
-            color: colorScheme.onSecondary,
-            fontWeight: FontWeight.w700,
+          style: textTheme.labelLarge?.copyWith(
+            color: colorScheme.surface,
+            fontWeight: FontWeight.w600,
           ),
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
@@ -204,139 +201,144 @@ class _ConversationTile extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(
-          children: [
-            CircleAvatar(
-              radius: 24,
-              backgroundImage: AssetImage(conversation.avatarPath),
-            ),
-            if (conversation.isOnline)
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: Container(
-                  height: 12,
-                  width: 12,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: colorScheme.surface, width: 2),
+    return GestureDetector(
+      onTap: () {
+        context.push('/messaging/chat');
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              CircleAvatar(
+                radius: 24,
+                backgroundImage: AssetImage(conversation.avatarPath),
+              ),
+              if (conversation.isOnline)
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    height: 12,
+                    width: 12,
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: colorScheme.surface, width: 2),
+                    ),
                   ),
                 ),
-              ),
-          ],
-        ),
-        SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    conversation.name,
-                    style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  SizedBox(width: 6),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 1),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerHigh,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      conversation.roleTag,
-                      style: textTheme.labelSmall?.copyWith(
-                        fontSize: 9,
+            ],
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      conversation.name,
+                      style: textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                  ),
-                  Spacer(),
-                  Text(
-                    conversation.timeLabel,
-                    style: textTheme.labelSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 2),
-              Row(
-                children: [
-                  HugeIcon(
-                    icon: HugeIcons.strokeRoundedHome01,
-                    size: 12,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                  SizedBox(width: 4),
-                  Expanded(
-                    child: Text(
-                      conversation.contextLabel,
-                      style: textTheme.labelSmall?.copyWith(
-                        color: colorScheme.secondary,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 4),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      conversation.lastMessage,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: conversation.unreadCount > 0
-                            ? colorScheme.onSurface
-                            : colorScheme.onSurfaceVariant,
-                        fontWeight: conversation.unreadCount > 0
-                            ? FontWeight.w600
-                            : FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  if (conversation.unreadCount > 0)
+                    SizedBox(width: 6),
                     Container(
-                      padding: EdgeInsets.all(6),
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 1),
                       decoration: BoxDecoration(
-                        color: colorScheme.primary,
-                        shape: BoxShape.circle,
+                        color: colorScheme.surfaceContainerHigh,
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        '${conversation.unreadCount}',
+                        conversation.roleTag,
                         style: textTheme.labelSmall?.copyWith(
-                          fontSize: 10,
+                          fontSize: 9,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                    )
-                  else if (conversation.isRead)
-                    Icon(Icons.done_all, size: 16, color: colorScheme.secondary)
-                  else
-                    Container(
-                      height: 8,
-                      width: 8,
-                      decoration: BoxDecoration(
-                        color: colorScheme.primary,
-                        shape: BoxShape.circle,
+                    ),
+                    Spacer(),
+                    Text(
+                      conversation.timeLabel,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+                SizedBox(height: 2),
+                Row(
+                  children: [
+                    HugeIcon(
+                      icon: HugeIcons.strokeRoundedHome01,
+                      size: 12,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        conversation.contextLabel,
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colorScheme.secondary,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 4),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        conversation.lastMessage,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: conversation.unreadCount > 0
+                              ? colorScheme.onSurface
+                              : colorScheme.onSurfaceVariant,
+                          fontWeight: conversation.unreadCount > 0
+                              ? FontWeight.w600
+                              : FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    if (conversation.unreadCount > 0)
+                      Container(
+                        padding: EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: colorScheme.primary,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          '${conversation.unreadCount}',
+                          style: textTheme.labelSmall?.copyWith(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    else if (conversation.isRead)
+                      Icon(Icons.done_all, size: 16, color: colorScheme.secondary)
+                    else
+                      Container(
+                        height: 8,
+                        width: 8,
+                        decoration: BoxDecoration(
+                          color: colorScheme.primary,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

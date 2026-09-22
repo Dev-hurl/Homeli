@@ -18,7 +18,7 @@ class SeekerHomeScreen extends StatefulWidget {
 }
 
 class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
-  final String _imagePath = '';
+  final String _imagePath = 'assets/images/avatar.png';
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -45,19 +45,24 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
             onPressed: () => context.push(AppRouter.notifications),
             icon: HugeIcon(
               icon: HugeIcons.strokeRoundedNotification01,
-              size: 24,
+              size: 22,
               strokeWidth: 2,
             ),
           ),
           SizedBox(width: 16),
-          CircleAvatar(
-            child: _imagePath.isNotEmpty
-                ? Image.asset(_imagePath)
-                : HugeIcon(
-                    icon: HugeIcons.strokeRoundedUser02,
-                    size: 24,
-                    strokeWidth: 2,
-                  ),
+          GestureDetector(
+            onTap: () {
+              context.push(AppRouter.seekerProfile);
+            },
+            child: CircleAvatar(
+              child: _imagePath.isNotEmpty
+                  ? Image.asset(_imagePath, fit: BoxFit.cover,)
+                  : HugeIcon(
+                      icon: HugeIcons.strokeRoundedUser02,
+                      size: 22,
+                      strokeWidth: 2,
+                    ),
+            ),
           ),
         ],
       ),

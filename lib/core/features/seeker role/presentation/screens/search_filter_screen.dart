@@ -105,12 +105,14 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                         color: colorScheme.surface,
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
-                  BoxShadow(
-                    color: colorScheme.secondary.withValues(alpha: 0.05),
-                    blurRadius: 16,
-                    offset: Offset(0, 4),
-                  ),
-                ],
+                          BoxShadow(
+                            color: colorScheme.secondary.withValues(
+                              alpha: 0.05,
+                            ),
+                            blurRadius: 16,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,12 +141,12 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                               suffixIcon: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 12),
                                 child: IconButton(
-                                  onPressed: () => _destinationController.clear(),
+                                  onPressed: () =>
+                                      _destinationController.clear(),
                                   icon: HugeIcon(
                                     icon: HugeIcons.strokeRoundedCancelCircle,
                                     size: 18,
                                     strokeWidth: 2,
-                                    
                                   ),
                                 ),
                               ),
@@ -224,6 +226,15 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                       decoration: BoxDecoration(
                         color: colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: colorScheme.secondary.withValues(
+                              alpha: 0.05,
+                            ),
+                            blurRadius: 16,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -302,6 +313,15 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                       decoration: BoxDecoration(
                         color: colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: colorScheme.secondary.withValues(
+                              alpha: 0.07,
+                            ),
+                            blurRadius: 16,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
