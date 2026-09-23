@@ -10,6 +10,7 @@ class NavItem {
 final navItems = [
   NavItem(icon: HugeIcons.strokeRoundedHome01, label: 'Home'),
   NavItem(icon: HugeIcons.strokeRoundedCalendar03, label: 'Bookings'),
+  NavItem(icon: HugeIcons.strokeRoundedBookBookmark01, label: 'Saved'),
   NavItem(icon: HugeIcons.strokeRoundedMessage01, label: 'Messages'),
   NavItem(icon: HugeIcons.strokeRoundedUser02, label: 'Profile'),
 ];
@@ -44,7 +45,7 @@ class HomeliBottomNav extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 decoration: BoxDecoration(
-                  color: colorScheme.surface,
+                  //color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(32),
                 ),
                 child: Row(
@@ -105,8 +106,7 @@ class HomeliBottomNav extends StatelessWidget {
                     height: 52,
                     width: 52,
                     decoration: BoxDecoration(
-                      color: colorScheme.primary,
-                      shape: BoxShape.circle,
+                      color: colorScheme.surface,
                       boxShadow: [
                         BoxShadow(
                           color: colorScheme.primary.withValues(alpha: 0.4),

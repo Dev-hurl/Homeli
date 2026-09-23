@@ -4,7 +4,9 @@ import 'package:homeli/core/features/auth/presentation/screens/registration/otp_
 import 'package:homeli/core/features/auth/presentation/screens/registration/role_setup_screen.dart';
 import 'package:homeli/core/features/auth/presentation/screens/registration/sign_in_screen.dart';
 import 'package:homeli/core/features/auth/presentation/screens/registration/sign_up_screen.dart';
+import 'package:homeli/core/features/lister%20role/presentation/screens/booking_request_details.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/booking_requests_screen.dart';
+import 'package:homeli/core/features/lister%20role/presentation/screens/create_listing_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/lister_dashboard_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/lister_profile_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/property_review_screen.dart';
@@ -64,7 +66,9 @@ class AppRouter {
   static const seekerSearchFilters = '/seeker/search-filters';
   static const seekerProfile = '/seeker/profile';
   static const listerHome = '/lister/home';
+  static const listerCreateListing = '/lister/create-listing';
   static const listerBookingRequests = '/lister/booking-requests';
+  static const listerBookingRequestDetails = '/lister/request-details';
   static const listerPropertyReviews = '/lister/property-reviews';
   static const listerTrustVerification = '/lister/verification';
   static const listerProfile = '/lister/profile';
@@ -129,6 +133,22 @@ class AppRouter {
                 path: listerHome,
                 builder: (context, state) => ListerDashboardScreen(),
               ),
+              GoRoute(
+                path: listerCreateListing,
+                builder: (context, state) => CreateListingScreen(),
+              ),
+              GoRoute(
+                path: listerPropertyReviews,
+                builder: (context, state) => PropertyReviewsScreen(),
+              ),
+              GoRoute(
+                path: listerTrustVerification,
+                builder: (context, state) => TrustVerificationScreen(),
+              ),
+              GoRoute(
+                path: listerBookingRequestDetails,
+                builder: (context, state) => BookingRequestDetails(),
+              ),
             ],
           ),
           StatefulShellBranch(
@@ -140,6 +160,14 @@ class AppRouter {
               GoRoute(
                 path: listerBookingRequests,
                 builder: (context, state) => BookingRequestsScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: seekerSavedSanctuaries,
+                builder: (context, state) => SavedSanctuariesScreen(),
               ),
             ],
           ),
@@ -169,33 +197,23 @@ class AppRouter {
         path: '/seeker/booking-detail',
         builder: (context, state) => BookingDetailScreen(),
       ),
+
       GoRoute(
         path: '/seeker/leave-review',
         builder: (context, state) => LeaveReviewScreen(),
       ),
-      GoRoute(
+      /*GoRoute(
         path: '/seeker/listing-details',
         builder: (context, state) => ListingDetailScreen(
           listing: state.extra is ListingDetailModel
               ? state.extra! as ListingDetailModel
               : listingDetailData,
         ),
-      ),
-      GoRoute(
-        path: '/seeker/saved-sanctuaries',
-        builder: (context, state) => SavedSanctuariesScreen(),
-      ),
+      ),*/
+
       GoRoute(
         path: seekerSearchFilters,
         builder: (context, state) => SearchFiltersScreen(),
-      ),
-      GoRoute(
-        path: '/lister/property-reviews',
-        builder: (context, state) => PropertyReviewsScreen(),
-      ),
-      GoRoute(
-        path: '/lister/verification',
-        builder: (context, state) => TrustVerificationScreen(),
       ),
       GoRoute(
         path: '/messaging/chat',

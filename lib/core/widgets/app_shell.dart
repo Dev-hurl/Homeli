@@ -18,9 +18,28 @@ class AppShell extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: HomeliBottomNav(
         currentIndex: navigationShell.currentIndex,
-        onTap: (index) => navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex),
+        onTap: (index) {
+          if (role == UserRole.lister) {
+            final listerLocations = [
+              AppRouter.listerHome,
+              AppRouter.listerBookingRequests,
+              AppRouter.messages,
+              AppRouter.listerProfile,
+            ];
+            context.go(listerLocations[index]);
+            return;
+          }
+
+          final seekerLocations = [
+            AppRouter.seekerHome,
+            AppRouter.seekerBookings,
+            AppRouter.messages,
+            AppRouter.seekerProfile,
+          ];
+          context.go(seekerLocations[index]);
+        },
         showAddListingFab: role == UserRole.lister,
-        onAddListingTap: () => context.push('/lister/add-listing'),
+        onAddListingTap: () => context.push(AppRouter.listerCreateListing),
       ),
     );
   }

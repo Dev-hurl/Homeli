@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homeli/core/constants/app_colors.dart';
+import 'package:homeli/core/features/auth/providers/role_provider.dart';
 import 'package:homeli/core/routing/app_router.dart';
 import 'package:homeli/core/widgets/otp_keypad.dart';
+import 'package:provider/provider.dart';
 
 class OtpVerification extends StatefulWidget {
   final String emailAddress;
@@ -50,6 +52,11 @@ class _OtpVerificationState extends State<OtpVerification> {
     });
 
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+      final role = widget.roleName == 'LISTER'
+          ? UserRole.lister
+          : UserRole.seeker;
+      context.read<UserRoleProvider>().setRole(role);
+
       if (widget.roleName == 'LISTER') {
         context.go(AppRouter.listerHome);
       } else {

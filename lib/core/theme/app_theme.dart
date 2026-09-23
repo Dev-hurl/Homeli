@@ -21,7 +21,8 @@ class AppTheme {
       surfaceContainerHigh: AppColors.grey,
       onSurface: AppColors.primaryText,
       onSurfaceVariant: AppColors.secondaryText,
-      //error: AppColors.error,
+      error: AppColors.error,
+      
     ),
     
   );

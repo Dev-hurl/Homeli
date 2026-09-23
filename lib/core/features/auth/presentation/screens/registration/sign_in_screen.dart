@@ -4,7 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homeli/core/widgets/custom_text_form_field.dart';
 import 'package:homeli/core/routing/app_router.dart';
+import 'package:homeli/core/features/auth/providers/role_provider.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -23,6 +25,7 @@ class _SignInState extends State<SignInScreen> {
 
   void _onLogin() {
     if (_formKey.currentState!.validate()) {
+      context.read<UserRoleProvider>().setRole(UserRole.lister);
       context.go(AppRouter.listerHome);
     }
   }
