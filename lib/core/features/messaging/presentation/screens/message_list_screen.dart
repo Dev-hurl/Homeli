@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/messaging/models/conversation_model.dart';
-import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class MessagesListScreen extends StatefulWidget {
@@ -69,6 +68,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                   Text(
                     'Messages',
                     style: textTheme.headlineMedium?.copyWith(
+                      color: colorScheme.secondaryContainer,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
