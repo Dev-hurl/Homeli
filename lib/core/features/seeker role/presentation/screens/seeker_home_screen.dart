@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/seeker%20role/models/featured_card_data.dart';
 import 'package:homeli/core/features/seeker%20role/models/nearby_residences_data.dart';
-import 'package:homeli/core/features/seeker%20role/presentation/screens/nearby_residences_card.dart';
+import 'package:homeli/core/features/seeker%20role/presentation/widgets/nearby_residences_card.dart';
 import 'package:homeli/core/features/seeker%20role/presentation/widgets/featured_card.dart';
 import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -55,6 +55,7 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
               context.push(AppRouter.seekerProfile);
             },
             child: CircleAvatar(
+              radius: 24,
               child: _imagePath.isNotEmpty
                   ? Image.asset(_imagePath, fit: BoxFit.cover,)
                   : HugeIcon(

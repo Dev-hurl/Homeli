@@ -51,478 +51,468 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () => context.pop(),
-                    icon: Icon(Icons.close),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Search & Filters',
-                      textAlign: TextAlign.center,
-                      style: textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => setState(() {
-                      _selectedPropertyType = 'All Homes';
-                      _priceRange = RangeValues(1500, 6000);
-                      _selectedBedrooms = 'Any';
-                      _selectedBathrooms = 'Any';
-                      _selectedAmenities.clear();
-                      _instantBooking = false;
-                      _flexibleLease = false;
-                    }),
-                    child: Text(
-                      'Reset',
-                      style: textTheme.labelMedium?.copyWith(
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
+      appBar: AppBar(
+        actionsPadding: EdgeInsets.only(right: 16),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () => context.pop(),
+          icon: HugeIcon(
+            icon: [HugeIcons.strokeRoundedArrowLeft01],
+            color: colorScheme.secondary,
+            size: 20,
+          ),
+        ),
+        title: Text(
+          'Search & Filters',
+          textAlign: TextAlign.center,
+          style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => setState(() {
+              _selectedPropertyType = 'All Homes';
+              _priceRange = RangeValues(1500, 6000);
+              _selectedBedrooms = 'Any';
+              _selectedBathrooms = 'Any';
+              _selectedAmenities.clear();
+              _instantBooking = false;
+              _flexibleLease = false;
+            }),
+            child: Text(
+              'Reset',
+              style: textTheme.labelLarge?.copyWith(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.w600,
               ),
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsetsDirectional.all(16),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surface,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: colorScheme.secondary.withValues(
-                              alpha: 0.05,
-                            ),
-                            blurRadius: 16,
-                            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsetsDirectional.all(16),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surface,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: colorScheme.secondary.withValues(alpha: 0.05),
+                          blurRadius: 16,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'DESTINATION',
+                          style: textTheme.labelSmall?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: colorScheme.onSurfaceVariant,
                           ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'DESTINATION',
-                            style: textTheme.labelSmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: colorScheme.onSurfaceVariant,
+                        ),
+                        SizedBox(height: 8),
+                        TextField(
+                          controller: _destinationController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: colorScheme.surfaceContainerLow,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.all(12),
+                              child: HugeIcon(
+                                icon: HugeIcons.strokeRoundedLocation09,
+                                size: 18,
+                                strokeWidth: 2,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 8),
-                          TextField(
-                            controller: _destinationController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainerLow,
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.all(12),
-                                child: HugeIcon(
-                                  icon: HugeIcons.strokeRoundedLocation09,
+                            suffixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 12),
+                              child: IconButton(
+                                onPressed: () => _destinationController.clear(),
+                                icon: HugeIcon(
+                                  icon: HugeIcons.strokeRoundedCancelCircle,
                                   size: 18,
                                   strokeWidth: 2,
                                 ),
                               ),
-                              suffixIcon: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12),
-                                child: IconButton(
-                                  onPressed: () =>
-                                      _destinationController.clear(),
-                                  icon: HugeIcon(
-                                    icon: HugeIcons.strokeRoundedCancelCircle,
-                                    size: 18,
-                                    strokeWidth: 2,
-                                  ),
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(28),
-                                borderSide: BorderSide.none,
-                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(28),
+                              borderSide: BorderSide.none,
+                            ),
 
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(28),
-                                borderSide: BorderSide(
-                                  color: colorScheme.outlineVariant,
-                                ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(28),
+                              borderSide: BorderSide(
+                                color: colorScheme.outlineVariant,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Property Type',
-                          style: textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Text(
-                          'Selected: $_selectedPropertyType',
-                          style: textTheme.labelSmall?.copyWith(
-                            color: colorScheme.secondary,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
-                    SizedBox(
-                      height: 40,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _propertyTypes.length,
-                        separatorBuilder: (_, _) => SizedBox(width: 8),
-                        itemBuilder: (context, index) {
-                          final type = _propertyTypes[index];
-                          final selected = type == _selectedPropertyType;
-                          return GestureDetector(
-                            onTap: () =>
-                                setState(() => _selectedPropertyType = type),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: selected
-                                    ? colorScheme.primary
-                                    : colorScheme.surfaceContainerHigh,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(
-                                type,
-                                style: textTheme.labelMedium?.copyWith(
-                                  color: colorScheme.secondaryContainer,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surface,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: colorScheme.secondary.withValues(
-                              alpha: 0.05,
-                            ),
-                            blurRadius: 16,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Monthly Price',
-                                      style: textTheme.bodyMedium?.copyWith(
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      'Includes estimated taxes & fees',
-                                      style: textTheme.labelSmall?.copyWith(
-                                        color: colorScheme.onSurfaceVariant,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 6,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: colorScheme.surfaceContainerLow,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  '\$${_priceRange.start.round()} - \$${_priceRange.end.round()}',
-                                  style: textTheme.labelSmall?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          RangeSlider(
-                            values: _priceRange,
-                            min: _minPrice,
-                            max: _maxPrice,
-                            activeColor: colorScheme.primary,
-                            inactiveColor: colorScheme.surfaceContainerHigh,
-                            onChanged: (values) =>
-                                setState(() => _priceRange = values),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Min: \$${_minPrice.round()}',
-                                style: textTheme.labelSmall,
-                              ),
-                              Text('Avg: \$3,450', style: textTheme.labelSmall),
-                              Text(
-                                'Max: \$${_maxPrice.round()}+',
-                                style: textTheme.labelSmall,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsetsDirectional.all(16),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surface,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: colorScheme.secondary.withValues(
-                              alpha: 0.07,
-                            ),
-                            blurRadius: 16,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Rooms & Beds',
-                            style: textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(height: 12),
-                          Text('Bedrooms', style: textTheme.labelMedium),
-                          SizedBox(height: 8),
-                          _StepperChipRow(
-                            options: _bedroomOptions,
-                            selected: _selectedBedrooms,
-                            onSelected: (v) =>
-                                setState(() => _selectedBedrooms = v),
-                          ),
-                          SizedBox(height: 16),
-                          Text('Bathrooms', style: textTheme.labelMedium),
-                          SizedBox(height: 8),
-                          _StepperChipRow(
-                            options: _bathroomOptions,
-                            selected: _selectedBathrooms,
-                            onSelected: (v) =>
-                                setState(() => _selectedBathrooms = v),
-                          ),
-                        ],
-                      ),
-                    ),
+                  ),
 
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Amenities',
-                          style: textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Property Type',
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
                         ),
-                        Text(
-                          '${_amenities.length} Curated',
-                          style: textTheme.labelSmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
+                      ),
+                      Text(
+                        'Selected: $_selectedPropertyType',
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colorScheme.secondary,
                         ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: _amenities.map((amenity) {
-                        final selected = _selectedAmenities.contains(amenity);
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    height: 40,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _propertyTypes.length,
+                      separatorBuilder: (_, _) => SizedBox(width: 8),
+                      itemBuilder: (context, index) {
+                        final type = _propertyTypes[index];
+                        final selected = type == _selectedPropertyType;
                         return GestureDetector(
-                          onTap: () => setState(
-                            () => selected
-                                ? _selectedAmenities.remove(amenity)
-                                : _selectedAmenities.add(amenity),
-                          ),
+                          onTap: () =>
+                              setState(() => _selectedPropertyType = type),
                           child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 14,
-                              vertical: 10,
-                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: selected
-                                  ? colorScheme.secondary
-                                  : colorScheme.surface,
+                                  ? colorScheme.primary
+                                  : colorScheme.surfaceContainerHigh,
                               borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: selected
-                                    ? Colors.transparent
-                                    : colorScheme.outlineVariant,
-                              ),
                             ),
                             child: Text(
-                              amenity,
+                              type,
                               style: textTheme.labelMedium?.copyWith(
-                                color: selected
-                                    ? colorScheme.surface
-                                    : colorScheme.onSurface,
-                                fontWeight: FontWeight.w500,
+                                color: colorScheme.secondaryContainer,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
                         );
-                      }).toList(),
-                    ),
-                    SizedBox(height: 20),
-                    _ToggleRow(
-                      title: 'Instant Booking',
-                      subtitle: 'Book without waiting for host',
-                      value: _instantBooking,
-                      onChanged: (v) => setState(() => _instantBooking = v),
-                    ),
-                    Divider(height: 24),
-                    _ToggleRow(
-                      title: 'Flexible Lease',
-                      subtitle: 'Month-to-month contracts',
-                      value: _flexibleLease,
-                      onChanged: (v) => setState(() => _flexibleLease = v),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerLow,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(
-                              'assets/images/elite-prop.jpg',
-                              width: 48,
-                              height: 48,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'LIVE PREVIEW',
-                                  style: textTheme.labelSmall?.copyWith(
-                                    color: colorScheme.onSurfaceVariant,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(
-                                  '142 Matches in New York',
-                                  style: textTheme.labelMedium?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(
-                                  'From \$2,100 to \$5,800/mo avg',
-                                  style: textTheme.labelSmall?.copyWith(
-                                    color: colorScheme.onSurfaceVariant,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Row(
-                children: [
-                  TextButton(onPressed: () {}, child: Text('Clear')),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: () {
-                        context.push(AppRouter.seekerHome);
                       },
-                      style: FilledButton.styleFrom(
-                        backgroundColor: colorScheme.primary,
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Apply Filters (142 Places)',
-                            style: textTheme.labelLarge?.copyWith(
-                              color: colorScheme.onPrimary,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(width: 6),
-                          HugeIcon(
-                            icon: HugeIcons.strokeRoundedArrowRight01,
-                            size: 16,
-                            color: colorScheme.onPrimary,
-                          ),
-                        ],
-                      ),
                     ),
                   ),
+                  SizedBox(height: 20),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surface,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: colorScheme.secondary.withValues(alpha: 0.05),
+                          blurRadius: 16,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Monthly Price',
+                                    style: textTheme.bodyMedium?.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    'Includes estimated taxes & fees',
+                                    style: textTheme.labelSmall?.copyWith(
+                                      color: colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 6,
+                              ),
+                              decoration: BoxDecoration(
+                                color: colorScheme.surfaceContainerLow,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Text(
+                                '\$${_priceRange.start.round()} - \$${_priceRange.end.round()}',
+                                style: textTheme.labelSmall?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        RangeSlider(
+                          values: _priceRange,
+                          min: _minPrice,
+                          max: _maxPrice,
+                          activeColor: colorScheme.primary,
+                          inactiveColor: colorScheme.surfaceContainerHigh,
+                          onChanged: (values) =>
+                              setState(() => _priceRange = values),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Min: \$${_minPrice.round()}',
+                              style: textTheme.labelSmall,
+                            ),
+                            Text('Avg: \$3,450', style: textTheme.labelSmall),
+                            Text(
+                              'Max: \$${_maxPrice.round()}+',
+                              style: textTheme.labelSmall,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsetsDirectional.all(16),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surface,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: colorScheme.secondary.withValues(alpha: 0.07),
+                          blurRadius: 16,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Rooms & Beds',
+                          style: textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(height: 12),
+                        Text('Bedrooms', style: textTheme.labelMedium),
+                        SizedBox(height: 8),
+                        _StepperChipRow(
+                          options: _bedroomOptions,
+                          selected: _selectedBedrooms,
+                          onSelected: (v) =>
+                              setState(() => _selectedBedrooms = v),
+                        ),
+                        SizedBox(height: 16),
+                        Text('Bathrooms', style: textTheme.labelMedium),
+                        SizedBox(height: 8),
+                        _StepperChipRow(
+                          options: _bathroomOptions,
+                          selected: _selectedBathrooms,
+                          onSelected: (v) =>
+                              setState(() => _selectedBathrooms = v),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Amenities',
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Text(
+                        '${_amenities.length} Curated',
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: _amenities.map((amenity) {
+                      final selected = _selectedAmenities.contains(amenity);
+                      return GestureDetector(
+                        onTap: () => setState(
+                          () => selected
+                              ? _selectedAmenities.remove(amenity)
+                              : _selectedAmenities.add(amenity),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: selected
+                                ? colorScheme.secondary
+                                : colorScheme.surface,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: selected
+                                  ? Colors.transparent
+                                  : colorScheme.outlineVariant,
+                            ),
+                          ),
+                          child: Text(
+                            amenity,
+                            style: textTheme.labelMedium?.copyWith(
+                              color: selected
+                                  ? colorScheme.surface
+                                  : colorScheme.onSurface,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(height: 20),
+                  _ToggleRow(
+                    title: 'Instant Booking',
+                    subtitle: 'Book without waiting for host',
+                    value: _instantBooking,
+                    onChanged: (v) => setState(() => _instantBooking = v),
+                  ),
+                  Divider(height: 24),
+                  _ToggleRow(
+                    title: 'Flexible Lease',
+                    subtitle: 'Month-to-month contracts',
+                    value: _flexibleLease,
+                    onChanged: (v) => setState(() => _flexibleLease = v),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surfaceContainerLow,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            'assets/images/elite-prop.jpg',
+                            width: 48,
+                            height: 48,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'LIVE PREVIEW',
+                                style: textTheme.labelSmall?.copyWith(
+                                  color: colorScheme.onSurfaceVariant,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                '142 Matches in New York',
+                                style: textTheme.labelMedium?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                'From \$2,100 to \$5,800/mo avg',
+                                style: textTheme.labelSmall?.copyWith(
+                                  color: colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 12),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Row(
+              children: [
+                TextButton(onPressed: () {}, child: Text('Clear')),
+                SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: () {
+                      context.push(AppRouter.seekerHome);
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: colorScheme.primary,
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(28),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Apply Filters (142 Places)',
+                          style: textTheme.labelLarge?.copyWith(
+                            color: colorScheme.onPrimary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(width: 6),
+                        HugeIcon(
+                          icon: HugeIcons.strokeRoundedArrowRight01,
+                          size: 16,
+                          color: colorScheme.onPrimary,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -33,9 +33,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
               size: 22,
             ),
           ),
-          SizedBox(width: 12),
-          CircleAvatar(radius: 16),
-          SizedBox(width: 16),
+          
         ],
       ),
       body: SafeArea(
@@ -56,6 +54,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                     Text(
                       'My Bookings',
                       style: textTheme.headlineMedium?.copyWith(
+                        color: colorScheme.secondaryContainer,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
