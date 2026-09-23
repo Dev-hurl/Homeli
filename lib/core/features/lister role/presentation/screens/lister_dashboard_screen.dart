@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homeli/core/constants/app_colors.dart';
+import 'package:homeli/core/features/lister%20role/models/active_listing_model.dart';
+import 'package:homeli/core/features/lister%20role/models/draft_listing_model.dart';
+import 'package:homeli/core/features/lister%20role/presentation/widgets/active_listing_card.dart';
+import 'package:homeli/core/features/lister%20role/presentation/widgets/draft_listing_card.dart';
+import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class ListerDashboardScreen extends StatefulWidget {
@@ -13,7 +18,7 @@ class ListerDashboardScreen extends StatefulWidget {
 
 class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
   int _selectedTab = 0;
-  final String _imagePath = '';
+  final String _imagePath = 'assets/images/avatar.png';
   final _tabs = ['All (3)', 'Active (2)', 'Draft / Review (1)', 'Paused (0)'];
 
   @override
@@ -26,14 +31,25 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
         actionsPadding: EdgeInsets.only(right: 24),
         leading: Image.asset('assets/icons/Homeli Logo T Inverted.png'),
         actions: [
+          IconButton(
+            onPressed: () => context.push(AppRouter.notifications),
+            icon: HugeIcon(
+              icon: HugeIcons.strokeRoundedNotification01,
+              size: 22,
+              strokeWidth: 2,
+            ),
+          ),
+          SizedBox(height: 8),
           CircleAvatar(
-            child: _imagePath.isNotEmpty
+            radius: 24,
+            backgroundImage: AssetImage(_imagePath), //TODO: Fix circle Avatar
+            /*child: _imagePath.isNotEmpty
                 ? Image.asset(_imagePath)
                 : HugeIcon(
                     icon: HugeIcons.strokeRoundedUser02,
                     size: 24,
                     strokeWidth: 2,
-                  ),
+                  ),*/
           ),
         ],
       ),
@@ -153,44 +169,23 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
               ),
             ),
             SizedBox(height: 16),
-            _ActiveListingCard(
-              imagePath: 'assets/images/elite-prop.jpg',
-              badge: 'Premier Host',
-              location: 'Soho, New York',
-              title: 'The Glass Pavilion',
-              price: '\$3,850',
-              stats: ['18 views', '4 requests', '1 today'],
-              visibilityLabel: 'Listing Visibility',
-              visibilitySubtitle: 'Publicly bookable on search',
-              visibilityOn: true,
-              actionButtons: ['Edit', 'Calendar', 'Promote'],
-              highlightedAction: 'Promote',
+            ...activeListing.map(
+              (active) => Padding(
+                padding: EdgeInsetsGeometry.only(bottom: 12),
+                child: ActiveListingCard(activeListing: active),
+              ),
             ),
             SizedBox(height: 16),
-            _ActiveListingCard(
-              imagePath: 'assets/images/naksha.jpg',
-              badge: null,
-              location: 'Tribeca, New York',
-              title: 'Franklin Studio Loft',
-              price: '\$4,200',
-              stats: ['12 Views today', '2 Booking Inquiries'],
-              visibilityLabel: 'Listing Active',
-              visibilitySubtitle: 'Accepting instant requests',
-              visibilityOn: true,
-              actionButtons: ['Manage', 'Calendar'],
-              highlightedAction: null,
-            ),
-            SizedBox(height: 16),
-            _DraftListingCard(
-              imagePath: 'assets/images/new-uk-homes.png',
-              title: 'Chelsea Townhouse',
-              stepLabel: 'Draft (Step 2/3)',
-              note: 'Pricing & verification pending',
+            ...draftListing.map(
+              (draft) => Padding(
+                padding: EdgeInsetsGeometry.only(bottom: 12),
+                child: DraftListingCard(draftListing: draft),
+              ),
             ),
             SizedBox(height: 24),
             FilledButton(
               onPressed: () {
-                context.go('/lister/create-listing');
+                context.push(AppRouter.listerCreateListing);
               },
               style: FilledButton.styleFrom(
                 backgroundColor: colorScheme.primary,
@@ -324,362 +319,6 @@ class _RevenueSparkline extends StatelessWidget {
             dotData: FlDotData(show: false),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _ActiveListingCard extends StatelessWidget {
-  final String imagePath;
-  final String? badge;
-  final String location;
-  final String title;
-  final String price;
-  final List<String> stats;
-  final String visibilityLabel;
-  final String visibilitySubtitle;
-  final bool visibilityOn;
-  final List<String> actionButtons;
-  final String? highlightedAction;
-
-  const _ActiveListingCard({
-    required this.imagePath,
-    required this.badge,
-    required this.location,
-    required this.title,
-    required this.price,
-    required this.stats,
-    required this.visibilityLabel,
-    required this.visibilitySubtitle,
-    required this.visibilityOn,
-    required this.actionButtons,
-    required this.highlightedAction,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              Image.asset(
-                imagePath,
-                width: double.infinity,
-                height: 160,
-                fit: BoxFit.cover,
-              ),
-              Positioned(
-                top: 12,
-                left: 12,
-                child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surface,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 6,
-                            height: 6,
-                            decoration: BoxDecoration(
-                              color: AppColors.success,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            'Active',
-                            style: textTheme.labelMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    if (badge != null) ...[
-                      SizedBox(width: 6),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: colorScheme.primary,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          badge!,
-                          style: textTheme.labelMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              Positioned(
-                bottom: 12,
-                left: 12,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      location,
-                      style: textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: colorScheme.surface,
-                      ),
-                    ),
-                    Text(
-                      title,
-                      style: textTheme.headlineSmall?.copyWith(
-                        color: colorScheme.surface,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                bottom: 12,
-                right: 12,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      price,
-                      style: textTheme.headlineSmall?.copyWith(
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      '/month',
-                      style: textTheme.labelLarge?.copyWith(
-                        color: colorScheme.surface,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.all(14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 34,
-                  decoration: BoxDecoration(
-                    color: colorScheme.surfaceContainerLow,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: stats
-                        .map(
-                          (stat) => Padding(
-                            padding: EdgeInsets.only(right: 12),
-                            child: Text(
-                              stat,
-                              style: textTheme.labelLarge?.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-                SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            visibilityLabel,
-                            style: textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Text(
-                            visibilitySubtitle,
-                            style: textTheme.labelLarge?.copyWith(
-                              color: colorScheme.onSurfaceVariant,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Switch(
-                      value: visibilityOn,
-                      onChanged: (_) {},
-                      activeThumbColor: colorScheme.primary,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12),
-                Row(
-                  children: actionButtons.map((label) {
-                    return Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 8),
-                        child: FilledButton(
-                          onPressed: () {},
-                          style: FilledButton.styleFrom(
-                            backgroundColor: colorScheme.surfaceContainerLow,
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                          ),
-                          child: Text(
-                            label,
-                            style: textTheme.labelMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _DraftListingCard extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final String stepLabel;
-  final String note;
-
-  const _DraftListingCard({
-    required this.imagePath,
-    required this.title,
-    required this.stepLabel,
-    required this.note,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      imagePath,
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 24),
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: colorScheme.tertiary,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(stepLabel, style: textTheme.labelSmall),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        title,
-                        style: textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: colorScheme.secondary,
-                        ),
-                      ),
-                      Text(
-                        note,
-                        style: textTheme.labelLarge?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-              decoration: BoxDecoration(
-                color: colorScheme.tertiary.withValues(alpha: 0.5),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Row(
-                children: [
-                  HugeIcon(
-                    icon: HugeIcons.strokeRoundedEdit02,
-                    size: 16,
-                    color: colorScheme.secondary,
-                  ),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Finish listing to publish',
-                      style: textTheme.labelMedium?.copyWith(
-                        color: colorScheme.secondary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Icon(Icons.chevron_right, size: 18),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

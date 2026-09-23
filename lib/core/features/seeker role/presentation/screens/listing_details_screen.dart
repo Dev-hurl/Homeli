@@ -4,46 +4,6 @@ import 'package:homeli/core/features/seeker%20role/models/listing_detail_model.d
 import 'package:homeli/core/features/shared/widgets/circle_icon_button.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-final listingDetailData = ListingDetailModel(
-  imagePaths: List.filled(5, 'assets/images/elite-prop.jpg'),
-  statusLabel: 'For Rent',
-  rating: 4.96,
-  reviewCount: 48,
-  title: 'The Glass Pavilion, Soho',
-  address: '32 W Mercer St, Soho, Manhattan, NY',
-  price: '\$3,850',
-  moveInStatus: 'Immediate Move-in',
-  quickFeatures: ['3 Beds', '2 Baths', '1,800 sq ft'],
-  hostName: 'Larry Cho',
-  hostImagePath: 'assets/images/avatar.png',
-  hostResponseTime: 'Responds in < 15 mins',
-  description: 'Experience refined urban elegance in this thoughtfully customized modern sanctuary. Soaring ceilings and floor-to-ceiling acoustic glass frame the city skyline, while the private courtyard pool offers a rare moment of stillness in Soho.',
-  amenities: [
-    AmenityItem(
-      icon: HugeIcons.strokeRoundedRuler,
-      label: 'Architectural Design',
-    ),
-    AmenityItem(
-      icon: HugeIcons.strokeRoundedSquareLock02,
-      label: 'Private Courtyard',
-    ),
-    AmenityItem(icon: HugeIcons.strokeRoundedCall02, label: 'Concierge 24/7'),
-    AmenityItem(icon: HugeIcons.strokeRoundedWifi01, label: 'High-speed Fiber'),
-    AmenityItem(
-      icon: HugeIcons.strokeRoundedKey01,
-      label: 'Smart Keyless Entry',
-    ),
-    AmenityItem(
-      icon: HugeIcons.strokeRoundedCar01,
-      label: 'Dedicated EV Charging',
-    ),
-  ],
-  totalAmenitiesCount: 24,
-  transitScore: '99/100',
-  neighborhoodName: 'SoHo Cast-Iron District',
-  neighborhoodDescription: 'Quiet cobblestone corridor near Mercer & Prince',
-);
-
 class ListingDetailScreen extends StatefulWidget {
   final ListingDetailModel listing;
   const ListingDetailScreen({super.key, required this.listing});
@@ -111,7 +71,9 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                       SizedBox(width: 8),
                       CircleIconButton(
                         icon: HugeIcons.strokeRoundedFavourite,
-                        iconColor: _isFavorited ? colorScheme.primary : colorScheme.secondary,
+                        iconColor: _isFavorited
+                            ? colorScheme.primary
+                            : colorScheme.secondary,
                         backgroundColor: colorScheme.surface,
                         onTap: () =>
                             setState(() => _isFavorited = !_isFavorited),
@@ -209,7 +171,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                           Positioned.fill(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.black54,
+                                color: colorScheme.secondary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               alignment: Alignment.center,
