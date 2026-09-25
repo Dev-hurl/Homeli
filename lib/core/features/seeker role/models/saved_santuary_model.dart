@@ -18,7 +18,7 @@ class SavedListingModel {
 
 final List<SavedListingModel> savedListings = [
   SavedListingModel(
-    imagePath: 'assets/images/onboard1.png',
+    imagePath: 'assets/images/elite-prop.jpg',
     badgeLabel: 'Verified Architectural',
     price: '\$3,850/mo',
     propertyName: 'Architectural Glass Villa',
@@ -26,7 +26,7 @@ final List<SavedListingModel> savedListings = [
     features: const ['3 Beds', '2 Baths', '1,840 sqft'],
   ),
   SavedListingModel(
-    imagePath: 'assets/images/onboard1.png',
+    imagePath: 'assets/images/new-uk-homes.png',
     badgeLabel: 'Tour Available Today',
     price: '\$2,950/mo',
     propertyName: 'The Arched Brownstone',
@@ -34,7 +34,7 @@ final List<SavedListingModel> savedListings = [
     features: const ['2 Beds', '1 Bath', 'Private Garden'],
   ),
   SavedListingModel(
-    imagePath: 'assets/images/onboard1.png',
+    imagePath: 'assets/images/naksha.jpg',
     badgeLabel: 'Concierge 24/7',
     price: '\$4,200/mo',
     propertyName: 'Franklin Studio Loft',

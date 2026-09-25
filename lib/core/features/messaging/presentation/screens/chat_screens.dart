@@ -31,11 +31,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Row(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Row(
                 children: [
                   IconButton(
                     onPressed: () => context.pop(),
@@ -113,100 +113,121 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ],
               ),
-            ),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                children: [
-                  Center(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerHigh,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        'Today, Oct 22',
-                        style: textTheme.labelSmall?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  children: [
+                    Center(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: colorScheme.surfaceContainerHigh,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          'Today, Oct 22',
+                          style: textTheme.labelSmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 16),
-                  ...chatMessages.map(
-                    (message) => _ChatBubble(message: message),
-                  ),
-                ],
+                    SizedBox(height: 16),
+                    ...chatMessages.map(
+                      (message) => _ChatBubble(message: message),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 36,
-              child: ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                scrollDirection: Axis.horizontal,
-                itemCount: _quickReplies.length,
-                separatorBuilder: (_, _) => SizedBox(width: 8),
-                itemBuilder: (context, index) => Container(
-                  padding: EdgeInsets.symmetric(horizontal: 14),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: colorScheme.surfaceContainerHigh,
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: Text(
-                    _quickReplies[index],
-                    style: textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
+              SizedBox(
+                height: 36,
+                child: ListView.separated(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _quickReplies.length,
+                  separatorBuilder: (_, _) => SizedBox(width: 8),
+                  itemBuilder: (context, index) => Container(
+                    padding: EdgeInsets.symmetric(horizontal: 14),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: colorScheme.surfaceContainerHigh,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Text(
+                      _quickReplies[index],
+                      style: textTheme.labelMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(12),
-              child: Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerHigh,
-                      shape: BoxShape.circle,
+              SizedBox(height: 8),
+              Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: colorScheme.surface,
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colorScheme.secondary.withValues(alpha: 0.05),
+                      blurRadius: 16,
+                      offset: Offset(0, 4),
                     ),
-                    child: Icon(Icons.add, size: 20),
-                  ),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: _messageController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: colorScheme.surfaceContainerLow,
-                        hintText: 'Type a message...',
-                        suffixIcon: Icon(Icons.mic_none, size: 20),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(28),
-                          borderSide: BorderSide.none,
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: colorScheme.surfaceContainerHigh,
+                        shape: BoxShape.circle,
+                      ),
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedAdd01,
+                        size: 20,
+                        color: colorScheme.secondary,
+                        strokeWidth: 2,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        controller: _messageController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: colorScheme.surfaceContainerLow,
+                          hintText: 'Type a message...',
+                          suffixIcon: Icon(Icons.mic_none, size: 20),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(24),
+                            borderSide: BorderSide.none,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 8),
-                  Container(
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primary,
-                      shape: BoxShape.circle,
+                    SizedBox(width: 8),
+                    Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.send,
+                        size: 18,
+                        color: colorScheme.secondary,
+                      ),
                     ),
-                    child: Icon(Icons.send, size: 18, color: Colors.black),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -40,8 +40,9 @@ class ListingDetailModel {
     required this.neighborhoodName,
     required this.neighborhoodDescription,
   });
+}
 
-  final listingDetailData = ListingDetailModel(
+final listingDetailData = ListingDetailModel(
   imagePaths: List.filled(5, 'assets/images/elite-prop.jpg'),
   statusLabel: 'For Rent',
   rating: 4.96,
@@ -80,7 +81,6 @@ class ListingDetailModel {
   neighborhoodName: 'SoHo Cast-Iron District',
   neighborhoodDescription: 'Quiet cobblestone corridor near Mercer & Prince',
 );
-}
 
 class AmenityItem {
   final dynamic icon;

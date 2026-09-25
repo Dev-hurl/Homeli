@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/seeker%20role/models/featured_card_model.dart';
 import 'package:homeli/core/routing/app_router.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class FeaturedCard extends StatelessWidget {
   final FeaturedCardModel featuredCard;
@@ -19,40 +20,38 @@ class FeaturedCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadiusGeometry.circular(24),
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: colorScheme.surface,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: colorScheme.secondary.withValues(alpha: 0.07),
-                    blurRadius: 16,
-                    offset: Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  _buildTopSection(
-                    context,
-                    imagePath: featuredCard.imagesPath,
-                    rating: featuredCard.rating,
-                    price: featuredCard.price,
-                    verificationStatus: featuredCard.verificationStatus,
-                  ),
-                  _buildBottomSection(
-                    context,
-                    cardIcon: featuredCard.cardIcon,
-                    propertyName: featuredCard.propertyName,
-                    propertyLocation: featuredCard.propertyLocation,
-                    apartmentType: featuredCard.apartmentType,
-                    features: featuredCard.features,
-                  ),
-                ],
-              ),
+          Container(
+            width: double.infinity,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: colorScheme.secondaryContainer.withValues(alpha: 0.05),
+                  blurRadius: 16,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                _buildTopSection(
+                  context,
+                  imagePath: featuredCard.imagesPath,
+                  rating: featuredCard.rating,
+                  price: featuredCard.price,
+                  verificationStatus: featuredCard.verificationStatus,
+                ),
+                _buildBottomSection(
+                  context,
+                  cardIcon: featuredCard.cardIcon,
+                  propertyName: featuredCard.propertyName,
+                  propertyLocation: featuredCard.propertyLocation,
+                  apartmentType: featuredCard.apartmentType,
+                  features: featuredCard.features,
+                ),
+              ],
             ),
           ),
         ],
@@ -221,7 +220,18 @@ class FeaturedCard extends StatelessWidget {
               ],
             ),
             SizedBox(height: 4),
-            Text(propertyLocation, style: textTheme.labelMedium),
+            Row(
+              children: [
+                HugeIcon(
+                  icon: HugeIcons.strokeRoundedLocation09,
+                  size: 18,
+                  color: colorScheme.onSurfaceVariant,
+                  strokeWidth: 2,
+                ),
+                SizedBox(width: 4),
+                Text(propertyLocation, style: textTheme.labelMedium),
+              ],
+            ),
             SizedBox(height: 18),
             SizedBox(
               height: 28,
@@ -236,7 +246,7 @@ class FeaturedCard extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: colorScheme.surfaceContainerLow,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       feature,

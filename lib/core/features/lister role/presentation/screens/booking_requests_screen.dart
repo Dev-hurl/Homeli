@@ -486,7 +486,7 @@ class _BookingRequestCard extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     child: Text('Decline'),
@@ -500,7 +500,7 @@ class _BookingRequestCard extends StatelessWidget {
                       backgroundColor: colorScheme.primary,
                       padding: EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     child: Row(

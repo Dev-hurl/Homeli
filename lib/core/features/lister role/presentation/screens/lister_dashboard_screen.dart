@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:go_router/go_router.dart';
-import 'package:homeli/core/constants/app_colors.dart';
 import 'package:homeli/core/features/lister%20role/models/active_listing_model.dart';
 import 'package:homeli/core/features/lister%20role/models/draft_listing_model.dart';
 import 'package:homeli/core/features/lister%20role/presentation/widgets/active_listing_card.dart';
@@ -40,16 +39,21 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
             ),
           ),
           SizedBox(height: 8),
-          CircleAvatar(
-            radius: 24,
-            backgroundImage: AssetImage(_imagePath), //TODO: Fix circle Avatar
-            /*child: _imagePath.isNotEmpty
-                ? Image.asset(_imagePath)
-                : HugeIcon(
-                    icon: HugeIcons.strokeRoundedUser02,
-                    size: 24,
-                    strokeWidth: 2,
-                  ),*/
+          GestureDetector(
+            onTap: () {
+              context.go(AppRouter.listerProfile);
+            },
+            child: ClipOval(
+              child: _imagePath.isNotEmpty
+                  ? Image.asset(_imagePath, fit: BoxFit.cover)
+                  : CircleAvatar(
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedUser02,
+                        size: 22,
+                        strokeWidth: 2,
+                      ),
+                    ),
+            ),
           ),
         ],
       ),
@@ -191,7 +195,7 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
                 backgroundColor: colorScheme.primary,
                 minimumSize: Size(double.infinity, 52),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28),
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
               child: Row(

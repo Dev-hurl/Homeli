@@ -171,7 +171,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                           Positioned.fill(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: colorScheme.secondary,
+                                color: colorScheme.secondary.withValues(alpha: 0.6),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               alignment: Alignment.center,

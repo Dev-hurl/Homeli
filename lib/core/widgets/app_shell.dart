@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/auth/providers/role_provider.dart';
 import 'package:homeli/core/routing/app_router.dart';
 import 'package:homeli/core/widgets/custom_nav_bar.dart';
+import 'package:homeli/core/widgets/profile_switcher.dart';
 import 'package:provider/provider.dart';
 
 class AppShell extends StatelessWidget {
@@ -18,6 +19,7 @@ class AppShell extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: HomeliBottomNav(
         currentIndex: navigationShell.currentIndex,
+        onProfileLongPress: () => showProfileSwitcherSheet(context),
         onTap: (index) {
           if (role == UserRole.lister) {
             final listerLocations = [
@@ -33,6 +35,7 @@ class AppShell extends StatelessWidget {
           final seekerLocations = [
             AppRouter.seekerHome,
             AppRouter.seekerBookings,
+            AppRouter.seekerSavedSanctuaries,
             AppRouter.messages,
             AppRouter.seekerProfile,
           ];

@@ -28,6 +28,7 @@ class _SignInState extends State<SignInScreen> {
       context.read<UserRoleProvider>().setRole(UserRole.lister);
       context.go(AppRouter.listerHome);
     }
+    
   }
 
   @override
@@ -127,8 +128,15 @@ class _SignInState extends State<SignInScreen> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          final email = value?.trim() ?? '';
+                          final emailPattern = RegExp(
+                            r'^[^\s@]+@[^\s@]+\.[^\s@]+$',
+                          );
+                          if (email.isEmpty) {
                             return 'Please enter your email address';
+                          }
+                          if (!emailPattern.hasMatch(email)) {
+                            return 'Please enter a valid email address';
                           }
                           return null;
                         },
@@ -138,7 +146,7 @@ class _SignInState extends State<SignInScreen> {
                       CustomTextFormField(
                         controller: _password,
                         labelText: 'Password',
-                        hintText: 'Create a strong password',
+                        hintText: 'Enter your password',
                         obscureText: true,
                         showPasswordToggle: true,
                         prefixIcon: UnconstrainedBox(
@@ -232,7 +240,7 @@ class _SocialButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.surface,
           border: Border.all(color: Theme.of(context).dividerColor),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(
           padding: EdgeInsets.all(12),

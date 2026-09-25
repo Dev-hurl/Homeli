@@ -199,7 +199,7 @@ class ActiveListingCard extends StatelessWidget {
                             backgroundColor: colorScheme.surfaceContainerLow,
                             padding: EdgeInsets.symmetric(vertical: 10),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                           child: Text(

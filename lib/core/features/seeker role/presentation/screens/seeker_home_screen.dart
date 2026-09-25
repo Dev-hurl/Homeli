@@ -52,17 +52,22 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
           SizedBox(width: 16),
           GestureDetector(
             onTap: () {
-              context.push(AppRouter.seekerProfile);
+              context.go(AppRouter.seekerProfile);
             },
-            child: CircleAvatar(
-              radius: 24,
-              child: _imagePath.isNotEmpty
-                  ? Image.asset(_imagePath, fit: BoxFit.cover,)
-                  : HugeIcon(
-                      icon: HugeIcons.strokeRoundedUser02,
-                      size: 22,
-                      strokeWidth: 2,
-                    ),
+            child: ClipOval(
+              child: SizedBox(
+                width: 48,
+                height: 48,
+                child: _imagePath.isNotEmpty
+                    ? Image.asset(_imagePath, fit: BoxFit.cover)
+                    : CircleAvatar(
+                        child: HugeIcon(
+                          icon: HugeIcons.strokeRoundedUser02,
+                          size: 22,
+                          strokeWidth: 2,
+                        ),
+                      ),
+              ),
             ),
           ),
         ],

@@ -202,14 +202,14 @@ class AppRouter {
         path: '/seeker/leave-review',
         builder: (context, state) => LeaveReviewScreen(),
       ),
-      /*GoRoute(
+      GoRoute(
         path: '/seeker/listing-details',
         builder: (context, state) => ListingDetailScreen(
           listing: state.extra is ListingDetailModel
               ? state.extra! as ListingDetailModel
               : listingDetailData,
         ),
-      ),*/
+      ),
 
       GoRoute(
         path: seekerSearchFilters,

@@ -10,7 +10,7 @@ class NavItem {
 final navItems = [
   NavItem(icon: HugeIcons.strokeRoundedHome01, label: 'Home'),
   NavItem(icon: HugeIcons.strokeRoundedCalendar03, label: 'Bookings'),
-  NavItem(icon: HugeIcons.strokeRoundedBookBookmark01, label: 'Saved'),
+  NavItem(icon: HugeIcons.strokeRoundedBookmark01, label: 'Saved'),
   NavItem(icon: HugeIcons.strokeRoundedMessage01, label: 'Messages'),
   NavItem(icon: HugeIcons.strokeRoundedUser02, label: 'Profile'),
 ];
@@ -18,6 +18,7 @@ final navItems = [
 class HomeliBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
+  final VoidCallback? onProfileLongPress;
   final bool showAddListingFab;
   final VoidCallback? onAddListingTap;
 
@@ -25,6 +26,7 @@ class HomeliBottomNav extends StatelessWidget {
     super.key,
     required this.currentIndex,
     required this.onTap,
+    this.onProfileLongPress,
     this.showAddListingFab = false,
     this.onAddListingTap,
   });
@@ -38,7 +40,7 @@ class HomeliBottomNav extends StatelessWidget {
       type: MaterialType.transparency,
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(bottom: 16  ),
+          padding: EdgeInsets.only(bottom: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -55,6 +57,9 @@ class HomeliBottomNav extends StatelessWidget {
                     final item = navItems[index];
                     return GestureDetector(
                       onTap: () => onTap(index),
+                      onLongPress: index == navItems.length - 1
+                          ? onProfileLongPress
+                          : null,
                       child: AnimatedContainer(
                         duration: Duration(milliseconds: 200),
                         padding: EdgeInsets.symmetric(

@@ -234,7 +234,7 @@ class _TrustVerificationScreenState extends State<TrustVerificationScreen> {
                 backgroundColor: colorScheme.primary,
                 minimumSize: Size(double.infinity, 52),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28),
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
               child: Row(

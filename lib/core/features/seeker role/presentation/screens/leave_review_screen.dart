@@ -497,7 +497,7 @@ class _LeaveReviewScreenState extends State<LeaveReviewScreen> {
                       backgroundColor: colorScheme.primary,
                       minimumSize: Size(double.infinity, 52),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(28),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     child: Row(

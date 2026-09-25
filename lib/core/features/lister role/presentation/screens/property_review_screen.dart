@@ -390,7 +390,7 @@ class _PropertyReviewsScreenState extends State<PropertyReviewsScreen> {
                         vertical: 14,
                       ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     child: Row(

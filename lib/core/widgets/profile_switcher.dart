@@ -20,7 +20,7 @@ Future<void> showProfileSwitcherSheet(BuildContext context) {
     backgroundColor: Colors.transparent,
     isScrollControlled: true,
     builder: (context) => ProfileSwitcherSheet(),
-    //onPressed: () => showProfileSwitcherSheet(context)
+    //TODO: USage : onPressed: () => showProfileSwitcherSheet(context)
   );
 }
 
@@ -37,7 +37,7 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
   final _profiles = [
     ProfileOption(
       imagePath: 'assets/images/avatar.png',
-      name: 'Sophia Chen',
+      name: 'Larry Cho',
       subtitle: 'Renting & Exploring',
     ),
     ProfileOption(
@@ -70,15 +70,15 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
                 height: 4,
                 margin: EdgeInsets.only(bottom: 16),
                 decoration: BoxDecoration(
-                  color: colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(4),
+                  color: colorScheme.secondaryContainer,
+                  borderRadius: BorderRadius.circular(24),
                 ),
               ),
             ),
             Text(
               'Seamlessly transition between renting your dream home and managing listing inquiries.',
               style: textTheme.bodyMedium?.copyWith(
-                color: colorScheme.secondary,
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -94,12 +94,12 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: colorScheme.surfaceContainerLow,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                         color: selected
                             ? colorScheme.primary
                             : Colors.transparent,
-                        width: 1.5,
+                        width: 1.3,
                       ),
                     ),
                     child: Row(
@@ -115,8 +115,8 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
                             children: [
                               Text(
                                 profile.name,
-                                style: textTheme.bodyLarge?.copyWith(
-                                  fontWeight: FontWeight.w700,
+                                style: textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                               SizedBox(height: 4),
@@ -146,12 +146,14 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
                                     vertical: 2,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: colorScheme.primaryContainer,
+                                    color: colorScheme.surface,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Text(
                                     profile.subtitle,
-                                    style: textTheme.labelSmall,
+                                    style: textTheme.labelSmall?.copyWith(
+                                      color: colorScheme.secondaryContainer,
+                                    ),
                                   ),
                                 ),
                             ],
@@ -165,10 +167,11 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
                                   color: colorScheme.primary,
                                   shape: BoxShape.circle,
                                 ),
-                                child: Icon(
-                                  Icons.check,
+                                child: HugeIcon(
+                                  icon:
+                                      HugeIcons.strokeRoundedCheckmarkCircle02,
                                   size: 16,
-                                  color: Colors.black,
+                                  color: colorScheme.surface,
                                 ),
                               )
                             : HugeIcon(
@@ -185,7 +188,7 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
             OutlinedButton(
               onPressed: () {},
               style: OutlinedButton.styleFrom(
-                minimumSize: Size(double.infinity, 48),
+                minimumSize: Size(double.infinity, 52),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
                 ),
@@ -193,10 +196,10 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.add, size: 18),
+                  HugeIcon(icon: HugeIcons.strokeRoundedAdd01, size: 18),
                   SizedBox(width: 8),
                   Text(
-                    'Add Another Role or Business',
+                    'Add Another Role',
                     style: textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -213,11 +216,13 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
                     icon: HugeIcons.strokeRoundedRefresh,
                     size: 14,
                     color: colorScheme.onSurfaceVariant,
+                    strokeWidth: 2,
                   ),
                   SizedBox(width: 6),
                   Text(
-                    'Favorites and chats sync instantly',
-                    style: textTheme.labelSmall?.copyWith(
+                    'Chats sync instantly',
+                    style: textTheme.labelMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),

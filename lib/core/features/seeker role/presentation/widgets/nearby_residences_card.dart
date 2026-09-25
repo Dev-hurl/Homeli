@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeli/core/features/seeker%20role/models/nearby_residences_model.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class NearbyResidencesCard extends StatelessWidget {
   final NearbyResidencesModel nearbyResidences;
@@ -12,45 +13,42 @@ class NearbyResidencesCard extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-
       children: [
-        ClipRRect(
-          borderRadius: BorderRadiusGeometry.circular(24),
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: colorScheme.secondary.withValues(alpha: 0.5),
-                  blurRadius: 16,
-                  offset: Offset(0, 4),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: colorScheme.secondaryContainer.withValues(alpha: 0.05),
+                blurRadius: 16,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Row(
+            children: [
+              SizedBox(
+                width: 180,
+                child: _buildLeftSection(
+                  context,
+                  imagePath: nearbyResidences.imagePath,
+                  rating: nearbyResidences.rating,
                 ),
-              ],
-            ),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 180,
-                  child: _buildLeftSection(
-                    context,
-                    imagePath: nearbyResidences.imagePath,
-                    rating: nearbyResidences.rating,
-                  ),
+              ),
+              Expanded(
+                child: _buildRightSection(
+                  context,
+                  price: nearbyResidences.price,
+                  propertyName: nearbyResidences.propertyName,
+                  propertyLocation: nearbyResidences.propertyLocation,
+                  features: nearbyResidences.features,
+                  viewType: nearbyResidences.viewType,
                 ),
-                Expanded(
-                  child: _buildRightSection(
-                    context,
-                    price: nearbyResidences.price,
-                    propertyName: nearbyResidences.propertyName,
-                    propertyLocation: nearbyResidences.propertyLocation,
-                    features: nearbyResidences.features,
-                    viewType: nearbyResidences.viewType,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
@@ -89,11 +87,17 @@ class NearbyResidencesCard extends StatelessWidget {
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                rating.toString(),
-                style: textTheme.labelMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+              child: Row(
+                spacing: 4,
+                children: [
+                  Icon(Icons.star, color: colorScheme.primary, size: 14),
+                  Text(
+                    rating.toString(),
+                    style: textTheme.labelMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -124,6 +128,13 @@ class NearbyResidencesCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                HugeIcon(
+                  icon: HugeIcons.strokeRoundedLocation09,
+                  size: 18,
+                  color: colorScheme.onSurfaceVariant,
+                  strokeWidth: 2,
+                ),
+                SizedBox(width: 4),
                 Text(
                   propertyLocation,
                   style: textTheme.labelMedium?.copyWith(
@@ -131,6 +142,7 @@ class NearbyResidencesCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+                Spacer(),
                 IconButton(
                   onPressed: () {
                     //
@@ -164,7 +176,7 @@ class NearbyResidencesCard extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: colorScheme.surfaceContainerLow,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       feature,

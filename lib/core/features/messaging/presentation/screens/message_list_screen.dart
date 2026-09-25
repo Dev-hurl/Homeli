@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/messaging/models/conversation_model.dart';
+import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class MessagesListScreen extends StatefulWidget {
@@ -40,7 +41,9 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.push(AppRouter.notifications);
+            },
             icon: HugeIcon(
               icon: HugeIcons.strokeRoundedNotification01,
               size: 20,
@@ -58,78 +61,81 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
           ),
         ],
       ),
-      body: SafeArea(
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
-              child: Row(
-                children: [
-                  Text(
-                    'Messages',
-                    style: textTheme.headlineMedium?.copyWith(
-                      color: colorScheme.secondaryContainer,
-                      fontWeight: FontWeight.w700,
-                    ),
+            Row(
+              children: [
+                Text(
+                  'Messages',
+                  style: textTheme.headlineMedium?.copyWith(
+                    color: colorScheme.secondaryContainer,
+                    fontWeight: FontWeight.w700,
                   ),
-                  if (unreadTotal > 0) ...[
-                    SizedBox(width: 8),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colorScheme.primary,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        '$unreadTotal Unread',
-                        style: textTheme.labelSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ],
-                  Spacer(),
+                ),
+                if (unreadTotal > 0) ...[
+                  SizedBox(width: 8),
                   Container(
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerHigh,
-                      shape: BoxShape.circle,
+                      color: colorScheme.primary,
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Icon(Icons.done_all, size: 16),
+                    child: Text(
+                      '$unreadTotal Unread',
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.surface,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: colorScheme.surfaceContainerLow,
-                  hintText: 'Search conversations or listings...',
-                  prefixIcon: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: HugeIcon(
-                      icon: HugeIcons.strokeRoundedSearch02,
-                      size: 18,
-                      strokeWidth: 2,
+                Spacer(),
+                Row(
+                  spacing: 4,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: colorScheme.surfaceContainerHigh,
+                        shape: BoxShape.circle,
+                      ),
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedCheckUnread04,
+                        size: 16,
+                      ),
                     ),
+                    Text('Mark all as Read', style: textTheme.labelSmall),
+                  ],
+                ),
+              ],
+            ),
+            TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: colorScheme.surfaceContainerLow,
+                hintText: 'Search conversations or listings...',
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  child: HugeIcon(
+                    icon: HugeIcons.strokeRoundedSearch02,
+                    size: 18,
+                    strokeWidth: 2,
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28),
-                    borderSide: BorderSide.none,
-                  ),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(28),
+                  borderSide: BorderSide.none,
                 ),
               ),
             ),
+            SizedBox(height: 12),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 12),
               child: SizedBox(
-                height: 36,
+                height: 24,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: _tabs.length,
@@ -149,7 +155,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                         ),
                         child: Text(
                           _tabs[index],
-                          style: textTheme.labelMedium?.copyWith(
+                          style: textTheme.labelSmall?.copyWith(
                             color: selected
                                 ? colorScheme.surface
                                 : colorScheme.onSurface,
@@ -162,12 +168,13 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 16),
             Expanded(
               child: ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                //padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 itemCount: conversations.length,
-                separatorBuilder: (_, _) => Divider(height: 24, color: Theme.of(context).dividerColor,),
+                separatorBuilder: (_, _) =>
+                    Divider(height: 24, color: Theme.of(context).dividerColor),
                 itemBuilder: (context, index) =>
                     _ConversationTile(conversation: conversations[index]),
               ),
@@ -186,7 +193,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
@@ -322,7 +329,11 @@ class _ConversationTile extends StatelessWidget {
                         ),
                       )
                     else if (conversation.isRead)
-                      Icon(Icons.done_all, size: 16, color: colorScheme.secondary)
+                      Icon(
+                        Icons.done_all,
+                        size: 16,
+                        color: colorScheme.secondary,
+                      )
                     else
                       Container(
                         height: 8,

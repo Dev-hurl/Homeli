@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:homeli/core/features/seeker%20role/models/booking_detail_screen.dart';
+import 'package:homeli/core/features/seeker%20role/models/booking_detail_model.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class BookingDetailScreen extends StatelessWidget {
@@ -502,7 +502,7 @@ class BookingDetailScreen extends StatelessWidget {
                       style: OutlinedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       child: Text('Message Lister'),
@@ -516,7 +516,7 @@ class BookingDetailScreen extends StatelessWidget {
                         backgroundColor: colorScheme.primary,
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       child: Text(

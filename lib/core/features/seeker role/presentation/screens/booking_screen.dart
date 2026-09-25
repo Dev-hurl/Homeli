@@ -19,23 +19,6 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(
-        leading: Image.asset(
-              'assets/icons/Homeli Logo T Inverted.png',
-              width: 28,
-              height: 28,
-            ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: HugeIcon(
-              icon: HugeIcons.strokeRoundedNotification01,
-              size: 22,
-            ),
-          ),
-          
-        ],
-      ),
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.all(20),
@@ -75,7 +58,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
             ),
             Text(
               'Manage tours, stays, and lease requests',
-              style: textTheme.labelSmall?.copyWith(
+              style: textTheme.labelMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
@@ -95,7 +78,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                       ),
                       decoration: BoxDecoration(
                         color: selected
-                            ? colorScheme.secondary
+                            ? colorScheme.secondaryContainer
                             : colorScheme.surfaceContainerHigh,
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -106,7 +89,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                             label,
                             style: textTheme.labelMedium?.copyWith(
                               color: selected
-                                  ? colorScheme.onSecondary
+                                  ? colorScheme.surface
                                   : colorScheme.onSurface,
                               fontWeight: FontWeight.w600,
                             ),
@@ -120,7 +103,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                             child: Text(
                               '$count',
                               style: textTheme.labelSmall?.copyWith(
-                                fontSize: 10,
+                                color: colorScheme.onSurface,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -139,7 +122,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                 Text(
                   'Next Experience',
                   style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 Row(
@@ -147,13 +130,14 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                     HugeIcon(
                       icon: HugeIcons.strokeRoundedRefresh,
                       size: 14,
-                      color: colorScheme.secondary,
+                      color: colorScheme.secondaryContainer,
+                      strokeWidth: 2,
                     ),
                     SizedBox(width: 4),
                     Text(
                       'Sync Calendar',
                       style: textTheme.labelSmall?.copyWith(
-                        color: colorScheme.secondary,
+                        color: colorScheme.secondaryContainer,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -263,7 +247,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                     onPressed: () {},
                     style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     child: Text('Chat'),
@@ -287,7 +271,16 @@ class _NextExperienceCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.secondary.withValues(alpha: 0.05),
+            blurRadius: 16,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
       clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -325,24 +318,7 @@ class _NextExperienceCard extends StatelessWidget {
                   onTap: () {},
                 ),
               ),
-              Positioned(
-                bottom: 12,
-                right: 12,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.black54,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    'VIP',
-                    style: textTheme.labelSmall?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
+
               Positioned(
                 bottom: 12,
                 left: 12,
@@ -350,16 +326,9 @@ class _NextExperienceCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'PRIVATE GUIDED VIEWING',
-                      style: textTheme.labelSmall?.copyWith(
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
                       'The Glass Pavilion, Soho',
                       style: textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
+                        color: colorScheme.surface,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -370,7 +339,7 @@ class _NextExperienceCard extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.all(16),
-            color: colorScheme.surfaceContainerLow,
+            color: colorScheme.surface,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -489,7 +458,7 @@ class _NextExperienceCard extends StatelessWidget {
                           backgroundColor: colorScheme.primary,
                           padding: EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                         child: Row(
@@ -502,7 +471,7 @@ class _NextExperienceCard extends StatelessWidget {
                             ),
                             SizedBox(width: 6),
                             Text(
-                              'View Booking Pass',
+                              'View Booking Details',
                               style: textTheme.labelMedium?.copyWith(
                                 color: colorScheme.onPrimary,
                                 fontWeight: FontWeight.w700,
@@ -521,7 +490,7 @@ class _NextExperienceCard extends StatelessWidget {
                           horizontal: 16,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       child: Row(

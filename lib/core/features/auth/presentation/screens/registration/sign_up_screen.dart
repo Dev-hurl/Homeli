@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homeli/core/features/auth/service/auth_service.dart';
 import 'package:homeli/core/widgets/custom_text_form_field.dart';
 import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -24,16 +25,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final bool isObscure = true;
   String? _checked;
 
-  void _onCreateAccountPressed() {
+  Future<void> _onCreateAccountPressed() async {
     if (_formKey.currentState!.validate()) {
-      context.push(
-        AppRouter.otpVerification,
-        extra: OtpRouteArguments(
-          firstName: _legalName.text,
-          emailAddress: _emailAddress.text,
-          role: widget.roleName == 'LISTER' ? UserRole.lister : UserRole.seeker,
-        ),
-      );
+      try {
+        await AuthService().signUpWithEmailPassword(
+          legalName: _legalName.text.trim(),
+          email: _emailAddress.text.trim(),
+          password: _password.text,
+          role: widget.roleName,
+        );
+        if (mounted) {
+          context.push(
+            AppRouter.otpVerification,
+            extra: OtpRouteArguments(
+              firstName: _legalName.text,
+              emailAddress: _emailAddress.text,
+              role: widget.roleName == 'LISTER'
+                  ? UserRole.lister
+                  : UserRole.seeker,
+            ),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Error : $e')));
+        }
+      }
     }
   }
 
@@ -155,8 +173,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          final email = value?.trim() ?? '';
+                          final emailPattern = RegExp(
+                            r'^[^\s@]+@[^\s@]+\.[^\s@]+$',
+                          );
+                          if (email.isEmpty) {
                             return 'Please enter your email address';
+                          }
+                          if (!emailPattern.hasMatch(email)) {
+                            return 'Please enter a valid email address';
                           }
                           return null;
                         },
@@ -301,7 +326,7 @@ class _SocialButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.surface,
           border: Border.all(color: Theme.of(context).dividerColor),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(
           padding: EdgeInsets.all(12),
