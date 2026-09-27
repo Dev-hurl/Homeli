@@ -4,22 +4,36 @@ import 'package:homeli/core/routing/app_router.dart';
 import 'package:homeli/core/theme/app_theme.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  
+
   await Supabase.initialize(
     url: 'https://depaphvgzaijinxbxche.supabase.co',
     publishableKey: 'sb_publishable_ey7FA_3TtPQomZIr9K6XYg_AWUJP896',
   );
 
+  final preferences = await SharedPreferences.getInstance();
+  final hasSeenOnboarding =
+      preferences.getBool(AppRouter.hasSeenOnboardingPreferenceKey) == true;
+  final hasExistingSession =
+      Supabase.instance.client.auth.currentSession != null;
+
+  // Older installations may have an authenticated Supabase session but no
+  // onboarding preference saved yet. Treat them as returning users.
+  if (hasExistingSession && !hasSeenOnboarding) {
+    await preferences.setBool(AppRouter.hasSeenOnboardingPreferenceKey, true);
+  }
+
+  AppRouter.initialLocation = hasSeenOnboarding || hasExistingSession
+      ? AppRouter.signIn
+      : AppRouter.onboarding;
+
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => UserRoleProvider(),
-      child: MyApp(),
-    ),
+    ChangeNotifierProvider(create: (_) => UserRoleProvider(), child: MyApp()),
   );
 }
 

@@ -4,11 +4,11 @@ import 'package:homeli/core/features/auth/presentation/screens/registration/otp_
 import 'package:homeli/core/features/auth/presentation/screens/registration/role_setup_screen.dart';
 import 'package:homeli/core/features/auth/presentation/screens/registration/sign_in_screen.dart';
 import 'package:homeli/core/features/auth/presentation/screens/registration/sign_up_screen.dart';
+import 'package:homeli/core/features/shared/settings/presentation/screens/account_settings_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/booking_request_details.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/booking_requests_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/create_listing_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/lister_dashboard_screen.dart';
-import 'package:homeli/core/features/lister%20role/presentation/screens/lister_profile_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/property_review_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/trust_verification_screen.dart';
 import 'package:homeli/core/features/messaging/presentation/screens/chat_screens.dart';
@@ -21,8 +21,8 @@ import 'package:homeli/core/features/seeker%20role/presentation/screens/listing_
 import 'package:homeli/core/features/seeker%20role/presentation/screens/saved_santuary_screen.dart';
 import 'package:homeli/core/features/seeker%20role/presentation/screens/search_filter_screen.dart';
 import 'package:homeli/core/features/seeker%20role/presentation/screens/seeker_home_screen.dart';
-import 'package:homeli/core/features/seeker%20role/presentation/screens/seeker_profile_screen.dart';
 import 'package:homeli/core/features/shared/notifications/notification_screen.dart';
+import 'package:homeli/core/features/shared/settings/presentation/screens/edit_identity_screen.dart';
 import 'package:homeli/core/widgets/app_shell.dart';
 
 enum UserRole { seeker, lister }
@@ -53,6 +53,7 @@ class SeekerHomeRouteArguments {
 
 class AppRouter {
   static const onboarding = '/';
+  static const hasSeenOnboardingPreferenceKey = 'hasSeenOnboarding';
   static const roleSetup = '/auth/role-setup';
   static const signIn = '/auth/sign-in';
   static const signUp = '/auth/sign-up';
@@ -64,20 +65,22 @@ class AppRouter {
   static const seekerListingDetails = '/seeker/listing-details';
   static const seekerSavedSanctuaries = '/seeker/saved-sanctuaries';
   static const seekerSearchFilters = '/seeker/search-filters';
-  static const seekerProfile = '/seeker/profile';
+  static const accountSettings = '/shared/account-settings';
+  static const editIdentityScreen = '/shared/edit-identity';
   static const listerHome = '/lister/home';
   static const listerCreateListing = '/lister/create-listing';
   static const listerBookingRequests = '/lister/booking-requests';
   static const listerBookingRequestDetails = '/lister/request-details';
   static const listerPropertyReviews = '/lister/property-reviews';
   static const listerTrustVerification = '/lister/verification';
-  static const listerProfile = '/lister/profile';
   static const messages = '/messaging/messages';
   static const chat = '/messaging/chat';
   static const notifications = '/shared/notifications';
 
+  static String initialLocation = onboarding;
+
   static final GoRouter router = GoRouter(
-    initialLocation: onboarding,
+    initialLocation: initialLocation,
     routes: [
       GoRoute(
         path: onboarding,
@@ -182,12 +185,8 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: seekerProfile,
-                builder: (context, state) => SeekerProfileScreen(),
-              ),
-              GoRoute(
-                path: listerProfile,
-                builder: (context, state) => ListerProfileScreen(),
+                path: accountSettings,
+                builder: (context, state) => AccountSettingsScreen(),
               ),
             ],
           ),
@@ -218,6 +217,10 @@ class AppRouter {
       GoRoute(
         path: '/messaging/chat',
         builder: (context, state) => ChatScreen(),
+      ),
+      GoRoute(
+        path: editIdentityScreen,
+        builder: (context, state) => EditIdentityScreen(),
       ),
       GoRoute(
         path: '/shared',

@@ -26,7 +26,7 @@ class AppShell extends StatelessWidget {
               AppRouter.listerHome,
               AppRouter.listerBookingRequests,
               AppRouter.messages,
-              AppRouter.listerProfile,
+              AppRouter.accountSettings,
             ];
             context.go(listerLocations[index]);
             return;
@@ -37,7 +37,7 @@ class AppShell extends StatelessWidget {
             AppRouter.seekerBookings,
             AppRouter.seekerSavedSanctuaries,
             AppRouter.messages,
-            AppRouter.seekerProfile,
+            AppRouter.accountSettings,
           ];
           context.go(seekerLocations[index]);
         },
