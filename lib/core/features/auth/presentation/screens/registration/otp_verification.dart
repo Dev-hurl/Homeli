@@ -271,7 +271,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                               'Verify OTP',
                               style: textTheme.labelLarge?.copyWith(
                                 fontWeight: FontWeight.w600,
-                                color: colorScheme.onPrimary,
+                                color: colorScheme.surface,
                               ),
                             ),
                           ),

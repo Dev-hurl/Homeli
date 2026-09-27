@@ -162,7 +162,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ? 'Get Started'
                                 : 'Continue',
                             style: textTheme.labelLarge?.copyWith(
-                              color: colorScheme.onPrimary,
+                              color: colorScheme.surface,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

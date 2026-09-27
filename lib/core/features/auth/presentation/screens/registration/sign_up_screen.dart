@@ -6,6 +6,7 @@ import 'package:homeli/core/features/auth/service/auth_service.dart';
 import 'package:homeli/core/widgets/custom_text_form_field.dart';
 import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpScreen extends StatefulWidget {
   final String roleName;
@@ -46,10 +47,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           );
         }
-      } catch (e) {
+      } on AuthException catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Error : $e')));
+              .showSnackBar(SnackBar(content: Text(e.message)));
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Something went wrong. Please try again.'),
+            ),
+          );
         }
       }
     }

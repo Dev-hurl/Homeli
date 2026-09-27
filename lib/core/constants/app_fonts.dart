@@ -14,7 +14,7 @@ class AppFonts {
     fontSize: 36,
     height: 44 / 36,
     fontWeight: FontWeight.w700,
-    color: AppColors.primaryText,
+    color: AppColors.blueSecondary,
   );
 
   static TextStyle displayMedium = TextStyle(
@@ -22,7 +22,7 @@ class AppFonts {
     fontSize: 32,
     height: 40 / 32,
     fontWeight: FontWeight.w700,
-    color: AppColors.primaryText,
+    color: AppColors.blueSecondary,
   );
 
   static TextStyle displaySmall = TextStyle(
@@ -40,7 +40,7 @@ class AppFonts {
     fontSize: 24,
     height: 32 / 24,
     fontWeight: FontWeight.w700,
-    color: AppColors.primaryText,
+    color: AppColors.blueSecondary,
   );
 
   static TextStyle headlineMedium = TextStyle(
@@ -48,7 +48,7 @@ class AppFonts {
     fontSize: 20,
     height: 28 / 20,
     fontWeight: FontWeight.w700,
-    color: AppColors.primaryText,
+    color: AppColors.blueSecondary,
   );
 
   static TextStyle headlineSmall = TextStyle(
@@ -56,7 +56,7 @@ class AppFonts {
     fontSize: 18,
     height: 24 / 18,
     fontWeight: FontWeight.w600,
-    color: AppColors.primaryText,
+    color: AppColors.blueSecondary,
   );
 
   // ---- BODY ----
@@ -66,15 +66,15 @@ class AppFonts {
     fontSize: 16,
     height: 24 / 16,
     fontWeight: FontWeight.w600,
-    color: AppColors.primaryText,
+    color: AppColors.blueSecondary,
   );
 
   static TextStyle bodyMedium = TextStyle(
     fontFamily: _fontFamily,
     fontSize: 14,
     height: 20 / 14,
-    fontWeight: FontWeight.w400,
-    color: AppColors.primaryText,
+    fontWeight: FontWeight.w500,
+    color: AppColors.blueSecondary,
   );
 
   static TextStyle bodySmall = TextStyle(
@@ -82,7 +82,7 @@ class AppFonts {
     fontSize: 12,
     height: 16 / 12,
     fontWeight: FontWeight.w400,
-    color: AppColors.primaryText,
+    color: AppColors.blueSecondary,
   );
 
   // ---- LABELS ----
@@ -92,7 +92,7 @@ class AppFonts {
     fontSize: 14,
     height: 20 / 14,
     fontWeight: FontWeight.w600,
-    color: AppColors.primaryText,
+    color: AppColors.blueSecondary,
   );
 
   static TextStyle labelMedium = TextStyle(
@@ -100,7 +100,7 @@ class AppFonts {
     fontSize: 12,
     height: 16 / 12,
     fontWeight: FontWeight.w600,
-    color: AppColors.primaryText,
+    color: AppColors.blueSecondary,
   );
 
   static TextStyle labelSmall = TextStyle(

@@ -21,11 +21,36 @@ class AuthService {
     required String password,
     required String role,
   }) async {
-    return await _supabase.auth.signUp(
+    final response = await _supabase.auth.signUp(
       email: email,
       password: password,
       data: {'legal_name': legalName, 'role': role},
     );
+
+    final userId = response.user?.id;
+    if (userId == null) {
+      throw Exception('Sign up succeeded but no user was returned.');
+    }
+
+    final normalizedRole = role.toLowerCase() == 'lister' ? 'lister' : 'seeker';
+
+    await _supabase.from('identities').insert({
+      'user_id': userId,
+      'full_name': legalName,
+    });
+
+    final profileRow = await _supabase
+        .from('profiles')
+        .insert({'user_id': userId, 'role': normalizedRole})
+        .select('id')
+        .single();
+
+    await _supabase.from('user_state').insert({
+      'user_id': userId,
+      'active_profile_id': profileRow['id'],
+    });
+
+    return response;
   }
 
   //SignIn with google

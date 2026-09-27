@@ -43,7 +43,6 @@ class _RoleSetupScreenState extends State<RoleSetupScreen> {
                 Text(
                   'How will you use Homeli?',
                   style: textTheme.headlineMedium?.copyWith(
-                    color: colorScheme.secondary,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -86,7 +85,7 @@ class _RoleSetupScreenState extends State<RoleSetupScreen> {
                         ? 'Continue'
                         : 'Continue as ${_selectedRoleName!.toLowerCase()}',
                     style: textTheme.labelLarge?.copyWith(
-                      color: colorScheme.onPrimary,
+                      color: colorScheme.surface,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

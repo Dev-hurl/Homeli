@@ -2,11 +2,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homeli/core/features/auth/service/auth_service.dart';
 import 'package:homeli/core/widgets/custom_text_form_field.dart';
 import 'package:homeli/core/routing/app_router.dart';
 import 'package:homeli/core/features/auth/providers/role_provider.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -23,12 +25,51 @@ class _SignInState extends State<SignInScreen> {
 
   final bool isObscure = true;
 
-  void _onLogin() {
+  Future<void> _onLogin() async {
     if (_formKey.currentState!.validate()) {
-      context.read<UserRoleProvider>().setRole(UserRole.lister);
-      context.go(AppRouter.listerHome);
+      try {
+        final response = await AuthService().signInWithEmailPassword(
+          _emailAddress.text.trim(),
+          _password.text,
+        );
+
+        final metadata = response.user?.userMetadata ?? <String, dynamic>{};
+        final roleName = (metadata['role'] as String?)?.toUpperCase();
+        final activeRole = roleName == 'LISTER'
+            ? UserRole.lister
+            : UserRole.seeker;
+        final legalName = (metadata['legal_name'] as String?)?.trim();
+
+        if (!mounted) return;
+        context.read<UserRoleProvider>().setRole(activeRole);
+
+        if (activeRole == UserRole.lister) {
+          context.go(AppRouter.listerHome);
+        } else {
+          context.go(
+            AppRouter.seekerHome,
+            extra: SeekerHomeRouteArguments(
+              firstName: legalName == null || legalName.isEmpty
+                  ? 'User'
+                  : legalName,
+            ),
+          );
+        }
+      } on AuthException catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(e.message)));
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Something went wrong. Please try again.'),
+            ),
+          );
+        }
+      }
     }
-    
   }
 
   @override

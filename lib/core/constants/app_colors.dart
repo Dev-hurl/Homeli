@@ -20,7 +20,7 @@ class AppColors {
 
   // ─── TEXT ───────────────────────────────────────────
 
-  static const Color primaryText = Color(0xff555D6E);
+  static const Color primaryText = Color(0xff222F56);
   static const Color secondaryText = Color(0xff656E80);
   // ─── STATUS ───────────────────────────────────────────
   static const Color error = Color(0xffE53E3E);

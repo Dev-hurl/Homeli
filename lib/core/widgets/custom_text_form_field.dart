@@ -75,7 +75,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
         ],
         Container(
           decoration: BoxDecoration(
@@ -109,6 +109,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 16,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),

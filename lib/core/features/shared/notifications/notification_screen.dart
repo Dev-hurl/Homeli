@@ -81,7 +81,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12),
               child: SizedBox(
-                height: 24,
+                height: 36,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
@@ -103,7 +103,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         ),
                         child: Text(
                           _tabs[index],
-                          style: textTheme.labelSmall?.copyWith(
+                          style: textTheme.labelMedium?.copyWith(
                             color: selected
                                 ? colorScheme.surface
                                 : colorScheme.onSurface,
