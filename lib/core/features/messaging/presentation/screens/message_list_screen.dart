@@ -70,7 +70,6 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                 Text(
                   'Messages',
                   style: textTheme.headlineMedium?.copyWith(
-                    color: colorScheme.secondaryContainer,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -135,7 +134,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12),
               child: SizedBox(
-                height: 24,
+                height: 36,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: _tabs.length,
@@ -155,7 +154,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                         ),
                         child: Text(
                           _tabs[index],
-                          style: textTheme.labelSmall?.copyWith(
+                          style: textTheme.labelMedium?.copyWith(
                             color: selected
                                 ? colorScheme.surface
                                 : colorScheme.onSurface,

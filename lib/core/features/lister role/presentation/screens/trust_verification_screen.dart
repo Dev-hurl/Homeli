@@ -243,7 +243,7 @@ class _TrustVerificationScreenState extends State<TrustVerificationScreen> {
                   Text(
                     'Submit Documents for Final Review',
                     style: textTheme.labelLarge?.copyWith(
-                      color: colorScheme.onPrimary,
+                      color: colorScheme.surface,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

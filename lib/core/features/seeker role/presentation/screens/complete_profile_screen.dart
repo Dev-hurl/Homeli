@@ -172,7 +172,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                   child: HugeIcon(
                                     icon: HugeIcons.strokeRoundedCamera01,
                                     size: 16,
-                                    color: colorScheme.onPrimary,
+                                    color: colorScheme.surface,
                                   ),
                                 ),
                               ),
@@ -454,7 +454,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         Text(
                           'Continue',
                           style: textTheme.labelLarge?.copyWith(
-                            color: colorScheme.onPrimary,
+                            color: colorScheme.surface,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -462,7 +462,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         HugeIcon(
                           icon: HugeIcons.strokeRoundedArrowRight01,
                           size: 16,
-                          color: colorScheme.onPrimary,
+                          color: colorScheme.surface,
                         ),
                       ],
                     ),

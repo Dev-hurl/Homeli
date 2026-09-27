@@ -495,7 +495,7 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                         Text(
                           'Apply Filters (142 Places)',
                           style: textTheme.labelLarge?.copyWith(
-                            color: colorScheme.onPrimary,
+                            color: colorScheme.surface,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -503,7 +503,7 @@ class _SearchFiltersScreenState extends State<SearchFiltersScreen> {
                         HugeIcon(
                           icon: HugeIcons.strokeRoundedArrowRight01,
                           size: 16,
-                          color: colorScheme.onPrimary,
+                          color: colorScheme.surface,
                         ),
                       ],
                     ),

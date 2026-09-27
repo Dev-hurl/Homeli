@@ -171,7 +171,9 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                           Positioned.fill(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: colorScheme.secondary.withValues(alpha: 0.6),
+                                color: colorScheme.secondary.withValues(
+                                  alpha: 0.6,
+                                ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               alignment: Alignment.center,
@@ -230,7 +232,6 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                   Text(
                     listing.title,
                     style: textTheme.headlineMedium?.copyWith(
-                      color: colorScheme.secondaryContainer,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -634,7 +635,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                       Text(
                         'Request Tour',
                         style: textTheme.labelLarge?.copyWith(
-                          color: colorScheme.onPrimary,
+                          color: colorScheme.surface,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -642,7 +643,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
                       HugeIcon(
                         icon: HugeIcons.strokeRoundedArrowRight01,
                         size: 16,
-                        color: colorScheme.onPrimary,
+                        color: colorScheme.surface,
                       ),
                     ],
                   ),

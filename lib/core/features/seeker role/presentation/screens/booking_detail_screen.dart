@@ -31,7 +31,8 @@ class BookingDetailScreen extends StatelessWidget {
                       children: [
                         Text(
                           'Booking Detail',
-                          style: textTheme.titleMedium?.copyWith(
+                          style: textTheme.bodyMedium?.copyWith(
+                            //TODO: fix colour not changing
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -70,7 +71,7 @@ class BookingDetailScreen extends StatelessWidget {
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: colorScheme.primaryContainer,
+                                color: colorScheme.surface,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
@@ -144,47 +145,29 @@ class BookingDetailScreen extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerLow,
+                      color: colorScheme.surface,
                       borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: colorScheme.secondary.withValues(alpha: 0.05),
+                          blurRadius: 16,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    'assets/images/elite-prop.jpg',
-                                    width: 64,
-                                    height: 64,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 4,
-                                  left: 4,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                      vertical: 2,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.black54,
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    child: Text(
-                                      'SOHO',
-                                      style: textTheme.labelSmall?.copyWith(
-                                        color: Colors.white,
-                                        fontSize: 9,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                'assets/images/elite-prop.jpg',
+                                width: 64,
+                                height: 64,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             SizedBox(width: 12),
                             Expanded(
@@ -206,12 +189,18 @@ class BookingDetailScreen extends StatelessWidget {
                                         color: Colors.amber,
                                       ),
                                       SizedBox(width: 2),
-                                      Text('4.96', style: textTheme.labelSmall),
+                                      Text(
+                                        '4.96',
+                                        style: textTheme.labelSmall?.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   Text(
                                     'The Glass Pavilion, Soho',
                                     style: textTheme.bodyLarge?.copyWith(
+                                      color: colorScheme.secondaryContainer,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -226,6 +215,7 @@ class BookingDetailScreen extends StatelessWidget {
                                   Text(
                                     '\$3,850 /month',
                                     style: textTheme.labelMedium?.copyWith(
+                                      color: colorScheme.secondaryContainer,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -238,7 +228,7 @@ class BookingDetailScreen extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
-                            color: colorScheme.surfaceContainerHigh,
+                            color: colorScheme.surfaceContainerLow,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
@@ -286,12 +276,13 @@ class BookingDetailScreen extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: colorScheme.primaryContainer,
+                          color: colorScheme.surface,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           'Step 3 of 4',
                           style: textTheme.labelSmall?.copyWith(
+                            color: colorScheme.secondaryContainer,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -353,6 +344,7 @@ class BookingDetailScreen extends StatelessWidget {
                                   Text(
                                     'Larry Cho',
                                     style: textTheme.bodyLarge?.copyWith(
+                                      
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -388,69 +380,46 @@ class BookingDetailScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 12),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      HugeIcon(
-                        icon: HugeIcons.strokeRoundedBuilding03,
-                        size: 18,
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'DESIGNATED MEETING SPOT',
-                              style: textTheme.labelSmall?.copyWith(
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                            Text(
-                              'Lobby desk, 112 Prince Street entrance',
-                              style: textTheme.labelMedium?.copyWith(
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(
-                              'Ring unit #PH-4 or announce Homeli Tour to concierge.',
-                              style: textTheme.labelSmall?.copyWith(
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
                   Container(
                     padding: EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: colorScheme.primaryContainer,
+                      color: colorScheme.surface,
                       borderRadius: BorderRadius.circular(14),
+                      boxShadow: [
+                        BoxShadow(
+                          color: colorScheme.secondary.withValues(alpha: 0.05),
+                          blurRadius: 16,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
                     ),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         HugeIcon(
-                          icon: HugeIcons.strokeRoundedQrCode,
-                          size: 22,
-                          color: colorScheme.secondary,
+                          icon: HugeIcons.strokeRoundedBuilding03,
+                          size: 18,
+                          color: colorScheme.onSurfaceVariant,
                         ),
-                        SizedBox(width: 12),
+                        SizedBox(width: 10),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Digital Pass Ready',
+                                'DESIGNATED MEETING SPOT',
+                                style: textTheme.labelSmall?.copyWith(
+                                  color: colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                              Text(
+                                'Lobby desk, 112 Prince Street entrance',
                                 style: textTheme.labelMedium?.copyWith(
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
                               Text(
-                                'Tap to reveal lobby QR entry',
+                                'Ring unit #PH-4 or announce Homeli Tour to concierge.',
                                 style: textTheme.labelSmall?.copyWith(
                                   color: colorScheme.onSurfaceVariant,
                                 ),
@@ -458,35 +427,8 @@ class BookingDetailScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Icon(Icons.chevron_right),
                       ],
                     ),
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    children: [
-                      HugeIcon(
-                        icon: HugeIcons.strokeRoundedShieldUser,
-                        size: 14,
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                      SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          'Flexible tour reschedule until 10:00 AM',
-                          style: textTheme.labelSmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'Policies',
-                        style: textTheme.labelSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ],
                   ),
                   SizedBox(height: 16),
                 ],
@@ -497,15 +439,23 @@ class BookingDetailScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: OutlinedButton(
+                    child: FilledButton(
                       onPressed: () {},
-                      style: OutlinedButton.styleFrom(
+                      style: FilledButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: colorScheme.surfaceContainerHigh,
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: Text('Message Lister'),
+                      child: Text(
+                        'Message Lister',
+                        style: textTheme.labelLarge?.copyWith(
+                          color: colorScheme.secondary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(width: 12),
@@ -513,6 +463,7 @@ class BookingDetailScreen extends StatelessWidget {
                     child: FilledButton(
                       onPressed: () {},
                       style: FilledButton.styleFrom(
+                        elevation: 0,
                         backgroundColor: colorScheme.primary,
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
@@ -522,8 +473,8 @@ class BookingDetailScreen extends StatelessWidget {
                       child: Text(
                         'View Tour Pass',
                         style: textTheme.labelLarge?.copyWith(
-                          color: colorScheme.onPrimary,
-                          fontWeight: FontWeight.w700,
+                          color: colorScheme.surface,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -640,8 +591,8 @@ class _TourJourneyTimeline extends StatelessWidget {
                             style: textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w700,
                               color: step.status == TourStepStatus.locked
-                                  ? colorScheme.onSurfaceVariant
-                                  : colorScheme.onSurface,
+                                  ? colorScheme.secondaryContainer
+                                  : colorScheme.secondaryContainer,
                             ),
                           ),
                           if (step.trailingLabel != null)

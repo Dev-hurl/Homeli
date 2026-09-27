@@ -506,7 +506,7 @@ class _LeaveReviewScreenState extends State<LeaveReviewScreen> {
                         Text(
                           'Submit Review',
                           style: textTheme.labelLarge?.copyWith(
-                            color: colorScheme.onPrimary,
+                            color: colorScheme.surface,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

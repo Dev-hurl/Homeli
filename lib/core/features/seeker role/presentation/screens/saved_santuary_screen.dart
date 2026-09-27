@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/seeker%20role/models/saved_santuary_model.dart';
 import 'package:homeli/core/features/seeker%20role/presentation/widgets/saved_listing_card.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -21,16 +20,6 @@ class _SavedSanctuariesScreenState extends State<SavedSanctuariesScreen> {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: HugeIcon(
-            icon: HugeIcons.strokeRoundedArrowLeft01,
-            color: colorScheme.secondary,
-            size: 20,
-          ),
-        ),
-      ),
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.all(20),
@@ -44,7 +33,6 @@ class _SavedSanctuariesScreenState extends State<SavedSanctuariesScreen> {
                     Text(
                       'Saved Sanctuaries',
                       style: textTheme.headlineMedium?.copyWith(
-                        color: colorScheme.secondaryContainer,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -184,14 +172,30 @@ class _SavedSanctuariesScreenState extends State<SavedSanctuariesScreen> {
                     ),
                   ),
                   SizedBox(height: 12),
-                  OutlinedButton(
+                  FilledButton(
                     onPressed: () {},
-                    style: OutlinedButton.styleFrom(
+                    style: FilledButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: colorScheme.surface,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
                       ),
                     ),
-                    child: Text('Create Shared Board'),
+                    child: Text(
+                      'Create Shared Board',
+                      style: textTheme.labelMedium?.copyWith(
+                        color: colorScheme.secondary,
+                        shadows: [
+                          BoxShadow(
+                            color: colorScheme.secondary.withValues(
+                              alpha: 0.05,
+                            ),
+                            blurRadius: 16,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),

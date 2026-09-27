@@ -29,7 +29,7 @@ final tourSteps = [
   TourStepModel(
     title: 'Tour Scheduled',
     trailingLabel: 'Active Step',
-    description: 'Thursday, Oct 24 • 2:00 PM EST\n⏰ Reminder set for 1 hour prior (1:00 PM)',
+    description: 'Thursday, Oct 24 • 2:00 PM EST',
     status: TourStepStatus.active,
   ),
   TourStepModel(

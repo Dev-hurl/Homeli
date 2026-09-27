@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/shared/widgets/circle_icon_button.dart';
+import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class MyBookingsScreen extends StatefulWidget {
@@ -28,16 +30,9 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
               children: [
                 Row(
                   children: [
-                    HugeIcon(
-                      icon: HugeIcons.strokeRoundedCalendar03,
-                      size: 22,
-                      color: colorScheme.secondary,
-                    ),
-                    SizedBox(width: 8),
                     Text(
                       'My Bookings',
                       style: textTheme.headlineMedium?.copyWith(
-                        color: colorScheme.secondaryContainer,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -222,8 +217,6 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
               ),
               child: Row(
                 children: [
-                  Text('✨', style: TextStyle(fontSize: 20)),
-                  SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,14 +236,18 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                       ],
                     ),
                   ),
-                  OutlinedButton(
-                    onPressed: () {},
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                  SizedBox(
+                    height: 40,
+                    child: FilledButton(
+                      onPressed: () {},
+                      style: OutlinedButton.styleFrom(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
+                      child: Text('Contact Support'),
                     ),
-                    child: Text('Chat'),
                   ),
                 ],
               ),
@@ -452,54 +449,72 @@ class _NextExperienceCard extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: FilledButton(
-                        onPressed: () {},
-                        style: FilledButton.styleFrom(
-                          backgroundColor: colorScheme.primary,
-                          padding: EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                      child: SizedBox(
+                        height: 40,
+                        child: FilledButton(
+                          onPressed: () {
+                            context.push(AppRouter.seekerBookingDetail);
+                          },
+                          style: FilledButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: colorScheme.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedTicket01,
-                              size: 16,
-                              color: colorScheme.onPrimary,
-                            ),
-                            SizedBox(width: 6),
-                            Text(
-                              'View Booking Details',
-                              style: textTheme.labelMedium?.copyWith(
-                                color: colorScheme.onPrimary,
-                                fontWeight: FontWeight.w700,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              HugeIcon(
+                                icon: HugeIcons.strokeRoundedTicket01,
+                                size: 16,
+                                color: colorScheme.surface,
                               ),
-                            ),
-                          ],
+                              SizedBox(width: 6),
+                              Text(
+                                'View Booking Details',
+                                style: textTheme.labelMedium?.copyWith(
+                                  color: colorScheme.surface,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(width: 10),
-                    OutlinedButton(
-                      onPressed: () {},
-                      style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 14,
-                          horizontal: 16,
+                    Expanded(
+                      child: SizedBox(
+                        height: 40,
+                        child: FilledButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: colorScheme.surfaceContainerHigh,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              HugeIcon(
+                                icon: HugeIcons.strokeRoundedChat01,
+                                size: 18,
+                                color: colorScheme.secondary,
+                              ),
+                              SizedBox(width: 6),
+                              Text(
+                                'Message Host',
+                                style: textTheme.labelMedium?.copyWith(
+                                  color: colorScheme.secondary,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.chat_bubble_outline, size: 16),
-                          SizedBox(width: 6),
-                          Text('Message Host'),
-                        ],
                       ),
                     ),
                   ],
@@ -556,7 +571,7 @@ class _PendingBookingCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
-                    color: colorScheme.primaryContainer,
+                    color: colorScheme.tertiary.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
@@ -584,8 +599,6 @@ class _PendingBookingCard extends StatelessWidget {
                 SizedBox(height: 4),
                 Row(
                   children: [
-                    Text('⏳', style: TextStyle(fontSize: 12)),
-                    SizedBox(width: 4),
                     Expanded(
                       child: Text(
                         'Host typically responds within 4 hrs',

@@ -81,18 +81,18 @@ class _SavedListingCardState extends State<SavedListingCard> {
               ),
               Positioned(
                 bottom: 12,
-                left: 12,
+                right: 12,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: colorScheme.secondary,
+                    color: colorScheme.secondaryContainer,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     listing.price,
                     style: textTheme.labelMedium?.copyWith(
-                      color: colorScheme.onSecondary,
-                      fontWeight: FontWeight.w700,
+                      color: colorScheme.surface,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -176,21 +176,24 @@ class _SavedListingCardState extends State<SavedListingCard> {
                     FilledButton(
                       onPressed: () {},
                       style: FilledButton.styleFrom(
-                        backgroundColor: colorScheme.secondary,
+                        backgroundColor: colorScheme.secondaryContainer,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.calendar_today, size: 14),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedCalendar04,
+                            size: 18,
+                            strokeWidth: 2,
+                          ),
                           SizedBox(width: 6),
                           Text(
                             'Schedule Tour',
                             style: textTheme.labelMedium?.copyWith(
-                             color: colorScheme.surface,
-                             
+                              color: colorScheme.surface,
                             ),
                           ),
                         ],
