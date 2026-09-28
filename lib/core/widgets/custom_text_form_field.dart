@@ -16,6 +16,7 @@ class CustomTextFormField extends StatefulWidget {
     this.textInputAction,
     this.fillColor,
     this.showPasswordToggle = false,
+    this.readOnly = false,
   });
 
   final TextEditingController controller;
@@ -30,6 +31,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final Color? fillColor;
   final bool showPasswordToggle;
+  final bool readOnly;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -83,10 +85,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           decoration: BoxDecoration(
             color: colorScheme.surface,
             borderRadius: BorderRadius.circular(12),
-           
-            
           ),
           child: TextFormField(
+            readOnly: widget.readOnly,
             controller: widget.controller,
             obscureText: widget.showPasswordToggle
                 ? _isObscure
@@ -94,6 +95,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             keyboardType: widget.keyboardType,
             textInputAction: widget.textInputAction,
             validator: widget.validator,
+            style: textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w500,
+              color: colorScheme.onSurfaceVariant,
+            ),
             decoration: InputDecoration(
               hintText: widget.hintText,
               hintStyle: textTheme.labelMedium?.copyWith(

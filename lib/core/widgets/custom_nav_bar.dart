@@ -15,26 +15,27 @@ final navItems = [
   NavItem(icon: HugeIcons.strokeRoundedUser02, label: 'Profile'),
 ];
 
+final listerNavItems = [navItems[0], navItems[1], navItems[3], navItems[4]];
+
 class HomeliBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
   final VoidCallback? onProfileLongPress;
-  final bool showAddListingFab;
-  final VoidCallback? onAddListingTap;
+  final List<NavItem>? items;
 
   const HomeliBottomNav({
     super.key,
     required this.currentIndex,
     required this.onTap,
     this.onProfileLongPress,
-    this.showAddListingFab = false,
-    this.onAddListingTap,
+    this.items,
   });
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final visibleItems = items ?? navItems;
 
     return Material(
       type: MaterialType.transparency,
@@ -52,12 +53,12 @@ class HomeliBottomNav extends StatelessWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: List.generate(navItems.length, (index) {
+                  children: List.generate(visibleItems.length, (index) {
                     final selected = index == currentIndex;
-                    final item = navItems[index];
+                    final item = visibleItems[index];
                     return GestureDetector(
                       onTap: () => onTap(index),
-                      onLongPress: index == navItems.length - 1
+                      onLongPress: index == visibleItems.length - 1
                           ? onProfileLongPress
                           : null,
                       child: AnimatedContainer(
@@ -103,31 +104,6 @@ class HomeliBottomNav extends StatelessWidget {
                   }),
                 ),
               ),
-              if (showAddListingFab) ...[
-                SizedBox(width: 10),
-                GestureDetector(
-                  onTap: onAddListingTap,
-                  child: Container(
-                    height: 52,
-                    width: 52,
-                    decoration: BoxDecoration(
-                      color: colorScheme.surface,
-                      boxShadow: [
-                        BoxShadow(
-                          color: colorScheme.primary.withValues(alpha: 0.4),
-                          blurRadius: 12,
-                          offset: Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Icon(
-                      Icons.add,
-                      color: colorScheme.secondary,
-                      size: 26,
-                    ),
-                  ),
-                ),
-              ],
             ],
           ),
         ),

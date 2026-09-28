@@ -13,15 +13,27 @@ class AppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final role = context.watch<UserRoleProvider>().activeRole;
+    final isLister = role == UserRole.lister;
+    final currentNavIndex = isLister
+        ? switch (navigationShell.currentIndex) {
+            0 => 0,
+            1 => 1,
+            3 => 2,
+            4 => 3,
+            _ => 0,
+          }
+        : navigationShell.currentIndex;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       body: navigationShell,
       bottomNavigationBar: HomeliBottomNav(
-        currentIndex: navigationShell.currentIndex,
+        items: isLister ? listerNavItems : navItems,
+        currentIndex: currentNavIndex,
+
         onProfileLongPress: () => showProfileSwitcherSheet(context),
         onTap: (index) {
-          if (role == UserRole.lister) {
+          if (isLister) {
             final listerLocations = [
               AppRouter.listerHome,
               AppRouter.listerBookingRequests,
@@ -41,8 +53,6 @@ class AppShell extends StatelessWidget {
           ];
           context.go(seekerLocations[index]);
         },
-        showAddListingFab: role == UserRole.lister,
-        onAddListingTap: () => context.push(AppRouter.listerCreateListing),
       ),
     );
   }

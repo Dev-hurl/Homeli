@@ -27,32 +27,25 @@ class _BookingRequestsScreenState extends State<BookingRequestsScreen> {
           children: [
             Row(
               children: [
-                IconButton(
-                  onPressed: () => Navigator.of(context).maybePop(),
-                  icon: HugeIcon(
-                    icon: HugeIcons.strokeRoundedArrowLeft01,
-                    size: 20,
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Booking Requests',
-                        style: textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
+                
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Booking Requests',
+                      style: textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
                       ),
-                      Text(
-                        'Manage host inquiries and prospective guests',
-                        style: textTheme.labelSmall?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
+                    ),
+                    Text(
+                      'Manage host inquiries and prospective guests',
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+                Spacer(),
                 Container(
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
@@ -78,6 +71,7 @@ class _BookingRequestsScreenState extends State<BookingRequestsScreen> {
                   child: Text(
                     '${bookingRequests.length} PENDING INQUIRIES',
                     style: textTheme.labelSmall?.copyWith(
+                      color: colorScheme.surface,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -91,7 +85,7 @@ class _BookingRequestsScreenState extends State<BookingRequestsScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 14),
+            SizedBox(height: 24),
             SizedBox(
               height: 36,
               child: ListView.separated(
@@ -107,7 +101,7 @@ class _BookingRequestsScreenState extends State<BookingRequestsScreen> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: selected
-                            ? colorScheme.secondary
+                            ? colorScheme.secondaryContainer
                             : colorScheme.surfaceContainerHigh,
                         borderRadius: BorderRadius.circular(18),
                       ),
@@ -115,7 +109,7 @@ class _BookingRequestsScreenState extends State<BookingRequestsScreen> {
                         _tabs[index],
                         style: textTheme.labelMedium?.copyWith(
                           color: selected
-                              ? colorScheme.onSecondary
+                              ? colorScheme.surface
                               : colorScheme.onSurface,
                           fontWeight: FontWeight.w600,
                         ),

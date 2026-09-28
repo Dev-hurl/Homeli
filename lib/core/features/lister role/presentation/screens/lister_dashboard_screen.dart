@@ -35,6 +35,7 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
             icon: HugeIcon(
               icon: HugeIcons.strokeRoundedNotification01,
               size: 22,
+              color: colorScheme.secondaryContainer,
               strokeWidth: 2,
             ),
           ),
@@ -214,6 +215,21 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
               ),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: colorScheme.primary.withValues(alpha: 0.9),
+        shape: RoundedRectangleBorder(
+          borderRadius: .circular(50),
+        ),
+        onPressed: () {
+          context.push(AppRouter.listerCreateListing);
+        },
+        child: HugeIcon(
+          icon: HugeIcons.strokeRoundedAdd01,
+          color: colorScheme.surface,
+          size: 20,
+          strokeWidth: 2,
         ),
       ),
     );
