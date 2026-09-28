@@ -51,6 +51,18 @@ class SeekerHomeRouteArguments {
   SeekerHomeRouteArguments({required this.firstName});
 }
 
+class EditIdentityRouteArguments {
+  final String fullName;
+  final String phoneNumber;
+  final String emailAddress;
+
+  EditIdentityRouteArguments({
+    required this.fullName,
+    required this.phoneNumber,
+    required this.emailAddress,
+  });
+}
+
 class AppRouter {
   static const onboarding = '/';
   static const hasSeenOnboardingPreferenceKey = 'hasSeenOnboarding';

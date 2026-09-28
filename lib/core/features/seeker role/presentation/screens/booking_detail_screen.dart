@@ -16,7 +16,11 @@ class BookingDetailScreen extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           onPressed: () => context.pop(),
-          icon: HugeIcon(icon: HugeIcons.strokeRoundedArrowLeft01, size: 20),
+          icon: HugeIcon(
+            icon: HugeIcons.strokeRoundedArrowLeft01,
+            size: 20,
+            color: colorScheme.secondaryContainer,
+          ),
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

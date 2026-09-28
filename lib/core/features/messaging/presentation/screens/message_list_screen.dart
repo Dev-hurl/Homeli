@@ -32,108 +32,78 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        actionsPadding: EdgeInsets.only(right: 16),
-        leading: Image.asset(
-          'assets/icons/Homeli Logo T Inverted.png',
-          width: 28,
-          height: 28,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.push(AppRouter.notifications);
-            },
-            icon: HugeIcon(
-              icon: HugeIcons.strokeRoundedNotification01,
-              size: 20,
-              strokeWidth: 2,
-            ),
-          ),
-          SizedBox(width: 4),
-          IconButton(
-            onPressed: () {},
-            icon: HugeIcon(
-              icon: HugeIcons.strokeRoundedCustomerSupport,
-              size: 20,
-              strokeWidth: 2,
-            ),
-          ),
-        ],
-      ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  'Messages',
-                  style: textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                if (unreadTotal > 0) ...[
-                  SizedBox(width: 8),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primary,
-                      borderRadius: BorderRadius.circular(12),
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Messages',
+                    style: textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
                     ),
-                    child: Text(
-                      '$unreadTotal Unread',
-                      style: textTheme.labelSmall?.copyWith(
-                        color: colorScheme.surface,
-                        fontWeight: FontWeight.w600,
+                  ),
+                  if (unreadTotal > 0) ...[
+                    SizedBox(width: 8),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary,
+                        borderRadius: BorderRadius.circular(12),
                       ),
+                      child: Text(
+                        '$unreadTotal Unread',
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colorScheme.surface,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                  Spacer(),
+                  TextButton(
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.done_all, size: 16),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Mark all read',
+                          style: textTheme.labelSmall?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
-                Spacer(),
-                Row(
-                  spacing: 4,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerHigh,
-                        shape: BoxShape.circle,
-                      ),
-                      child: HugeIcon(
-                        icon: HugeIcons.strokeRoundedCheckUnread04,
-                        size: 16,
-                      ),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: colorScheme.surfaceContainerLow,
+                  hintText: 'Search conversations or listings...',
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    child: HugeIcon(
+                      icon: HugeIcons.strokeRoundedSearch02,
+                      size: 18,
+                      strokeWidth: 2,
                     ),
-                    Text('Mark all as Read', style: textTheme.labelSmall),
-                  ],
-                ),
-              ],
-            ),
-            TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: colorScheme.surfaceContainerLow,
-                hintText: 'Search conversations or listings...',
-                prefixIcon: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  child: HugeIcon(
-                    icon: HugeIcons.strokeRoundedSearch02,
-                    size: 18,
-                    strokeWidth: 2,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: BorderSide.none,
                   ),
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(28),
-                  borderSide: BorderSide.none,
-                ),
               ),
-            ),
-            SizedBox(height: 12),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: SizedBox(
+              SizedBox(height: 16),
+              SizedBox(
                 height: 36,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
@@ -166,19 +136,21 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                   },
                 ),
               ),
-            ),
-            SizedBox(height: 16),
-            Expanded(
-              child: ListView.separated(
-                //padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                itemCount: conversations.length,
-                separatorBuilder: (_, _) =>
-                    Divider(height: 24, color: Theme.of(context).dividerColor),
-                itemBuilder: (context, index) =>
-                    _ConversationTile(conversation: conversations[index]),
+              SizedBox(height: 16),
+              Expanded(
+                child: ListView.separated(
+                  //padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  itemCount: conversations.length,
+                  separatorBuilder: (_, _) => Divider(
+                    height: 24,
+                    color: Theme.of(context).dividerColor,
+                  ),
+                  itemBuilder: (context, index) =>
+                      _ConversationTile(conversation: conversations[index]),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -192,7 +164,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     );
   }

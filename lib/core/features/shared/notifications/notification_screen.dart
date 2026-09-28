@@ -127,6 +127,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ],
               ),
             ),
+            SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               child: SizedBox(
@@ -144,7 +145,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: selected
-                              ? colorScheme.secondary
+                              ? colorScheme.secondaryContainer
                               : colorScheme.surfaceContainerHigh,
                           borderRadius: BorderRadius.circular(18),
                         ),
