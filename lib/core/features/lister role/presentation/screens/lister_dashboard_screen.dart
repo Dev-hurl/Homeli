@@ -41,7 +41,7 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
           SizedBox(height: 8),
           GestureDetector(
             onTap: () {
-              context.go(AppRouter.listerProfile);
+              context.go(AppRouter.accountSettings);
             },
             child: ClipOval(
               child: _imagePath.isNotEmpty

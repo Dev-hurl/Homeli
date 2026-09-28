@@ -22,8 +22,11 @@ class AppTheme {
       onSurface: AppColors.primaryText,
       onSurfaceVariant: AppColors.secondaryText,
       error: AppColors.error,
-      
     ),
-    
+    appBarTheme: AppBarTheme(
+      //backgroundColor: AppColors.blueSecondary,
+      foregroundColor: AppColors.white,
+      surfaceTintColor: AppColors.blueSecondary,
+    ),
   );
 }

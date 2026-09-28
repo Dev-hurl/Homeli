@@ -286,7 +286,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Text.rich(
                     TextSpan(
                       text: 'Already have an account? ',
-                      style: textTheme.labelMedium,
+                      style: textTheme.labelLarge,
                       children: [
                         TextSpan(
                           text: 'Sign In',
@@ -294,7 +294,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ..onTap = () {
                               context.push(AppRouter.signIn);
                             },
-                          style: textTheme.labelMedium?.copyWith(
+                          style: textTheme.labelLarge?.copyWith(
                             color: colorScheme.primary,
                             fontWeight: FontWeight.w600,
                           ),

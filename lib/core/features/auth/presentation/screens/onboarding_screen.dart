@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homeli/core/routing/app_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingSlide {
   final String title;
@@ -38,7 +39,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ),
   ];
 
-  void _finishOnboarding() {
+  Future<void> _finishOnboarding() async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(
+      AppRouter.hasSeenOnboardingPreferenceKey,
+      true,
+    );
+    if (!mounted) return;
     context.go(AppRouter.roleSetup);
   }
 

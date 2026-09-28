@@ -232,7 +232,7 @@ class _SignInState extends State<SignInScreen> {
                   child: Text.rich(
                     TextSpan(
                       text: 'Don\'t have an account? ',
-                      style: textTheme.labelMedium,
+                      style: textTheme.labelLarge,
                       children: [
                         TextSpan(
                           text: 'Sign Up',
@@ -240,7 +240,7 @@ class _SignInState extends State<SignInScreen> {
                             ..onTap = () {
                               context.push(AppRouter.roleSetup);
                             },
-                          style: textTheme.labelMedium?.copyWith(
+                          style: textTheme.labelLarge?.copyWith(
                             color: colorScheme.primary,
                             fontWeight: FontWeight.w600,
                           ),

@@ -12,478 +12,458 @@ class BookingDetailScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      body: SafeArea(
-        child: Column(
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () => context.pop(),
+          icon: HugeIcon(icon: HugeIcons.strokeRoundedArrowLeft01, size: 20),
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () => context.pop(),
-                    icon: HugeIcon(
-                      icon: HugeIcons.strokeRoundedArrowLeft01,
-                      size: 20,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Booking Detail',
-                          style: textTheme.bodyMedium?.copyWith(
-                            //TODO: fix colour not changing
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Text(
-                          'REF: #HL-8842',
-                          style: textTheme.labelSmall?.copyWith(
-                            color: colorScheme.secondary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz)),
-                ],
+            Text(
+              'Booking Detail',
+              style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+            ),
+            Text(
+              'REF: #HL-8842',
+              style: textTheme.labelSmall?.copyWith(
+                color: colorScheme.secondary,
               ),
             ),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerLow,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              children: [
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: colorScheme.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: colorScheme.surface,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              'Confirmed Guided Tour',
+                              style: textTheme.labelSmall?.copyWith(
+                                fontWeight: FontWeight.w700,
                               ),
-                              decoration: BoxDecoration(
-                                color: colorScheme.surface,
-                                borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.verified_user,
+                                size: 14,
+                                color: colorScheme.secondary,
                               ),
-                              child: Text(
-                                'Confirmed Guided Tour',
+                              SizedBox(width: 4),
+                              Text(
+                                'Secured',
                                 style: textTheme.labelSmall?.copyWith(
+                                  color: colorScheme.secondary,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedCalendar03,
+                            size: 16,
+                            color: colorScheme.secondary,
+                          ),
+                          SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              'Scheduled for Thursday, Oct 24 • 2:00 PM EST',
+                              style: textTheme.labelMedium?.copyWith(
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                            Row(
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 6),
+                      Row(
+                        children: [
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedClock01,
+                            size: 14,
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                          SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              '45-minute architectural walk-through with host',
+                              style: textTheme.labelSmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16),
+                Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colorScheme.secondary.withValues(alpha: 0.05),
+                        blurRadius: 16,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(
+                              'assets/images/elite-prop.jpg',
+                              width: 64,
+                              height: 64,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(
-                                  Icons.verified_user,
-                                  size: 14,
-                                  color: colorScheme.secondary,
+                                Row(
+                                  children: [
+                                    Text(
+                                      'RESIDENCE',
+                                      style: textTheme.labelSmall?.copyWith(
+                                        color: colorScheme.onSurfaceVariant,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.star,
+                                      size: 12,
+                                      color: Colors.amber,
+                                    ),
+                                    SizedBox(width: 2),
+                                    Text(
+                                      '4.96',
+                                      style: textTheme.labelSmall?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(width: 4),
                                 Text(
-                                  'Secured',
+                                  'The Glass Pavilion, Soho',
+                                  style: textTheme.bodyLarge?.copyWith(
+                                    color: colorScheme.secondaryContainer,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Text(
+                                  '32 W Mercer St, Soho, Manhat...',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: textTheme.labelSmall?.copyWith(
-                                    color: colorScheme.secondary,
+                                    color: colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                                Text(
+                                  '\$3,850 /month',
+                                  style: textTheme.labelMedium?.copyWith(
+                                    color: colorScheme.secondaryContainer,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          children: [
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedCalendar03,
-                              size: 16,
-                              color: colorScheme.secondary,
-                            ),
-                            SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                'Scheduled for Thursday, Oct 24 • 2:00 PM EST',
-                                style: textTheme.labelMedium?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 6),
-                        Row(
-                          children: [
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedClock01,
-                              size: 14,
-                              color: colorScheme.onSurfaceVariant,
-                            ),
-                            SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                '45-minute architectural walk-through with host',
-                                style: textTheme.labelSmall?.copyWith(
-                                  color: colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Container(
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surface,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: colorScheme.secondary.withValues(alpha: 0.05),
-                          blurRadius: 16,
-                          offset: Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
-                                'assets/images/elite-prop.jpg',
-                                width: 64,
-                                height: 64,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'RESIDENCE',
-                                        style: textTheme.labelSmall?.copyWith(
-                                          color: colorScheme.onSurfaceVariant,
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      Icon(
-                                        Icons.star,
-                                        size: 12,
-                                        color: Colors.amber,
-                                      ),
-                                      SizedBox(width: 2),
-                                      Text(
-                                        '4.96',
-                                        style: textTheme.labelSmall?.copyWith(
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    'The Glass Pavilion, Soho',
-                                    style: textTheme.bodyLarge?.copyWith(
-                                      color: colorScheme.secondaryContainer,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  Text(
-                                    '32 W Mercer St, Soho, Manhat...',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: textTheme.labelSmall?.copyWith(
-                                      color: colorScheme.onSurfaceVariant,
-                                    ),
-                                  ),
-                                  Text(
-                                    '\$3,850 /month',
-                                    style: textTheme.labelMedium?.copyWith(
-                                      color: colorScheme.secondaryContainer,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 12),
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                            color: colorScheme.surfaceContainerLow,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              _StatColumn(
-                                label: 'Layout',
-                                value: '2 Bed, 2 Bath',
-                              ),
-                              _StatColumn(label: 'Area', value: '1,420 sq ft'),
-                              _StatColumn(
-                                label: 'Type',
-                                value: 'Loft Penthouse',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Tour Journey',
-                            style: textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Text(
-                            'Real-time status updates',
-                            style: textTheme.labelSmall?.copyWith(
-                              color: colorScheme.onSurfaceVariant,
-                            ),
                           ),
                         ],
                       ),
+                      SizedBox(height: 12),
                       Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
-                        ),
+                        padding: EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
-                          color: colorScheme.surface,
+                          color: colorScheme.surfaceContainerLow,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Text(
-                          'Step 3 of 4',
-                          style: textTheme.labelSmall?.copyWith(
-                            color: colorScheme.secondaryContainer,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            _StatColumn(
+                              label: 'Layout',
+                              value: '2 Bed, 2 Bath',
+                            ),
+                            _StatColumn(label: 'Area', value: '1,420 sq ft'),
+                            _StatColumn(label: 'Type', value: 'Loft Penthouse'),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Tour Journey',
+                          style: textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
                         ),
+                        Text(
+                          'Real-time status updates',
+                          style: textTheme.labelSmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  _TourJourneyTimeline(steps: tourSteps),
-                  SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Meeting & Access',
-                        style: textTheme.titleMedium?.copyWith(
+                      decoration: BoxDecoration(
+                        color: colorScheme.surface,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        'Step 3 of 4',
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colorScheme.secondaryContainer,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.verified_user,
-                            size: 14,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                _TourJourneyTimeline(steps: tourSteps),
+                SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Meeting & Access',
+                      style: textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.verified_user,
+                          size: 14,
+                          color: colorScheme.secondary,
+                        ),
+                        SizedBox(width: 4),
+                        Text(
+                          'Verified Host',
+                          style: textTheme.labelSmall?.copyWith(
                             color: colorScheme.secondary,
                           ),
-                          SizedBox(width: 4),
-                          Text(
-                            'Verified Host',
-                            style: textTheme.labelSmall?.copyWith(
-                              color: colorScheme.secondary,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 12),
+                Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: colorScheme.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 22,
+                        backgroundImage: AssetImage('assets/images/avatar.png'),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'Larry Cho',
+                                  style: textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 1,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: colorScheme.surfaceContainerHigh,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(
+                                    'Premier Host',
+                                    style: textTheme.labelSmall?.copyWith(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            Text(
+                              'Response rate: 100% • Typically replies in 5m',
+                              style: textTheme.labelSmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 12),
-                  Container(
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerLow,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 22,
-                          backgroundImage: AssetImage(
-                            'assets/images/avatar.png',
-                          ),
-                        ),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    'Larry Cho',
-                                    style: textTheme.bodyLarge?.copyWith(
-                                      
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  SizedBox(width: 6),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                      vertical: 1,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: colorScheme.surfaceContainerHigh,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text(
-                                      'Premier Host',
-                                      style: textTheme.labelSmall?.copyWith(
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                'Response rate: 100% • Typically replies in 5m',
-                                style: textTheme.labelSmall?.copyWith(
-                                  color: colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                ),
+                SizedBox(height: 12),
+                Container(
+                  padding: EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface,
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colorScheme.secondary.withValues(alpha: 0.05),
+                        blurRadius: 16,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 12),
-                  Container(
-                    padding: EdgeInsets.all(14),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surface,
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: [
-                        BoxShadow(
-                          color: colorScheme.secondary.withValues(alpha: 0.05),
-                          blurRadius: 16,
-                          offset: Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        HugeIcon(
-                          icon: HugeIcons.strokeRoundedBuilding03,
-                          size: 18,
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'DESIGNATED MEETING SPOT',
-                                style: textTheme.labelSmall?.copyWith(
-                                  color: colorScheme.onSurfaceVariant,
-                                ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      HugeIcon(
+                        icon: HugeIcons.strokeRoundedBuilding03,
+                        size: 18,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'DESIGNATED MEETING SPOT',
+                              style: textTheme.labelSmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
                               ),
-                              Text(
-                                'Lobby desk, 112 Prince Street entrance',
-                                style: textTheme.labelMedium?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                ),
+                            ),
+                            Text(
+                              'Lobby desk, 112 Prince Street entrance',
+                              style: textTheme.labelMedium?.copyWith(
+                                fontWeight: FontWeight.w700,
                               ),
-                              Text(
-                                'Ring unit #PH-4 or announce Homeli Tour to concierge.',
-                                style: textTheme.labelSmall?.copyWith(
-                                  color: colorScheme.onSurfaceVariant,
-                                ),
+                            ),
+                            Text(
+                              'Ring unit #PH-4 or announce Homeli Tour to concierge.',
+                              style: textTheme.labelSmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 16),
-                ],
-              ),
+                ),
+                SizedBox(height: 16),
+              ],
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: () {},
-                      style: FilledButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: colorScheme.surfaceContainerHigh,
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child: Row(
+              children: [
+                Expanded(
+                  child: FilledButton(
+                    onPressed: () {},
+                    style: FilledButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: colorScheme.surfaceContainerHigh,
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Text(
-                        'Message Lister',
-                        style: textTheme.labelLarge?.copyWith(
-                          color: colorScheme.secondary,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    ),
+                    child: Text(
+                      'Message Lister',
+                      style: textTheme.labelLarge?.copyWith(
+                        color: colorScheme.secondary,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: () {},
-                      style: FilledButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: colorScheme.primary,
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: () {},
+                    style: FilledButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: colorScheme.primary,
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Text(
-                        'View Tour Pass',
-                        style: textTheme.labelLarge?.copyWith(
-                          color: colorScheme.surface,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    ),
+                    child: Text(
+                      'View Tour Pass',
+                      style: textTheme.labelLarge?.copyWith(
+                        color: colorScheme.surface,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

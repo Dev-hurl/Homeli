@@ -46,13 +46,14 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
             icon: HugeIcon(
               icon: HugeIcons.strokeRoundedNotification01,
               size: 22,
+              color: colorScheme.secondaryContainer,
               strokeWidth: 2,
             ),
           ),
           SizedBox(width: 16),
           GestureDetector(
             onTap: () {
-              context.go(AppRouter.seekerProfile);
+              context.go(AppRouter.accountSettings);
             },
             child: ClipOval(
               child: SizedBox(
@@ -74,203 +75,200 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 36,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
-                      color: colorScheme.surfaceContainerHigh,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 6,
-                        children: [
-                          HugeIcon(
-                            icon: HugeIcons.strokeRoundedLocation09,
+        child: ListView(
+          children: [
+            Row(
+              children: [
+                Container(
+                  height: 36,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    color: colorScheme.surfaceContainerHigh,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 6,
+                      children: [
+                        HugeIcon(
+                          icon: HugeIcons.strokeRoundedLocation09,
+                          color: colorScheme.secondaryContainer,
+                        ),
+                        Text(
+                          'Nigeria,IB',
+                          style: textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            //
+                          },
+                          child: HugeIcon(
+                            icon: HugeIcons.strokeRoundedArrowDown01,
+                            strokeWidth: 2,
                             color: colorScheme.secondaryContainer,
                           ),
-                          Text(
-                            'Nigeria,IB',
-                            style: textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              //
-                            },
-                            child: HugeIcon(
-                              icon: HugeIcons.strokeRoundedArrowDown01,
-                              strokeWidth: 2,
-                              color: colorScheme.secondaryContainer,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-              SizedBox(height: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Good Morning ${widget.firstName}',
-                    style: textTheme.bodyMedium?.copyWith(),
-                  ),
-                  Text(
-                    'Find your perfect place',
-                    style: textTheme.headlineLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.secondary,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              SearchBar(
-                //padding: WidgetStateProperty.all(horizontal:2),
-                keyboardType: TextInputType.text,
-                backgroundColor: WidgetStateProperty.all(colorScheme.surface),
-                elevation: WidgetStateProperty.all(0),
-                leading: HugeIcon(
-                  icon: HugeIcons.strokeRoundedSearch02,
-                  strokeWidth: 2,
-                  color: colorScheme.secondary,
                 ),
-                trailing: [
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        context.push(AppRouter.seekerSearchFilters);
-                      },
-                      icon: HugeIcon(
-                        icon: HugeIcons.strokeRoundedPreferenceHorizontal,
-                        color: colorScheme.surface,
-                        strokeWidth: 1.5,
-                        size: 20,
-                      ),
+              ],
+            ),
+            SizedBox(height: 12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Good Morning ${widget.firstName}',
+                  style: textTheme.bodyMedium?.copyWith(),
+                ),
+                Text(
+                  'Find your perfect place',
+                  style: textTheme.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.secondary,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            SearchBar(
+              //padding: WidgetStateProperty.all(horizontal:2),
+              keyboardType: TextInputType.text,
+              backgroundColor: WidgetStateProperty.all(colorScheme.surface),
+              elevation: WidgetStateProperty.all(0),
+              leading: HugeIcon(
+                icon: HugeIcons.strokeRoundedSearch02,
+                strokeWidth: 2,
+                color: colorScheme.secondary,
+              ),
+              trailing: [
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: colorScheme.secondary,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      context.push(AppRouter.seekerSearchFilters);
+                    },
+                    icon: HugeIcon(
+                      icon: HugeIcons.strokeRoundedPreferenceHorizontal,
+                      color: colorScheme.surface,
+                      strokeWidth: 1.5,
+                      size: 20,
                     ),
                   ),
-                ],
-                hintText: 'Search city, neighbourhood, villa',
-              ),
-              SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Featured Selection',
-                    style: textTheme.bodyLarge?.copyWith(
-                      color: colorScheme.secondaryContainer,
+                ),
+              ],
+              hintText: 'Search city, neighbourhood, villa',
+            ),
+            SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Featured Selection',
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: colorScheme.secondaryContainer,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'See all',
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.primaryContainer,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'See all',
-                      style: textTheme.bodySmall?.copyWith(
-                        color: colorScheme.primaryContainer,
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            ...featureCard.map(
+              (feature) => Padding(
+                padding: EdgeInsetsGeometry.only(bottom: 12),
+                child: FeaturedCard(featuredCard: feature),
+              ),
+            ),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Nearby Residences',
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.secondaryContainer,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              ...featureCard.map(
-                (feature) => Padding(
-                  padding: EdgeInsetsGeometry.only(bottom: 12),
-                  child: FeaturedCard(featuredCard: feature),
-                ),
-              ),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Nearby Residences',
-                        style: textTheme.bodyLarge?.copyWith(
-                          color: colorScheme.secondaryContainer,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        'Curated spots within 2 miles of you',
-                        style: textTheme.bodySmall?.copyWith(
-                          color: colorScheme.secondaryContainer,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerLow,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        context.push(AppRouter.seekerSearchFilters);
-                      },
-                      icon: HugeIcon(
-                        icon: HugeIcons.strokeRoundedPreferenceHorizontal,
+                    Text(
+                      'Curated spots within 2 miles of you',
+                      style: textTheme.bodySmall?.copyWith(
                         color: colorScheme.secondaryContainer,
-                        strokeWidth: 1.5,
-                        size: 20,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 12),
-              ...nearbyProperty.map(
-                (property) => Padding(
-                  padding: EdgeInsetsGeometry.only(bottom: 12),
-                  child: NearbyResidencesCard(nearbyResidences: property),
+                  ],
                 ),
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: colorScheme.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      context.push(AppRouter.seekerSearchFilters);
+                    },
+                    icon: HugeIcon(
+                      icon: HugeIcons.strokeRoundedPreferenceHorizontal,
+                      color: colorScheme.secondaryContainer,
+                      strokeWidth: 1.5,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 12),
+            ...nearbyProperty.map(
+              (property) => Padding(
+                padding: EdgeInsetsGeometry.only(bottom: 12),
+                child: NearbyResidencesCard(nearbyResidences: property),
               ),
-              // Grid alternative: comment out the list above and uncomment this.
-              // SizedBox(
-              //   height: 520,
-              //   child: GridView.builder(
-              //     physics: NeverScrollableScrollPhysics(),
-              //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 2,
-              //       crossAxisSpacing: 12,
-              //       mainAxisSpacing: 12,
-              //       childAspectRatio: 0.72,
-              //     ),
-              //     itemCount: nearbyProperty.length,
-              //     itemBuilder: (context, index) {
-              //       return NearbyResidencesCard(
-              //         nearbyResidences: nearbyProperty[index],
-              //       );
-              //     },
-              //   ),
-              // ),
-            ],
-          ),
+            ),
+            // Grid alternative: comment out the list above and uncomment this.
+            // SizedBox(
+            //   height: 520,
+            //   child: GridView.builder(
+            //     physics: NeverScrollableScrollPhysics(),
+            //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //       crossAxisCount: 2,
+            //       crossAxisSpacing: 12,
+            //       mainAxisSpacing: 12,
+            //       childAspectRatio: 0.72,
+            //     ),
+            //     itemCount: nearbyProperty.length,
+            //     itemBuilder: (context, index) {
+            //       return NearbyResidencesCard(
+            //         nearbyResidences: nearbyProperty[index],
+            //       );
+            //     },
+            //   ),
+            // ),
+          ],
         ),
       ),
     );

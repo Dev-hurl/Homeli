@@ -19,8 +19,12 @@ void main() async {
   final preferences = await SharedPreferences.getInstance();
   final hasSeenOnboarding =
       preferences.getBool(AppRouter.hasSeenOnboardingPreferenceKey) == true;
-  final hasExistingSession =
-      Supabase.instance.client.auth.currentSession != null;
+  final session = Supabase.instance.client.auth.currentSession;
+  final hasExistingSession = session != null;
+  final roleName = session?.user.userMetadata?['role'] as String?;
+  final activeRole = roleName?.toUpperCase() == 'LISTER'
+      ? UserRole.lister
+      : UserRole.seeker;
 
   // Older installations may have an authenticated Supabase session but no
   // onboarding preference saved yet. Treat them as returning users.
@@ -28,12 +32,19 @@ void main() async {
     await preferences.setBool(AppRouter.hasSeenOnboardingPreferenceKey, true);
   }
 
-  AppRouter.initialLocation = hasSeenOnboarding || hasExistingSession
+  AppRouter.initialLocation = hasExistingSession
+      ? activeRole == UserRole.lister
+            ? AppRouter.listerHome
+            : AppRouter.seekerHome
+      : hasSeenOnboarding
       ? AppRouter.signIn
       : AppRouter.onboarding;
 
   runApp(
-    ChangeNotifierProvider(create: (_) => UserRoleProvider(), child: MyApp()),
+    ChangeNotifierProvider(
+      create: (_) => UserRoleProvider()..setRole(activeRole),
+      child: MyApp(),
+    ),
   );
 }
 
