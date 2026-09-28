@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:homeli/core/features/shared/widgets/circle_icon_button.dart';
+import 'package:homeli/core/features/auth/service/identity_service.dart';
 import 'package:homeli/core/widgets/custom_text_form_field.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class EditIdentityScreen extends StatefulWidget {
   const EditIdentityScreen({super.key});
@@ -12,14 +13,14 @@ class EditIdentityScreen extends StatefulWidget {
 }
 
 class _EditIdentityScreenState extends State<EditIdentityScreen> {
-  final TextEditingController _legalNameController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _emailAddressController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _legalNameController.dispose();
+    _fullNameController.dispose();
     _phoneNumberController.dispose();
     _emailAddressController.dispose();
     super.dispose();
@@ -31,6 +32,88 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
 
   void _removePhoto() {
     //
+  }
+
+  String _originalFullName = '';
+  String _originalPhone = '';
+  String _originalEmail = '';
+  bool _isLoading = true;
+  bool _isSaving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadIdentity();
+  }
+
+  Future<void> _loadIdentity() async {
+    try {
+      final data = await IdentityService().fetchIdentity();
+      _originalFullName = data['full_name']!;
+      _originalPhone = data['phone']!;
+      _originalEmail = data['email']!;
+      _fullNameController.text = _originalFullName;
+      _phoneNumberController.text = _originalPhone;
+      _emailAddressController.text = _originalEmail;
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Failed to load profile: $e')));
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _onSavePressed() async {
+    setState(() => _isSaving = true);
+    final newFullName = _fullNameController.text.trim();
+    final newPhone = _phoneNumberController.text.trim();
+    final newEmail = _emailAddressController.text.trim();
+    final identityChanged =
+        newFullName != _originalFullName || newPhone != _originalPhone;
+    final emailChanged = newEmail != _originalEmail;
+
+    try {
+      if (identityChanged) {
+        await IdentityService().updateNameAndPhone(
+          fullName: newFullName,
+          phone: newPhone,
+        );
+        _originalFullName = newFullName;
+        _originalPhone = newPhone;
+      }
+      if (emailChanged) {
+        await IdentityService().updateEmail(newEmail);
+      }
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              emailChanged
+                  ? 'Saved. Check your new email to confirm the change.'
+                  : 'Saved.',
+            ),
+          ),
+        );
+      }
+    } on AuthException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.message)));
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Something went wrong. Please try again.'),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
+    }
   }
 
   @override
@@ -117,7 +200,7 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
                       style: FilledButton.styleFrom(
                         elevation: 0,
                         padding: EdgeInsets.symmetric(
-                          horizontal: 8,
+                          horizontal: 12,
                           vertical: 16,
                         ),
                         backgroundColor: colorScheme.surfaceContainerLow,
@@ -141,7 +224,7 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
                       onPressed: _removePhoto,
                       style: FilledButton.styleFrom(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 8,
+                          horizontal: 12,
                           vertical: 16,
                         ),
                         iconColor: colorScheme.error,
@@ -156,7 +239,7 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
           ),
           SizedBox(height: 24),
           Container(
-            padding: EdgeInsets.all(24),
+            padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: colorScheme.surface,
               borderRadius: BorderRadius.circular(16),
@@ -176,10 +259,18 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
                   SizedBox(height: 24),
 
                   CustomTextFormField(
-                    controller: _legalNameController,
+                    controller: _fullNameController,
                     hintText: 'Larry Cho',
-                    labelText: 'Full Legal Name',
+                    labelText: 'Full full Name',
                     labelColor: colorScheme.secondaryContainer,
+                    prefixIcon: UnconstrainedBox(
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedUser,
+                        size: 18,
+                        color: colorScheme.onSurfaceVariant,
+                        strokeWidth: 2,
+                      ),
+                    ),
                   ),
                   SizedBox(height: 16),
                   CustomTextFormField(
@@ -187,15 +278,47 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
                     hintText: '+234 801 234 56',
                     labelText: 'Phone Number',
                     labelColor: colorScheme.secondaryContainer,
+                    prefixIcon: UnconstrainedBox(
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedSmartPhone02,
+                        size: 18,
+                        color: colorScheme.onSurfaceVariant,
+                        strokeWidth: 2,
+                      ),
+                    ),
                   ),
                   SizedBox(height: 16),
                   CustomTextFormField(
+                    readOnly: true,
                     controller: _emailAddressController,
                     hintText: 'Larrycho@homeli.com',
                     labelText: 'Email Address',
                     labelColor: colorScheme.secondaryContainer,
+                    prefixIcon: UnconstrainedBox(
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedMail01,
+                        size: 18,
+                        color: colorScheme.onSurfaceVariant,
+                        strokeWidth: 2,
+                      ),
+                    ),
                   ),
                 ],
+              ),
+            ),
+          ),
+          SizedBox(height: 32,),
+          FilledButton(
+            onPressed: _onSavePressed,
+            style: FilledButton.styleFrom(
+              elevation: 0,
+              disabledBackgroundColor: colorScheme.surfaceContainerLow,
+              minimumSize: Size(double.infinity, 52),
+            ),
+            child: Text(
+              'Save Changes',
+              style: textTheme.labelMedium?.copyWith(
+                color: colorScheme.surface,
               ),
             ),
           ),
