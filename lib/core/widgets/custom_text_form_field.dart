@@ -7,6 +7,7 @@ class CustomTextFormField extends StatefulWidget {
     required this.controller,
     required this.hintText,
     this.labelText,
+    this.labelColor,
     this.validator,
     this.obscureText = false,
     this.prefixIcon,
@@ -20,6 +21,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final String? labelText;
+  final Color? labelColor;
   final String? Function(String?)? validator;
   final bool obscureText;
   final Widget? prefixIcon;
@@ -71,7 +73,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           Text(
             widget.labelText!,
             style: textTheme.labelLarge?.copyWith(
-              color: colorScheme.secondary,
+              color: widget.labelColor ?? colorScheme.secondaryContainer,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -81,13 +83,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           decoration: BoxDecoration(
             color: colorScheme.surface,
             borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: colorScheme.secondary.withValues(alpha: 0.03),
-                blurRadius: 12,
-                offset: Offset(0, 3),
-              ),
-            ],
+           
+            
           ),
           child: TextFormField(
             controller: widget.controller,
@@ -100,10 +97,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             decoration: InputDecoration(
               hintText: widget.hintText,
               hintStyle: textTheme.labelMedium?.copyWith(
-                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+                color: colorScheme.onSurfaceVariant,
               ),
               filled: true,
-              fillColor: widget.fillColor ?? colorScheme.surface,
+              fillColor: widget.fillColor ?? colorScheme.surfaceContainerLow,
               prefixIcon: widget.prefixIcon,
               suffixIcon: effectiveSuffixIcon,
               contentPadding: EdgeInsets.symmetric(
