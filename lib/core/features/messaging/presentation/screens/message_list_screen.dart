@@ -154,6 +154,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'messages-new-message-fab',
         onPressed: () {},
         backgroundColor: colorScheme.secondaryContainer,
         icon: HugeIcon(icon: HugeIcons.strokeRoundedEdit03),
@@ -181,7 +182,7 @@ class _ConversationTile extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.push('/messaging/chat');
+        context.push(AppRouter.chat);
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -218,10 +218,9 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'lister-add-listing-fab',
         backgroundColor: colorScheme.primary.withValues(alpha: 0.9),
-        shape: RoundedRectangleBorder(
-          borderRadius: .circular(50),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: .circular(50)),
         onPressed: () {
           context.push(AppRouter.listerCreateListing);
         },

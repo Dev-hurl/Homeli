@@ -15,6 +15,7 @@ class BookingRequestModel {
   final String? duration;
   final String? guestNote;
   final String? subtitle;
+  final String? partySize;
 
   BookingRequestModel({
     this.urgencyLabel,
@@ -33,6 +34,7 @@ class BookingRequestModel {
     this.duration,
     this.guestNote,
     this.subtitle,
+    this.partySize,
   });
 }
 
@@ -41,6 +43,7 @@ final bookingRequests = [
     urgencyLabel: 'Expires in 4hrs',
     requestedAgo: 'Requested 20h ago',
     guestAvatar: 'assets/images/avatar.png',
+    partySize: '1',
     guestName: 'Liam Gallagher',
     isVerified: true,
     verifiedLabel: 'Verified',
