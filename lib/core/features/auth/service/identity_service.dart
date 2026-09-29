@@ -4,21 +4,22 @@ class IdentityService {
   final SupabaseClient _supabase = Supabase.instance.client;
 
   Future<Map<String, String>> fetchIdentity() async {
-    final userId = _supabase.auth.currentUser!.id;
+    final user = _supabase.auth.currentUser;
+    final userId = user!.id;
     final identity = await _supabase
         .from('identities')
         .select('full_name, phone')
         .eq('user_id', userId)
-        .single();
+        .maybeSingle();
 
     return {
-      'full_name': identity['full_name'] as String? ?? '',
-      'phone': identity['phone'] as String? ?? '',
-      'email': _supabase.auth.currentUser?.email ?? '',
+      'full_name': identity?['full_name'] as String? ?? '',
+      'phone': identity?['phone'] as String? ?? '',
+      'email': user.email ?? '',
     };
   }
 
-  Future<void> updateNameAndPhone({
+  Future<void> updateIdentity({
     required String fullName,
     required String phone,
   }) async {

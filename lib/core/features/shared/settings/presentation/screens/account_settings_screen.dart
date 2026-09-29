@@ -42,7 +42,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
           padding: EdgeInsets.all(20),
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Text(
                   'Account Settings',
@@ -157,17 +157,17 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     ],
                   ),
                   SizedBox(height: 12),
-                  SizedBox(
+                  /*SizedBox(
                     width: double.infinity,
                     child: FilledButton(
                       onPressed: () => context.read<UserRoleProvider>().setRole(
                         isLister ? UserRole.seeker : UserRole.lister,
                       ),
                       style: FilledButton.styleFrom(
-                        backgroundColor: colorScheme.surfaceContainerHigh,
+                        backgroundColor: colorScheme.surfaceContainerLow,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       child: Padding(
@@ -196,7 +196,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                         ),
                       ),
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),
