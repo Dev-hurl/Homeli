@@ -5,7 +5,6 @@ import 'package:homeli/core/features/auth/presentation/screens/registration/role
 import 'package:homeli/core/features/auth/presentation/screens/registration/sign_in_screen.dart';
 import 'package:homeli/core/features/auth/presentation/screens/registration/sign_up_screen.dart';
 import 'package:homeli/core/features/shared/settings/presentation/screens/account_settings_screen.dart';
-import 'package:homeli/core/features/lister%20role/presentation/screens/booking_request_details.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/booking_requests_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/create_listing_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/lister_dashboard_screen.dart';
@@ -82,7 +81,6 @@ class AppRouter {
   static const listerHome = '/lister/home';
   static const listerCreateListing = '/lister/create-listing';
   static const listerBookingRequests = '/lister/booking-requests';
-  static const listerBookingRequestDetails = '/lister/request-details';
   static const listerPropertyReviews = '/lister/property-reviews';
   static const listerTrustVerification = '/lister/verification';
   static const messages = '/messaging/messages';
@@ -111,14 +109,22 @@ class AppRouter {
           GoRoute(
             path: 'sign-up',
             builder: (context, state) {
-              final arguments = state.extra! as SignUpRouteArguments;
+              final arguments = state.extra is SignUpRouteArguments
+                  ? state.extra! as SignUpRouteArguments
+                  : SignUpRouteArguments(role: UserRole.seeker);
               return SignUpScreen(roleName: _roleName(arguments.role));
             },
           ),
           GoRoute(
             path: 'otp-verification',
             builder: (context, state) {
-              final arguments = state.extra! as OtpRouteArguments;
+              final arguments = state.extra is OtpRouteArguments
+                  ? state.extra! as OtpRouteArguments
+                  : OtpRouteArguments(
+                      firstName: 'User',
+                      emailAddress: '',
+                      role: UserRole.seeker,
+                    );
               return OtpVerification(
                 firstName: arguments.firstName,
                 emailAddress: arguments.emailAddress,
@@ -159,10 +165,6 @@ class AppRouter {
               GoRoute(
                 path: listerTrustVerification,
                 builder: (context, state) => TrustVerificationScreen(),
-              ),
-              GoRoute(
-                path: listerBookingRequestDetails,
-                builder: (context, state) => BookingRequestDetails(),
               ),
             ],
           ),
