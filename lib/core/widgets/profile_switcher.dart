@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:homeli/core/features/auth/providers/role_provider.dart';
+import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:provider/provider.dart';
 
 class ProfileOption {
   final String imagePath;
@@ -52,6 +56,7 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+     final role = context.watch<UserRoleProvider>().activeRole;
 
     return SafeArea(
       child: Container(
@@ -186,7 +191,9 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
               );
             }),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                context.push(AppRouter.activateRole);
+              },
               style: OutlinedButton.styleFrom(
                 minimumSize: Size(double.infinity, 52),
                 shape: RoundedRectangleBorder(

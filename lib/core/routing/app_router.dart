@@ -4,6 +4,7 @@ import 'package:homeli/core/features/auth/presentation/screens/registration/otp_
 import 'package:homeli/core/features/auth/presentation/screens/registration/role_setup_screen.dart';
 import 'package:homeli/core/features/auth/presentation/screens/registration/sign_in_screen.dart';
 import 'package:homeli/core/features/auth/presentation/screens/registration/sign_up_screen.dart';
+import 'package:homeli/core/features/shared/identity/presentation/screens/activate_role_screen.dart';
 import 'package:homeli/core/features/shared/settings/presentation/screens/account_settings_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/booking_requests_screen.dart';
 import 'package:homeli/core/features/lister%20role/presentation/screens/create_listing_screen.dart';
@@ -86,7 +87,7 @@ class AppRouter {
   static const messages = '/messaging/messages';
   static const chat = '/messaging/chat';
   static const notifications = '/shared/notifications';
-
+  static const activateRole = '/shared/activate-role';
   static String initialLocation = onboarding;
 
   static final GoRouter router = GoRouter(
@@ -244,6 +245,18 @@ class AppRouter {
           GoRoute(
             path: 'notifications',
             builder: (context, state) => NotificationScreen(),
+          ),
+          GoRoute(
+            path: 'activate-role',
+            builder: (context, state) => ActivateRoleScreen(
+              fullName: 'User',
+              avatarPath: '',
+              memberSince: '2024',
+              reviewCount: 0,
+              isGovIdVerified: false,
+              email: '',
+              phone: '',
+            ),
           ),
         ],
       ),

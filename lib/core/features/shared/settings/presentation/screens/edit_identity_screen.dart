@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/auth/service/identity_service.dart';
 import 'package:homeli/core/features/auth/service/profile_service.dart';
 import 'package:homeli/core/widgets/custom_text_form_field.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class EditIdentityScreen extends StatefulWidget {
@@ -14,6 +17,8 @@ class EditIdentityScreen extends StatefulWidget {
 }
 
 class _EditIdentityScreenState extends State<EditIdentityScreen> {
+  File? image; //image file
+  final ImagePicker picker = ImagePicker(); //image picker
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _emailAddressController = TextEditingController();
@@ -34,12 +39,67 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
     super.dispose();
   }
 
-  void _changePhoto() {
+  void _removePhoto() {
     //
   }
 
-  void _removePhoto() {
-    //
+  //Image picker method
+  Future<void> pickImage(ImageSource source) async {
+    //pick from gallery or camera
+    final pickedFile = await picker.pickImage(source: source);
+
+    //update picker file
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+      });
+    }
+  }
+
+  //Upload Image to supabase
+  Future<void> uploadImage() async {
+    if (image == null) return;
+
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+    if (userId == null) return; // not signed in — shouldn't happen here, but guards the null check below
+
+    final path = '$userId/avatar.jpg';
+
+    try {
+      await Supabase.instance.client.storage
+          .from('avatars')
+          .upload(path, image!, fileOptions: const FileOptions(upsert: true));
+
+      final publicUrl = Supabase.instance.client.storage
+          .from('avatars')
+          .getPublicUrl(path);
+
+      await Supabase.instance.client
+          .from('identities')
+          .update({'avatar_url': publicUrl})
+          .eq('user_id', userId);
+
+      await Supabase.instance.client
+          .from('profiles')
+          .update({'avatar_url': publicUrl})
+          .eq('user_id', userId);
+
+      if (!mounted) return;
+      setState(() {
+        _avatarUrl = publicUrl;
+        image = null;
+      });
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Image uploaded successfully')),
+      );
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to upload image: $error')));
+    }
   }
 
   String _originalFullName = '';
@@ -48,9 +108,28 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
   String _originalDisplayName = '';
   String _originalOccupation = '';
   String _originalBio = '';
+  String _avatarUrl = '';
   bool _isLoading = true;
   bool _isSaving = false;
 
+  bool get _hasAnyChanges {
+    final fullNameChanged =
+        _fullNameController.text.trim() != _originalFullName;
+    final phoneChanged = _phoneNumberController.text.trim() != _originalPhone;
+    final emailChanged = _emailAddressController.text.trim() != _originalEmail;
+    final displayNameChanged =
+        _displayNameController.text.trim() != _originalDisplayName;
+    final occupationChanged =
+        _occupationController.text.trim() != _originalOccupation;
+    final bioChanged = _bioController.text.trim() != _originalBio;
+
+    return fullNameChanged ||
+        phoneChanged ||
+        emailChanged ||
+        displayNameChanged ||
+        occupationChanged ||
+        bioChanged;
+  }
 
   @override
   void initState() {
@@ -65,6 +144,7 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
       _originalFullName = data['full_name'] ?? '';
       _originalPhone = data['phone'] ?? '';
       _originalEmail = data['email'] ?? '';
+      _avatarUrl = data['avatar_url'] ?? '';
       _fullNameController.text = _originalFullName;
       _phoneNumberController.text = _originalPhone;
       _emailAddressController.text = _originalEmail;
@@ -85,6 +165,10 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
       _originalDisplayName = data['display_name'] ?? '';
       _originalOccupation = data['occupation'] ?? '';
       _originalBio = data['bio'] ?? '';
+      if ((data['avatar_url'] as String? ?? '').isNotEmpty &&
+          _avatarUrl.isEmpty) {
+        _avatarUrl = data['avatar_url'] ?? '';
+      }
       _displayNameController.text = _originalDisplayName;
       _occupationController.text = _originalOccupation;
       _bioController.text = _originalBio;
@@ -100,7 +184,6 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
   }
 
   Future<void> _onSavePressed() async {
-
     setState(() => _isSaving = true);
     final newFullName = _fullNameController.text.trim();
     final newPhone = _phoneNumberController.text.trim();
@@ -212,14 +295,46 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
                   ),
                   child: Column(
                     children: [
-                      Container(
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/avatar.png'),
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => pickImage(ImageSource.gallery),
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: colorScheme.surfaceContainerHigh,
+                            shape: BoxShape.circle,
                           ),
-                          borderRadius: BorderRadius.circular(100),
+                          child: image != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: Image.file(image!, fit: BoxFit.cover),
+                                )
+                              : _avatarUrl.isNotEmpty
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: Image.network(
+                                    _avatarUrl,
+                                    fit: BoxFit.cover,
+                                    width: 100,
+                                    height: 100,
+                                    errorBuilder: (_, _, _) => Center(
+                                      child: HugeIcon(
+                                        icon:
+                                            HugeIcons.strokeRoundedCameraAdd01,
+                                        size: 20,
+                                        strokeWidth: 2,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Center(
+                                  child: HugeIcon(
+                                    icon: HugeIcons.strokeRoundedCameraAdd01,
+                                    size: 20,
+                                    strokeWidth: 2,
+                                  ),
+                                ),
                         ),
                       ),
 
@@ -245,7 +360,7 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
                         children: [
                           FilledButton.icon(
                             label: Text(
-                              'Change Photo',
+                              'Upload Photo',
                               style: textTheme.labelLarge?.copyWith(
                                 fontWeight: FontWeight.w600,
                               ),
@@ -255,7 +370,7 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
                               color: colorScheme.secondaryContainer,
                               size: 18,
                             ),
-                            onPressed: _changePhoto,
+                            onPressed: () => uploadImage(),
                             style: FilledButton.styleFrom(
                               elevation: 0,
 
@@ -305,9 +420,9 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
                           children: [
                             Text(
                               'Credentials',
-                              style: textTheme.headlineSmall?.copyWith(
+                              style: textTheme.headlineMedium?.copyWith(
                                 color: colorScheme.secondaryContainer,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             SizedBox(height: 24),
@@ -372,9 +487,9 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
                           children: [
                             Text(
                               'Role-Specific Display Override',
-                              style: textTheme.headlineSmall?.copyWith(
+                              style: textTheme.headlineMedium?.copyWith(
                                 color: colorScheme.secondaryContainer,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             SizedBox(height: 8),
@@ -439,10 +554,14 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
                 ),
                 SizedBox(height: 32),
                 FilledButton(
-                  onPressed: _onSavePressed,
+                  onPressed: (_isLoading || _isSaving || !_hasAnyChanges)
+                      ? null
+                      : _onSavePressed,
                   style: FilledButton.styleFrom(
                     elevation: 0,
-                    disabledBackgroundColor: colorScheme.surfaceContainerLow,
+                    disabledBackgroundColor: colorScheme.primary.withValues(
+                      alpha: 0.3,
+                    ),
                     minimumSize: Size(double.infinity, 52),
                   ),
                   child: _isSaving
@@ -450,8 +569,8 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
                       : Text(
                           'Save Changes',
                           style: textTheme.labelLarge?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.surface,
+                            fontWeight: FontWeight.w700,
+                            // color: colorScheme.surface,
                           ),
                         ),
                 ),

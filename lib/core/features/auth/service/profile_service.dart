@@ -4,11 +4,14 @@ class ProfileService {
   final SupabaseClient _supabase = Supabase.instance.client;
 
   Future<Map<String, String>> fetchProfile() async {
-    final userId = _supabase.auth.currentUser!.id;
+    final userId = _supabase.auth.currentUser?.id;
+    if (userId == null) {
+      return {'display_name': '', 'occupation': '', 'bio': ''};
+    }
 
     final profile = await _supabase
         .from('profiles')
-        .select('display_name, occupation, bio')
+        .select('display_name, occupation, bio, avatar_url')
         .eq('user_id', userId)
         .maybeSingle();
 
@@ -16,6 +19,7 @@ class ProfileService {
       'display_name': profile?['display_name'] as String? ?? '',
       'occupation': profile?['occupation'] as String? ?? '',
       'bio': profile?['bio'] as String? ?? '',
+      'avatar_url': profile?['avatar_url'] as String? ?? '',
     };
   }
 
@@ -24,7 +28,11 @@ class ProfileService {
     required String occupation,
     required String bio,
   }) async {
-    final userId = _supabase.auth.currentUser!.id;
+    final userId = _supabase.auth.currentUser?.id;
+    if (userId == null) {
+      throw StateError('No active user found.');
+    }
+
     await _supabase
         .from('profiles')
         .update({
