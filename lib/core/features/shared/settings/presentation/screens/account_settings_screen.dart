@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homeli/core/features/auth/providers/role_provider.dart';
 import 'package:homeli/core/features/auth/service/auth_service.dart';
+import 'package:homeli/core/features/auth/service/identity_service.dart';
+import 'package:homeli/core/features/auth/service/profile_service.dart';
 import 'package:homeli/core/routing/app_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +16,10 @@ class AccountSettingsScreen extends StatefulWidget {
 }
 
 class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
+  String _avatarUrl = '';
+  String _fullName = '';
+  String _emailAddress = '';
+
   Future<void> _onLogout() async {
     try {
       await AuthService().logout();
@@ -30,6 +36,38 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _loadAvatar();
+    _loadFullName();
+  }
+
+  Future<void> _loadFullName() async {
+    try {
+      final identity = await IdentityService().fetchIdentity();
+      if (!mounted) return;
+      setState(() {
+        _fullName = identity['full_name'] ?? '';
+        _emailAddress = identity['email'] ?? '';
+      });
+    } catch (_) {
+      // Keep the fallback name if the identity cannot be loaded.
+    }
+  }
+
+  Future<void> _loadAvatar() async {
+    try {
+      final profile = await ProfileService().fetchProfile();
+      if (!mounted) return;
+      setState(() {
+        _avatarUrl = profile['avatar_url'] ?? '';
+      });
+    } catch (_) {
+      //ignore error
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
@@ -42,7 +80,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
           padding: EdgeInsets.all(20),
           children: [
             Row(
-              mainAxisAlignment: .spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Account Settings',
@@ -72,10 +110,36 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     children: [
                       Stack(
                         children: [
-                          const CircleAvatar(
-                            radius: 24,
-                            backgroundImage: AssetImage(
-                              'assets/images/avatar.png',
+                          ClipOval(
+                            child: SizedBox(
+                              width: 48,
+                              height: 48,
+                              child: _avatarUrl.isNotEmpty
+                                  ? Image.network(
+                                      _avatarUrl,
+                                      fit: BoxFit.cover,
+                                      width: 48,
+                                      height: 48,
+                                      errorBuilder: (_, _, _) => CircleAvatar(
+                                        backgroundColor:
+                                            colorScheme.surfaceContainerHigh,
+                                        child: HugeIcon(
+                                          icon: HugeIcons.strokeRoundedUser02,
+                                          size: 20,
+                                          strokeWidth: 2,
+                                        ),
+                                      ),
+                                    )
+                                  : CircleAvatar(
+                                      backgroundColor:
+                                          colorScheme.surfaceContainerHigh,
+                                      child: HugeIcon(
+                                        icon: HugeIcons.strokeRoundedUser02,
+                                        size: 22,
+                                        strokeWidth: 2,
+                                        color: colorScheme.secondaryContainer,
+                                      ),
+                                    ),
                             ),
                           ),
                           Positioned(
@@ -108,7 +172,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                             Row(
                               children: [
                                 Text(
-                                  'Larry Cho',
+                                  _fullName.isEmpty ? 'User' : _fullName,
                                   style: textTheme.bodyLarge?.copyWith(
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -146,7 +210,9 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              'sophia.chen@studio-arch.com',
+                              _emailAddress.isEmpty
+                                  ? ''
+                                  : _emailAddress,
                               style: textTheme.labelMedium?.copyWith(
                                 color: colorScheme.onSurfaceVariant,
                               ),
@@ -156,47 +222,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 12),
-                  /*SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: () => context.read<UserRoleProvider>().setRole(
-                        isLister ? UserRole.seeker : UserRole.lister,
-                      ),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: colorScheme.surfaceContainerLow,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 4,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              isLister
-                                  ? 'Switch to Seeker View'
-                                  : 'Switch to Lister View',
-                              style: textTheme.labelLarge?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const Spacer(),
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedArrowRight01,
-                              size: 16,
-                              color: colorScheme.secondaryContainer,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),*/
                 ],
               ),
             ),

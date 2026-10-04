@@ -152,7 +152,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                                       ? Text(
                                           widget.fullName.isNotEmpty
                                               ? widget.fullName[0].toUpperCase()
-                                              : 'U',
+                                              : 'H',
                                           style: textTheme.bodyMedium?.copyWith(
                                             fontWeight: FontWeight.w700,
                                           ),

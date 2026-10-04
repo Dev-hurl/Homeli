@@ -165,7 +165,7 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
       _originalDisplayName = data['display_name'] ?? '';
       _originalOccupation = data['occupation'] ?? '';
       _originalBio = data['bio'] ?? '';
-      if ((data['avatar_url'] as String? ?? '').isNotEmpty &&
+      if ((data['avatar_url'] ?? '').isNotEmpty &&
           _avatarUrl.isEmpty) {
         _avatarUrl = data['avatar_url'] ?? '';
       }
@@ -340,7 +340,9 @@ class _EditIdentityScreenState extends State<EditIdentityScreen> {
 
                       SizedBox(height: 12),
                       Text(
-                        'Larry Cho',
+                        _fullNameController.text.trim().isEmpty
+                            ? 'User'
+                            : _fullNameController.text.trim(),
                         style: textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),

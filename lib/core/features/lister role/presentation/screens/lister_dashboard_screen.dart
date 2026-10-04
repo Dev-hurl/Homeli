@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homeli/core/features/auth/service/profile_service.dart';
 import 'package:homeli/core/features/lister%20role/models/active_listing_model.dart';
 import 'package:homeli/core/features/lister%20role/models/draft_listing_model.dart';
 import 'package:homeli/core/features/lister%20role/presentation/widgets/active_listing_card.dart';
@@ -17,8 +18,26 @@ class ListerDashboardScreen extends StatefulWidget {
 
 class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
   int _selectedTab = 0;
-  final String _imagePath = 'assets/images/avatar.png';
+  String _avatarUrl = '';
   final _tabs = ['All (3)', 'Active (2)', 'Draft / Review (1)', 'Paused (0)'];
+
+  Future<void> _loadAvatar() async {
+    try {
+      final profile = await ProfileService().fetchProfile();
+      if (!mounted) return;
+      setState(() {
+        _avatarUrl = profile['avatar_url'] ?? '';
+      });
+    } catch (_) {
+      // Ignore avatar load errors and use the fallback icon.
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAvatar();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +64,34 @@ class _ListerDashboardScreenState extends State<ListerDashboardScreen> {
               context.go(AppRouter.accountSettings);
             },
             child: ClipOval(
-              child: _imagePath.isNotEmpty
-                  ? Image.asset(_imagePath, fit: BoxFit.cover)
-                  : CircleAvatar(
-                      child: HugeIcon(
-                        icon: HugeIcons.strokeRoundedUser02,
-                        size: 22,
-                        strokeWidth: 2,
+              child: SizedBox(
+                width: 48,
+                height: 48,
+                child: _avatarUrl.isNotEmpty
+                    ? Image.network(
+                        _avatarUrl,
+                        fit: BoxFit.cover,
+                        width: 48,
+                        height: 48,
+                        errorBuilder: (_, _, _) => CircleAvatar(
+                          backgroundColor: colorScheme.surfaceContainerHigh,
+                          child: HugeIcon(
+                            icon: HugeIcons.strokeRoundedUser02,
+                            size: 20,
+                            strokeWidth: 2,
+                          ),
+                        ),
+                      )
+                    : CircleAvatar(
+                        backgroundColor: colorScheme.surfaceContainerHigh,
+                        child: HugeIcon(
+                          icon: HugeIcons.strokeRoundedUser02,
+                          size: 22,
+                          strokeWidth: 2,
+                          color: colorScheme.secondaryContainer,
+                        ),
                       ),
-                    ),
+              ),
             ),
           ),
         ],
