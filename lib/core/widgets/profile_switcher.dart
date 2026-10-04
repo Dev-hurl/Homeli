@@ -24,7 +24,7 @@ Future<void> showProfileSwitcherSheet(BuildContext context) {
     backgroundColor: Colors.transparent,
     isScrollControlled: true,
     builder: (context) => ProfileSwitcherSheet(),
-    //TODO: USage : onPressed: () => showProfileSwitcherSheet(context)
+    
   );
 }
 
@@ -56,7 +56,7 @@ class _ProfileSwitcherSheetState extends State<ProfileSwitcherSheet> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-     final role = context.watch<UserRoleProvider>().activeRole;
+    //final role = context.watch<UserRoleProvider>().activeRole;
 
     return SafeArea(
       child: Container(

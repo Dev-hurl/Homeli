@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homeli/core/features/auth/service/profile_service.dart';
 import 'package:homeli/core/features/seeker%20role/models/featured_card_data.dart';
 import 'package:homeli/core/features/seeker%20role/models/nearby_residences_data.dart';
 import 'package:homeli/core/features/seeker%20role/presentation/widgets/nearby_residences_card.dart';
@@ -18,8 +19,26 @@ class SeekerHomeScreen extends StatefulWidget {
 }
 
 class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
-  final String _imagePath = 'assets/images/avatar.png';
+  String _avatarUrl = '';
   final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAvatar();
+  }
+
+  Future<void> _loadAvatar() async {
+    try {
+      final profile = await ProfileService().fetchProfile();
+      if (!mounted) return;
+      setState(() {
+        _avatarUrl = profile['avatar_url'] ?? '';
+      });
+    } catch (_) {
+      // Ignore avatar load errors and use the fallback icon.
+    }
+  }
 
   @override
   void dispose() {
@@ -59,13 +78,28 @@ class _SeekerHomeScreenState extends State<SeekerHomeScreen> {
               child: SizedBox(
                 width: 48,
                 height: 48,
-                child: _imagePath.isNotEmpty
-                    ? Image.asset(_imagePath, fit: BoxFit.cover)
+                child: _avatarUrl.isNotEmpty
+                    ? Image.network(
+                        _avatarUrl,
+                        fit: BoxFit.cover,
+                        width: 48,
+                        height: 48,
+                        errorBuilder: (_, _, _) => CircleAvatar(
+                          backgroundColor: colorScheme.surfaceContainerHigh,
+                          child: HugeIcon(
+                            icon: HugeIcons.strokeRoundedUser02,
+                            size: 20,
+                            strokeWidth: 2,
+                          ),
+                        ),
+                      )
                     : CircleAvatar(
+                        backgroundColor: colorScheme.surfaceContainerHigh,
                         child: HugeIcon(
                           icon: HugeIcons.strokeRoundedUser02,
                           size: 22,
                           strokeWidth: 2,
+                          color: colorScheme.secondaryContainer,
                         ),
                       ),
               ),
