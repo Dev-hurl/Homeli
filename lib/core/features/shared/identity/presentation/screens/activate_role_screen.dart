@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeli/core/features/shared/identity/presentation/widgets/info_chip_card.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class ActivateRoleScreen extends StatefulWidget {
   final String fullName;
@@ -10,7 +11,7 @@ class ActivateRoleScreen extends StatefulWidget {
   final String email;
   final String phone;
 
-  const ActivateRoleScreen({
+  ActivateRoleScreen({
     super.key,
     this.fullName = 'User',
     this.avatarPath = '',
@@ -29,7 +30,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
   final Set<String> _selectedSanctuaryTypes = {'Entire Loft / Penthouse'};
   bool _isPayoutConnected = false;
 
-  final _sanctuaryTypes = const [
+  final _sanctuaryTypes = [
     ('Entire Loft / Penthouse', Icons.apartment),
     ('Brownstone / Townhouse', Icons.holiday_village),
     ('Architectural Villa', Icons.villa),
@@ -45,24 +46,24 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
                     onPressed: () => Navigator.of(context).maybePop(),
-                    icon: const Icon(Icons.arrow_back),
+                    icon: Icon(Icons.arrow_back),
                   ),
                   IconButton(
                     onPressed: () => Navigator.of(context).maybePop(),
-                    icon: const Icon(Icons.close),
+                    icon: Icon(Icons.close),
                   ),
                 ],
               ),
             ),
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 children: [
                   Text(
                     'Start Hosting with Homeli',
@@ -71,16 +72,16 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                       color: colorScheme.secondary,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Text(
                     'Your verified personal identity carries over seamlessly. Switch between exploring sanctuaries and hosting guests anytime.',
                     style: textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
                   Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: colorScheme.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(18),
@@ -109,7 +110,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                               ],
                             ),
                             Container(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: 10,
                                 vertical: 4,
                               ),
@@ -125,7 +126,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                                     size: 12,
                                     color: colorScheme.secondary,
                                   ),
-                                  const SizedBox(width: 4),
+                                  SizedBox(width: 4),
                                   Text(
                                     'Auto-Synced',
                                     style: textTheme.labelSmall?.copyWith(
@@ -137,7 +138,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 14),
+                        SizedBox(height: 14),
                         Row(
                           children: [
                             Stack(
@@ -163,7 +164,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                                   bottom: 0,
                                   right: 0,
                                   child: Container(
-                                    padding: const EdgeInsets.all(4),
+                                    padding: EdgeInsets.all(4),
                                     decoration: BoxDecoration(
                                       color: colorScheme.secondary,
                                       shape: BoxShape.circle,
@@ -172,16 +173,16 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                                         width: 2,
                                       ),
                                     ),
-                                    child: const Icon(
-                                      Icons.camera_alt,
+                                    child: HugeIcon(
+                                      icon: HugeIcons.strokeRoundedCamera01,
                                       size: 12,
-                                      color: Colors.white,
+                                      color: colorScheme.surface,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,7 +207,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                                           size: 12,
                                           color: colorScheme.secondary,
                                         ),
-                                        const SizedBox(width: 4),
+                                        SizedBox(width: 4),
                                         Text(
                                           'Government ID Verified',
                                           style: textTheme.labelSmall?.copyWith(
@@ -221,13 +222,13 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 14),
+                        SizedBox(height: 14),
                         InfoField(
                           label: 'ACCOUNT EMAIL',
                           value: widget.email,
                           onEdit: () {},
                         ),
-                        const Divider(height: 20),
+                        Divider(height: 20),
                         InfoField(
                           label: 'PHONE VERIFICATION',
                           value: widget.phone,
@@ -236,9 +237,9 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
                   Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: EdgeInsets.all(12), 
                     decoration: BoxDecoration(
                       color: colorScheme.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(14),
@@ -251,7 +252,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                           size: 18,
                           color: colorScheme.onSurfaceVariant,
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: 10),
                         Expanded(
                           child: Text(
                             'You can update your public display name, co-host permissions, or legal business entity at any time in Profile Settings.',
@@ -263,7 +264,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 28),
+                  SizedBox(height: 28),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -281,19 +282,19 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     'What style of architectural spaces are you preparing to present?',
                     style: textTheme.labelMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
-                  const SizedBox(height: 14),
+                  SizedBox(height: 14),
                   ..._sanctuaryTypes.map((entry) {
                     final (label, icon) = entry;
                     final selected = _selectedSanctuaryTypes.contains(label);
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                      padding: EdgeInsets.only(bottom: 10),
                       child: GestureDetector(
                         onTap: () => setState(
                           () => selected
@@ -302,7 +303,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                         ),
                         child: Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 14,
                           ),
@@ -321,7 +322,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                                     ? colorScheme.onSecondary
                                     : colorScheme.onSurfaceVariant,
                               ),
-                              const SizedBox(width: 10),
+                              SizedBox(width: 10),
                               Expanded(
                                 child: Text(
                                   label,
@@ -345,9 +346,9 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                       ),
                     );
                   }),
-                  const SizedBox(height: 14),
+                  SizedBox(height: 14),
                   Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: colorScheme.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(18),
@@ -362,7 +363,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                               size: 20,
                               color: colorScheme.secondary,
                             ),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8),
                             Text(
                               'Direct Earnings Destination',
                               style: textTheme.titleSmall?.copyWith(
@@ -371,16 +372,16 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 6),
+                        SizedBox(height: 6),
                         Text(
                           'Reserve settlements are paid via fast, automated wire or debit transfer following check-in.',
                           style: textTheme.labelSmall?.copyWith(
                             color: colorScheme.onSurfaceVariant,
                           ),
                         ),
-                        const SizedBox(height: 14),
+                        SizedBox(height: 14),
                         Container(
-                          padding: const EdgeInsets.all(12),
+                          padding: EdgeInsets.all(12),
                           decoration: BoxDecoration(
                             color: colorScheme.surface,
                             borderRadius: BorderRadius.circular(14),
@@ -388,7 +389,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                           child: Row(
                             children: [
                               Container(
-                                padding: const EdgeInsets.all(8),
+                                padding: EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   color: colorScheme.surfaceContainerHigh,
                                   borderRadius: BorderRadius.circular(10),
@@ -399,7 +400,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                                   color: colorScheme.secondary,
                                 ),
                               ),
-                              const SizedBox(width: 10),
+                              SizedBox(width: 10),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -426,7 +427,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                                         () => _isPayoutConnected = true,
                                       ),
                                 style: OutlinedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
+                                  padding: EdgeInsets.symmetric(
                                     horizontal: 14,
                                     vertical: 8,
                                   ),
@@ -436,7 +437,7 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                                 ),
                                 child: Text(
                                   _isPayoutConnected ? 'Linked' : 'Link Now',
-                                  style: const TextStyle(fontSize: 12),
+                                  style: TextStyle(fontSize: 12),
                                 ),
                               ),
                             ],
@@ -445,19 +446,19 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+              padding: EdgeInsets.fromLTRB(20, 8, 20, 16),
               child: Column(
                 children: [
                   FilledButton(
                     onPressed: () {},
                     style: FilledButton.styleFrom(
                       backgroundColor: colorScheme.primary,
-                      minimumSize: const Size(double.infinity, 52),
+                      minimumSize: Size(double.infinity, 52),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28),
                       ),
@@ -472,12 +473,12 @@ class _ActivateRoleScreenState extends State<ActivateRoleScreen> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        const SizedBox(width: 6),
-                        const Icon(Icons.arrow_forward, size: 16),
+                        SizedBox(width: 6),
+                        Icon(Icons.arrow_forward, size: 16),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Text(
                     'By continuing, you accept the Homeli Host Agreement and Terms of Service.',
                     textAlign: TextAlign.center,
