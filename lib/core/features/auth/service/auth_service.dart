@@ -1,5 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'identity_service.dart';
+
 class AuthService {
   final SupabaseClient _supabase = Supabase.instance.client;
 
@@ -57,6 +59,7 @@ class AuthService {
 
   //Logout
   Future<void> logout() async {
+    await IdentityService().clearCache();
     await _supabase.auth.signOut();
   }
 
