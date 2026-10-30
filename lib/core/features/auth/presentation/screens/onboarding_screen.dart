@@ -41,10 +41,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Future<void> _finishOnboarding() async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool(
-      AppRouter.hasSeenOnboardingPreferenceKey,
-      true,
-    );
+    await preferences.setBool(AppRouter.hasSeenOnboardingPreferenceKey, true);
     if (!mounted) return;
     context.go(AppRouter.roleSetup);
   }
@@ -74,114 +71,152 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final size = MediaQuery.sizeOf(context);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        actionsPadding: EdgeInsets.symmetric(horizontal: 16),
-        leading: Image.asset('assets/icons/Homeli Logo T Inverted.png'),
-        actions: [
-          FilledButton(
-            onPressed: _onSkip,
-            style: FilledButton.styleFrom(
-              elevation: 0,
-              backgroundColor: colorScheme.surfaceContainerHigh,
-            ),
-            child: Text(
-              'Skip',
-              style: textTheme.labelMedium?.copyWith(
-                color: colorScheme.primaryContainer,
+      body: PageView.builder(
+        controller: _pageController,
+        itemCount: _slides.length,
+        onPageChanged: (index) => setState(() => _currentPage = index),
+        itemBuilder: (context, index) {
+          final slides = _slides[index];
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(slides.imagePath, fit: BoxFit.cover),
+              const DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0x66000000),
+                      Color(0x22000000),
+                      Color(0xCC000000),
+                    ],
+                    stops: [0, 0.38, 1],
+                  ),
+                ),
               ),
-            ),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: _slides.length,
-                onPageChanged: (index) => setState(() => _currentPage = index),
-                itemBuilder: (context, index) {
-                  final slides = _slides[index];
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    child: Column(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: Image.asset(
-                            slides.imagePath,
-                            fit: BoxFit.cover,
-                            height: size.height * 0.6,
-                          ),
+              SafeArea(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
                         ),
-                        SizedBox(height: 24),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(
-                            _slides.length,
-                            (dotIndex) => AnimatedContainer(
-                              duration: Duration(milliseconds: 200),
-                              margin: EdgeInsets.symmetric(horizontal: 4),
-                              height: 8,
-                              width: dotIndex == _currentPage ? 24 : 8,
-                              decoration: BoxDecoration(
-                                color: dotIndex == _currentPage
-                                    ? colorScheme.primary
-                                    : colorScheme.surfaceContainerHigh,
-                                borderRadius: BorderRadius.circular(8),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 16,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Image.asset(
+                                    'assets/icons/Homeli Logo T Inverted.png',
+                                    height: 40,
+                                  ),
+                                  TextButton(
+                                    onPressed: _onSkip,
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: colorScheme.surface,
+                                      backgroundColor: colorScheme.onSurface
+                                          .withValues(alpha: 0.7),
+                                    ),
+                                    child: Text(
+                                      'Skip',
+                                      style: textTheme.labelMedium?.copyWith(
+                                        color: colorScheme.surface,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                              Column(
+                                children: [
+                                  Text(
+                                    slides.title,
+                                    textAlign: TextAlign.center,
+                                    style: textTheme.headlineLarge?.copyWith(
+                                      color: colorScheme.surface,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    slides.subtitle,
+                                    textAlign: TextAlign.center,
+                                    style: textTheme.labelLarge?.copyWith(
+                                      color: colorScheme.surface,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 24),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: List.generate(
+                                      _slides.length,
+                                      (dotIndex) => AnimatedContainer(
+                                        duration: const Duration(
+                                          milliseconds: 200,
+                                        ),
+                                        margin: const EdgeInsets.symmetric(
+                                          horizontal: 4,
+                                        ),
+                                        height: 8,
+                                        width: dotIndex == _currentPage
+                                            ? 24
+                                            : 8,
+                                        decoration: BoxDecoration(
+                                          color: dotIndex == _currentPage
+                                              ? colorScheme.surface
+                                              : colorScheme.onSurface,
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  ElevatedButton(
+                                    onPressed: _onGetStartedPressed,
+                                    style: ElevatedButton.styleFrom(
+                                      elevation: 0,
+                                      minimumSize: const Size(
+                                        double.infinity,
+                                        52,
+                                      ),
+                                      backgroundColor: colorScheme.primary,
+                                    ),
+                                    child: Text(
+                                      _currentPage == _slides.length - 1
+                                          ? 'Get Started'
+                                          : 'Continue',
+                                      style: textTheme.labelLarge?.copyWith(
+                                        color: colorScheme.surface,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(height: 20),
-                        Text(
-                          slides.title,
-                          textAlign: TextAlign.center,
-                          style: textTheme.headlineLarge?.copyWith(
-                            color: colorScheme.secondary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 12),
-                        Text(
-                          slides.subtitle,
-                          textAlign: TextAlign.center,
-                          style: textTheme.labelLarge?.copyWith(
-                            color: colorScheme.secondary,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        SizedBox(height: 24),
-                        ElevatedButton(
-                          onPressed: _onGetStartedPressed,
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            minimumSize: Size(double.infinity, 52),
-                            backgroundColor: colorScheme.primary,
-                          ),
-                          child: Text(
-                            _currentPage == _slides.length - 1
-                                ? 'Get Started'
-                                : 'Continue',
-                            style: textTheme.labelLarge?.copyWith(
-                              color: colorScheme.surface,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          );
+        },
       ),
     );
   }
